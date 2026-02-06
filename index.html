@@ -354,75 +354,119 @@
 
         .countdown {
             position: relative;
-            width: 200px;
-            height: 200px;
-            margin: 20px auto;
+            width: 280px;
+            height: 280px;
+            margin: 30px auto;
+            background: radial-gradient(circle at 30% 30%, rgba(253, 251, 247, 0.15), rgba(122, 140, 111, 0.3));
+            border-radius: 50%;
+            box-shadow:
+                0 10px 40px rgba(0, 0, 0, 0.3),
+                inset 0 -5px 20px rgba(0, 0, 0, 0.2),
+                inset 0 5px 20px rgba(255, 255, 255, 0.1);
+            padding: 20px;
         }
 
         .countdown-circle {
             position: relative;
             width: 100%;
             height: 100%;
+            background: radial-gradient(circle at 35% 35%, #8a9c7f, #5d6e52);
+            border-radius: 50%;
+            box-shadow:
+                inset 0 0 30px rgba(0, 0, 0, 0.5),
+                inset 0 5px 10px rgba(255, 255, 255, 0.1);
         }
 
         .countdown-svg {
             transform: rotate(-90deg);
             width: 100%;
             height: 100%;
+            filter: drop-shadow(0 0 8px rgba(253, 251, 247, 0.3));
         }
 
         .countdown-circle-bg {
             fill: none;
-            stroke: rgba(253, 251, 247, 0.2);
-            stroke-width: 12;
+            stroke: rgba(253, 251, 247, 0.15);
+            stroke-width: 14;
         }
 
         .countdown-circle-progress {
             fill: none;
-            stroke: #fdfbf7;
-            stroke-width: 12;
+            stroke: url(#progressGradient);
+            stroke-width: 14;
             stroke-linecap: round;
             transition: stroke-dashoffset 1s linear;
+            filter: drop-shadow(0 0 4px rgba(253, 251, 247, 0.5));
         }
 
         .countdown-time {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 32px;
-            font-weight: bold;
-            font-family: 'Courier New', monospace;
+            transform: translate(-50%, -55%);
+            font-size: 42px;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
             color: #fdfbf7;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            letter-spacing: 1px;
+            text-shadow:
+                0 2px 4px rgba(0, 0, 0, 0.5),
+                0 0 20px rgba(253, 251, 247, 0.3);
+            letter-spacing: 2px;
             text-align: center;
         }
 
         .countdown-label {
             position: absolute;
-            bottom: 35px;
+            bottom: 65px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 12px;
-            color: rgba(253, 251, 247, 0.8);
+            font-size: 13px;
+            color: rgba(253, 251, 247, 0.9);
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            font-weight: 600;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .countdown.finished {
+            background: radial-gradient(circle at 30% 30%, rgba(255, 177, 20, 0.2), rgba(212, 146, 63, 0.3));
+            animation: pulse-glow 1.5s infinite;
+        }
+
+        .countdown.finished .countdown-circle {
+            background: radial-gradient(circle at 35% 35%, #e8a554, #d4923f);
         }
 
         .countdown.finished .countdown-circle-progress {
-            stroke: #FFB114;
-            animation: pulse-stroke 1.5s infinite;
+            stroke: url(#finishedGradient);
         }
 
         .countdown.finished .countdown-time {
-            color: #FFB114;
-            font-size: 18px;
+            color: #fdfbf7;
+            font-size: 28px;
+            animation: pulse-text 1.5s infinite;
         }
 
-        @keyframes pulse-stroke {
-            0%, 100% { stroke-width: 12; }
-            50% { stroke-width: 14; }
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow:
+                    0 10px 40px rgba(0, 0, 0, 0.3),
+                    inset 0 -5px 20px rgba(0, 0, 0, 0.2),
+                    inset 0 5px 20px rgba(255, 255, 255, 0.1),
+                    0 0 30px rgba(255, 177, 20, 0.4);
+            }
+            50% {
+                box-shadow:
+                    0 10px 40px rgba(0, 0, 0, 0.3),
+                    inset 0 -5px 20px rgba(0, 0, 0, 0.2),
+                    inset 0 5px 20px rgba(255, 255, 255, 0.1),
+                    0 0 50px rgba(255, 177, 20, 0.6);
+            }
+        }
+
+        @keyframes pulse-text {
+            0%, 100% { transform: translate(-50%, -55%) scale(1); }
+            50% { transform: translate(-50%, -55%) scale(1.05); }
         }
 
         .stop-button {
@@ -597,6 +641,16 @@
                     <div class="countdown" id="countdown" role="status" aria-live="polite" aria-atomic="true">
                         <div class="countdown-circle">
                             <svg class="countdown-svg" viewBox="0 0 200 200">
+                                <defs>
+                                    <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#fdfbf7;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#e8e4d8;stop-opacity:1" />
+                                    </linearGradient>
+                                    <linearGradient id="finishedGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#FFB114;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#ffd700;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
                                 <circle class="countdown-circle-bg" cx="100" cy="100" r="90"></circle>
                                 <circle
                                     class="countdown-circle-progress"
@@ -609,7 +663,7 @@
                                 </circle>
                             </svg>
                             <div class="countdown-time" id="countdownTime">00:00:00</div>
-                            <div class="countdown-label">Återstår</div>
+                            <div class="countdown-label">ÅTERSTÅR</div>
                         </div>
                     </div>
                     <button
