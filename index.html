@@ -1274,14 +1274,20 @@
 
             // Calculate effective fermentation during cold proofing
             let coldProofEquivalent = 0;
+            let bulkAdjustment = 0;
             if (coldProof > 0) {
                 // Fermentation rate based on fridge temp
                 // 4°C = 10%, increases exponentially
                 const coldFermentRate = 0.10 * Math.pow(1.20, fridgeTemp - 4);
                 coldProofEquivalent = coldProof * coldFermentRate;
 
-                // Adjust bulk time by subtracting cold proof equivalent
-                bulkTime = Math.max(2, bulkTime - coldProofEquivalent);
+                // Only adjust bulk time slightly for warm fridges
+                // Cold proofing CANNOT replace bulk fermentation!
+                if (fridgeTemp > 7 && coldProofEquivalent > 2) {
+                    // Only reduce bulk by max 20% or 2h, whichever is less
+                    bulkAdjustment = Math.min(coldProofEquivalent * 0.3, bulkTime * 0.2, 2);
+                    bulkTime = Math.max(3, bulkTime - bulkAdjustment);
+                }
             }
 
             // Create range (±15%)
@@ -1289,10 +1295,10 @@
             const maxTime = bulkTime * 1.15;
 
             // Display results
-            displayResults(bulkTime, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof, fridgeTemp, coldProofEquivalent);
+            displayResults(bulkTime, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof, fridgeTemp, coldProofEquivalent, bulkAdjustment);
         }
 
-        function displayResults(time, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof, fridgeTemp, coldProofEquivalent) {
+        function displayResults(time, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof, fridgeTemp, coldProofEquivalent, bulkAdjustment) {
             const resultDiv = document.getElementById('result');
             const timeDisplay = document.getElementById('timeDisplay');
             const timeRange = document.getElementById('timeRange');
@@ -1355,10 +1361,12 @@
                 const fermentRate = ((coldProofEquivalent / coldProof) * 100).toFixed(0);
 
                 timeInfo += `<br><strong>Total tid (bulk + kall): ${totalMin}-${totalMax}h</strong>`;
-                timeInfo += `<br><span style="font-size: var(--text-sm); opacity: 0.85;">Kalljäsning vid ${fridgeTemp}°C (${fermentRate}% jäsningshastighet = ~${equivalentHours}h effektiv jäsning)</span>`;
+                timeInfo += `<br><span style="font-size: var(--text-sm); opacity: 0.85;">Kalljäsning vid ${fridgeTemp}°C motsvarar ~${equivalentHours}h jäsning (${fermentRate}% hastighet)</span>`;
 
-                if (fridgeTemp > 8) {
-                    timeInfo += `<br><span style="font-size: var(--text-sm); color: #d4923f;">⚠️ Varmt kylskåp - bulkjäsningstiden är justerad ner med ${equivalentHours}h</span>`;
+                if (bulkAdjustment > 0) {
+                    timeInfo += `<br><span style="font-size: var(--text-sm); color: #c9a875;">💡 Varmt kylskåp - bulkjäsningen förkortad med ${bulkAdjustment.toFixed(1)}h</span>`;
+                } else if (fridgeTemp <= 6) {
+                    timeInfo += `<br><span style="font-size: var(--text-sm); opacity: 0.75;">✅ Perfekt kyltemp - ingen justering av bulkjäsning behövs</span>`;
                 }
             }
 
