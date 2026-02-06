@@ -1370,6 +1370,18 @@
         </h1>
         <p class="subtitle">Beräkna optimal bulkjäsning för perfekt surdegsbröd - med timer, viknings- och gräddningsinstruktioner</p>
 
+        <div style="background: linear-gradient(135deg, #f8fdf9 0%, #f0faf4 100%); border-left: 4px solid var(--green-medium); padding: var(--space-4); margin: var(--space-5) 0; border-radius: 12px;">
+            <h2 style="font-size: var(--text-lg); color: var(--green-dark); margin-top: 0; margin-bottom: var(--space-3);">Hur länge ska surdegsbröd jäsa?</h2>
+            <p style="font-size: var(--text-base); line-height: 1.6; color: var(--text-color); margin-bottom: var(--space-3);"><strong>Surdegsbröd behöver vanligtvis 3-8 timmars bulkjäsning</strong>, men den exakta tiden beror på flera faktorer:</p>
+            <ul style="font-size: var(--text-base); line-height: 1.7; color: var(--text-color); margin-bottom: var(--space-3); padding-left: var(--space-5);">
+                <li><strong>Temperatur:</strong> Varmare = snabbare jäsning (22°C ger ca 5 timmar)</li>
+                <li><strong>Surdegsandel:</strong> Mer surdeg = kortare jästid (20% är standard)</li>
+                <li><strong>Mjöltyp:</strong> Fullkorn jäser snabbare än vitt mjöl</li>
+                <li><strong>Hydrering:</strong> Högre vattenhalt kan påverka jästiden</li>
+            </ul>
+            <p style="font-size: var(--text-base); line-height: 1.6; color: var(--text-color); margin-bottom: 0;"><strong>Exempel:</strong> Vid 22°C med 20% surdegsstart tar bulkjäsningen cirka 5 timmar. Använd kalkylatorn nedan för att få exakt tid baserat på dina förutsättningar - inklusive när du ska göra stretch & fold och när degen är redo för formning!</p>
+        </div>
+
         <form onsubmit="calculateTime(); return false;">
             <!-- Full-width temperature section -->
             <div class="temperature-section">
@@ -1702,44 +1714,69 @@
                 <h3 style="font-size: var(--text-lg); color: var(--green-dark); margin-top: var(--space-3); margin-bottom: var(--space-2);">
                     Hur lång ska bulkjäsningen vara?
                 </h3>
-                <p style="margin-bottom: var(--space-3);">
-                    Bulkjäsningen varierar mellan 3-8 timmar beroende på temperatur, surdegsandel och mjöltyp. Vid 22°C och 20% surdeg tar det cirka 5 timmar. Vår kalkylator anpassar tiden automatiskt efter dina förutsättningar.
-                </p>
+                <p style="margin-bottom: var(--space-2);"><strong>Bulkjäsningen tar vanligtvis 3-8 timmar.</strong> Den exakta tiden beror på:</p>
+                <ul style="margin-bottom: var(--space-3); padding-left: var(--space-5); line-height: 1.7;">
+                    <li><strong>Temperatur:</strong> Vid 22°C tar det cirka 5 timmar</li>
+                    <li><strong>Surdegsandel:</strong> 20% är standard, mer ger snabbare jäsning</li>
+                    <li><strong>Mjöltyp:</strong> Fullkornsmjöl jäser snabbare än vitt mjöl</li>
+                </ul>
+                <p style="margin-bottom: var(--space-3);">Använd kalkylatorn ovan för att få exakt tid baserat på just dina förutsättningar.</p>
 
                 <h3 style="font-size: var(--text-lg); color: var(--green-dark); margin-top: var(--space-3); margin-bottom: var(--space-2);">
                     Varför är temperatur så viktig för surdeg?
                 </h3>
-                <p style="margin-bottom: var(--space-3);">
-                    Jästbakterierna i surdegen är mest aktiva vid 24-28°C. Varje grad påverkar jästhastigheten med cirka 15%. Kallare = långsammare men mer smak. Varmare = snabbare men risk för överjäsning.
-                </p>
+                <p style="margin-bottom: var(--space-2);"><strong>Temperaturen avgör hur snabbt jästbakterierna arbetar.</strong> Här är vad du behöver veta:</p>
+                <ul style="margin-bottom: var(--space-3); padding-left: var(--space-5); line-height: 1.7;">
+                    <li><strong>Optimal temperatur:</strong> 24-28°C för jästbakterierna</li>
+                    <li><strong>Varje grad räknas:</strong> Varje gradförändring påverkar hastigheten med ~15%</li>
+                    <li><strong>Kallare (18-20°C):</strong> Långsammare jäsning = mer utvecklad smak</li>
+                    <li><strong>Varmare (26-28°C):</strong> Snabbare jäsning men risk för överjäsning</li>
+                </ul>
 
                 <h3 style="font-size: var(--text-lg); color: var(--green-dark); margin-top: var(--space-3); margin-bottom: var(--space-2);">
                     Vad betyder hydrering i surdeg?
                 </h3>
-                <p style="margin-bottom: var(--space-3);">
-                    Hydrering är förhållandet vatten till mjöl i procent (baker's percentage). 75% hydrering = 750g vatten per 1000g mjöl. Högre hydrering ger luftigare bröd men är svårare att hantera. Standard är 70-75%.
-                </p>
+                <p style="margin-bottom: var(--space-2);"><strong>Hydrering är mängden vatten i förhållande till mjöl, uttryckt i procent.</strong> Till exempel:</p>
+                <ul style="margin-bottom: var(--space-3); padding-left: var(--space-5); line-height: 1.7;">
+                    <li><strong>75% hydrering:</strong> 750g vatten per 1000g mjöl</li>
+                    <li><strong>60-70%:</strong> Fast deg, lättare att hantera, kompaktare bröd</li>
+                    <li><strong>75-80%:</strong> Standard för ciabatta och lantbröd, luftig struktur</li>
+                    <li><strong>85%+:</strong> Mycket blöt deg, kräver erfarenhet, extra luftigt bröd</li>
+                </ul>
 
                 <h3 style="font-size: var(--text-lg); color: var(--green-dark); margin-top: var(--space-3); margin-bottom: var(--space-2);">
                     Hur vet jag när bulkjäsningen är klar?
                 </h3>
-                <p style="margin-bottom: var(--space-3);">
-                    Degen ska ha ökat med cirka 50-75% i volym, vara luftig med synliga bubblor, och studsa tillbaka när du trycker lätt (fingertest). Vår timer hjälper dig hålla koll på tiden.
-                </p>
+                <p style="margin-bottom: var(--space-2);"><strong>Kolla efter dessa tre tecken:</strong></p>
+                <ul style="margin-bottom: var(--space-3); padding-left: var(--space-5); line-height: 1.7;">
+                    <li><strong>Volymökning:</strong> Degen har växt med 50-75%</li>
+                    <li><strong>Bubblor:</strong> Synliga luftbubblor på ytan och vid kanten</li>
+                    <li><strong>Fingertest:</strong> När du trycker lätt ska degen studsa tillbaka långsamt</li>
+                </ul>
+                <p style="margin-bottom: var(--space-3);">Vår inbyggda timer hjälper dig hålla koll på tiden så du inte missar det perfekta tillfället!</p>
 
                 <h3 style="font-size: var(--text-lg); color: var(--green-dark); margin-top: var(--space-3); margin-bottom: var(--space-2);">
                     Varför ska man göra stretch & fold?
                 </h3>
-                <p style="margin-bottom: var(--space-3);">
-                    Vikningar (stretch & fold) utvecklar glutennätverket utan att knåda. Detta ger brödet styrka att hålla formen och fånga jäsgaserna. Antal vikningar anpassas efter hydreringen - blötare deg behöver fler vikningar.
-                </p>
+                <p style="margin-bottom: var(--space-2);"><strong>Stretch & fold (vikningar) utvecklar glutennätverket utan att knåda.</strong> Fördelarna är:</p>
+                <ul style="margin-bottom: var(--space-3); padding-left: var(--space-5); line-height: 1.7;">
+                    <li><strong>Starkare deg:</strong> Bygger styrka så brödet håller formen</li>
+                    <li><strong>Bättre luftstruktur:</strong> Fångar jäsgaserna mer effektivt</li>
+                    <li><strong>Jämnare jäsning:</strong> Distribuerar jästen bättre i degen</li>
+                </ul>
+                <p style="margin-bottom: var(--space-3);"><strong>Hur ofta?</strong> Kalkylatorn räknar ut antalet vikningar baserat på din hydrering - blötare deg behöver fler vikningar (vanligtvis 3-5 gånger under bulkjäsningen).</p>
 
                 <h3 style="font-size: var(--text-lg); color: var(--green-dark); margin-top: var(--space-3); margin-bottom: var(--space-2);">
                     Vad är kalljäsning och behöver jag det?
                 </h3>
-                <p style="margin-bottom: var(--space-3);">
-                    Kalljäsning innebär att degen vilar i kylskåpet (2-24h) efter formning. Det ger bättre smak, lättare att skåra, och är bekvämt för timing. Inte nödvändigt men rekommenderat för bästa resultat.
-                </p>
+                <p style="margin-bottom: var(--space-2);"><strong>Kalljäsning betyder att den formade degen vilar i kylskåpet i 2-24 timmar.</strong> Det är inte nödvändigt, men ger flera fördelar:</p>
+                <ul style="margin-bottom: var(--space-3); padding-left: var(--space-5); line-height: 1.7;">
+                    <li><strong>Bättre smak:</strong> Längre jäsning = mer utvecklad, komplex smak</li>
+                    <li><strong>Lättare att skåra:</strong> Kall deg är fastare och enklare att göra snitt i</li>
+                    <li><strong>Flexibel timing:</strong> Grädda när det passar dig - imorgon, ikväll eller om 12 timmar</li>
+                    <li><strong>Finare ris:</strong> Kallare deg ger ofta bättre "öron" (ear) på brödet</li>
+                </ul>
+                <p style="margin-bottom: var(--space-3);"><strong>Rekommendation:</strong> Om du har tiden, gör alltid kalljäsning för bästa resultat!</p>
             </div>
         </div>
 
