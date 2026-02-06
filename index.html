@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surdegs Jästidskalkylator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            color: #34495e;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 5px 15px;
+            border: 2px solid #e9ecef;
+            transition: border-color 0.3s;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: #3498db;
+        }
+
+        input[type="number"] {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 12px 5px;
+            font-size: 18px;
+            color: #2c3e50;
+            outline: none;
+        }
+
+        input[type="number"]:focus {
+            outline: 3px solid #3498db;
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        .unit {
+            color: #7f8c8d;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 5px;
+            background: #e9ecef;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]:focus {
+            outline: 3px solid #3498db;
+            outline-offset: 4px;
+            border-radius: 10px;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #3498db;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        input[type="range"]:focus::-webkit-slider-thumb {
+            outline: 3px solid #3498db;
+            outline-offset: 2px;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #3498db;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        input[type="range"]:focus::-moz-range-thumb {
+            outline: 3px solid #3498db;
+            outline-offset: 2px;
+        }
+
+        .range-display {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+
+        button {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:focus {
+            outline: 3px solid #2c3e50;
+            outline-offset: 3px;
+        }
+
+        button:focus:not(:focus-visible) {
+            outline: none;
+        }
+
+        button:focus-visible {
+            outline: 3px solid #2c3e50;
+            outline-offset: 3px;
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            color: white;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .time-display {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .time-range {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .info {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .info-box {
+            margin-top: 30px;
+            padding: 20px;
+            background: #e8f4f8;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+        }
+
+        .info-box h3 {
+            color: #2c3e50;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .info-box p {
+            color: #546e7a;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .timer-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .timer-button {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            color: #667eea;
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 15px;
+        }
+
+        .timer-button:hover {
+            background: white;
+            transform: scale(1.02);
+        }
+
+        .timer-display {
+            display: none;
+            margin-top: 15px;
+        }
+
+        .timer-display.active {
+            display: block;
+        }
+
+        .timer-info {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+
+        .timer-info strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .countdown {
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .countdown.finished {
+            background: #27ae60;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .stop-button {
+            background: rgba(231, 76, 60, 0.9);
+            color: white;
+        }
+
+        .stop-button:hover {
+            background: rgba(231, 76, 60, 1);
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" role="main">
+        <h1>
+            <span aria-hidden="true">🥖</span>
+            <span class="visually-hidden">Bröd</span>
+            Surdegs Jästidskalkylator
+        </h1>
+        <p class="subtitle">Beräkna optimal jästid för din surdeg</p>
+
+        <form onsubmit="calculateTime(); return false;">
+            <div class="input-group">
+                <label for="temperature">Rumstemperatur</label>
+                <div class="input-wrapper">
+                    <input
+                        type="number"
+                        id="temperature"
+                        value="22"
+                        min="15"
+                        max="30"
+                        step="0.5"
+                        aria-describedby="temp-desc"
+                        required>
+                    <span class="unit" aria-hidden="true">°C</span>
+                </div>
+                <span id="temp-desc" class="visually-hidden">Ange rumstemperatur mellan 15 och 30 grader Celsius</span>
+            </div>
+
+            <div class="input-group">
+                <label for="starter">Andel surdeg i degen</label>
+                <input
+                    type="range"
+                    id="starter"
+                    min="5"
+                    max="50"
+                    value="20"
+                    step="1"
+                    aria-valuemin="5"
+                    aria-valuemax="50"
+                    aria-valuenow="20"
+                    aria-valuetext="20 procent"
+                    aria-describedby="starter-desc">
+                <div class="range-display" aria-hidden="true">
+                    <span>5%</span>
+                    <span id="starterValue">20%</span>
+                    <span>50%</span>
+                </div>
+                <span id="starter-desc" class="visually-hidden">Använd piltangenterna för att justera andelen surdeg mellan 5 och 50 procent</span>
+            </div>
+
+            <button type="submit" aria-label="Beräkna jästid för surdeg">Beräkna Jästid</button>
+        </form>
+
+        <div class="result" id="result" role="region" aria-live="polite" aria-atomic="true">
+            <h2>Rekommenderad jästid</h2>
+            <div class="time-display" id="timeDisplay" role="status"></div>
+            <div class="time-range" id="timeRange"></div>
+            <div class="info" id="infoText"></div>
+
+            <div class="timer-section">
+                <button
+                    class="timer-button"
+                    id="startTimerBtn"
+                    onclick="startTimer()"
+                    aria-label="Starta nedräkningstimer">
+                    <span aria-hidden="true">⏱️</span> Starta Timer
+                </button>
+                <div class="timer-display" id="timerDisplay" role="timer" aria-live="polite">
+                    <div class="timer-info">
+                        <strong>Starttid:</strong>
+                        <span id="startTime"></span>
+                    </div>
+                    <div class="timer-info">
+                        <strong>Degen klar:</strong>
+                        <span id="finishTime"></span>
+                    </div>
+                    <div class="countdown" id="countdown" role="status" aria-live="polite" aria-atomic="true"></div>
+                    <button
+                        class="timer-button stop-button"
+                        onclick="stopTimer()"
+                        aria-label="Stoppa och återställ timer">
+                        <span aria-hidden="true">⏹️</span> Stoppa Timer
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen reader announcements -->
+        <div id="sr-announcements" class="visually-hidden" role="status" aria-live="assertive" aria-atomic="true"></div>
+
+        <div class="info-box" role="complementary" aria-labelledby="tips-heading">
+            <h3 id="tips-heading">
+                <span aria-hidden="true">💡</span>
+                <span class="visually-hidden">Glödlampa</span>
+                Tips för bästa resultat
+            </h3>
+            <p>
+                <strong>Temperatur:</strong> Optimal jästtemperatur är 24-26°C. Lägre temperatur ger längsammare jäsning och mer smak.<br><br>
+                <strong>Surdegsandel:</strong> 15-20% är vanligt för grundrecept. Mer surdeg = snabbare jäsning men kan ge surare smak.<br><br>
+                <strong>Testa dig fram:</strong> Kalkylatorn ger en uppskattning. Degen är klar när den nästan dubblat i storlek och är luftig.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Update slider value display
+        const starterSlider = document.getElementById('starter');
+        const starterValue = document.getElementById('starterValue');
+
+        starterSlider.addEventListener('input', function() {
+            const value = this.value;
+            starterValue.textContent = value + '%';
+            this.setAttribute('aria-valuenow', value);
+            this.setAttribute('aria-valuetext', value + ' procent');
+        });
+
+        // Timer variables
+        let timerInterval = null;
+        let endTime = null;
+        let calculatedTime = 0;
+
+        function calculateTime() {
+            const temp = parseFloat(document.getElementById('temperature').value);
+            const starter = parseFloat(document.getElementById('starter').value);
+
+            // Base time at 22°C with 20% starter (in hours)
+            const baseTime = 5;
+            const baseTemp = 22;
+            const baseStarter = 20;
+
+            // Temperature factor: for every degree above/below base, adjust time
+            // Higher temp = faster (divide by factor), lower temp = slower (multiply by factor)
+            const tempFactor = Math.pow(1.15, baseTemp - temp);
+
+            // Starter factor: more starter = faster fermentation
+            // For every 5% increase in starter, reduce time by ~15%
+            const starterFactor = Math.pow(0.85, (starter - baseStarter) / 5);
+
+            // Calculate time
+            let totalTime = baseTime * tempFactor * starterFactor;
+
+            // Ensure reasonable bounds
+            totalTime = Math.max(2, Math.min(24, totalTime));
+
+            // Create range (±15%)
+            const minTime = totalTime * 0.85;
+            const maxTime = totalTime * 1.15;
+
+            // Display results
+            displayResults(totalTime, minTime, maxTime, temp, starter);
+        }
+
+        function displayResults(time, minTime, maxTime, temp, starter) {
+            const resultDiv = document.getElementById('result');
+            const timeDisplay = document.getElementById('timeDisplay');
+            const timeRange = document.getElementById('timeRange');
+            const infoText = document.getElementById('infoText');
+
+            // Save calculated time for timer
+            calculatedTime = time;
+
+            // Reset timer if running
+            if (timerInterval) {
+                stopTimer();
+            }
+
+            // Format time display
+            const hours = Math.floor(time);
+            const minutes = Math.round((time - hours) * 60);
+            timeDisplay.textContent = `${hours}h ${minutes}min`;
+
+            // Format range
+            const minHours = Math.floor(minTime);
+            const minMinutes = Math.round((minTime - minHours) * 60);
+            const maxHours = Math.floor(maxTime);
+            const maxMinutes = Math.round((maxTime - maxHours) * 60);
+            timeRange.textContent = `Intervall: ${minHours}h ${minMinutes}min - ${maxHours}h ${maxMinutes}min`;
+
+            // Generate info text
+            let info = '';
+            if (temp < 20) {
+                info = '❄️ Låg temperatur ger långsam jäsning och mer komplex smak. Perfekt för över natten!';
+            } else if (temp > 26) {
+                info = '🌡️ Hög temperatur ger snabb jäsning. Håll koll så degen inte överjäser!';
+            } else {
+                info = '✅ Perfekt temperatur för jäsning. Degen kommer utvecklas fint!';
+            }
+
+            if (starter > 30) {
+                info += ' Mycket surdeg i degen ger snabb jäsning och syrligare smak.';
+            } else if (starter < 15) {
+                info += ' Lite surdeg ger långsammare jäsning och mildare smak.';
+            }
+
+            infoText.textContent = info;
+
+            // Show result
+            resultDiv.classList.add('show');
+
+            // Announce to screen readers
+            announceToScreenReader(`Beräkning klar. Rekommenderad jästid är ${hours} timmar och ${minutes} minuter.`);
+        }
+
+        function startTimer() {
+            const now = new Date();
+            endTime = new Date(now.getTime() + calculatedTime * 60 * 60 * 1000);
+
+            // Update UI
+            document.getElementById('startTimerBtn').style.display = 'none';
+            document.getElementById('timerDisplay').classList.add('active');
+
+            // Format and display times
+            document.getElementById('startTime').textContent = formatTime(now);
+            document.getElementById('finishTime').textContent = formatTime(endTime);
+
+            // Start countdown
+            updateTimer();
+            timerInterval = setInterval(updateTimer, 1000);
+
+            // Update button states
+            document.getElementById('startTimerBtn').setAttribute('aria-hidden', 'true');
+
+            // Announce to screen readers
+            announceToScreenReader(`Timer startad. Degen är klar klockan ${formatTime(endTime)}.`);
+
+            // Request notification permission
+            if ("Notification" in window && Notification.permission === "default") {
+                Notification.requestPermission();
+            }
+        }
+
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+
+            document.getElementById('startTimerBtn').style.display = 'block';
+            document.getElementById('startTimerBtn').removeAttribute('aria-hidden');
+            document.getElementById('timerDisplay').classList.remove('active');
+            document.getElementById('countdown').classList.remove('finished');
+
+            // Announce to screen readers
+            announceToScreenReader('Timer stoppad.');
+        }
+
+        function updateTimer() {
+            const now = new Date();
+            const remaining = endTime - now;
+
+            if (remaining <= 0) {
+                // Timer finished
+                document.getElementById('countdown').textContent = '🎉 Degen är klar!';
+                document.getElementById('countdown').classList.add('finished');
+                clearInterval(timerInterval);
+                timerInterval = null;
+
+                // Announce to screen readers
+                announceToScreenReader('Tiden är ute! Din surdeg är klar att bakas!');
+
+                // Show notification
+                if ("Notification" in window && Notification.permission === "granted") {
+                    new Notification("Surdegs Timer", {
+                        body: "Din surdeg är klar att bakas!",
+                        icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75'>🥖</text></svg>"
+                    });
+                }
+
+                // Play sound (if browser supports it)
+                try {
+                    const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm7A7+OZURE');
+                    audio.play().catch(() => {});
+                } catch (e) {}
+
+                return;
+            }
+
+            // Calculate remaining time
+            const hours = Math.floor(remaining / (1000 * 60 * 60));
+            const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+
+            // Display countdown
+            document.getElementById('countdown').textContent =
+                `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function formatTime(date) {
+            return date.toLocaleTimeString('sv-SE', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Announce messages to screen readers
+        function announceToScreenReader(message) {
+            const announcement = document.getElementById('sr-announcements');
+            announcement.textContent = message;
+
+            // Clear after a delay to allow for repeated announcements
+            setTimeout(() => {
+                announcement.textContent = '';
+            }, 1000);
+        }
+
+        // Calculate on load with default values
+        window.addEventListener('load', function() {
+            calculateTime();
+        });
+    </script>
+</body>
+</html>
