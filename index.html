@@ -1370,9 +1370,13 @@
                 }
             }
 
-            // Calculate baking time based on dough weight
+            // Get number of loaves (default 1)
+            const numLoaves = parseFloat(document.getElementById('numLoaves')?.value) || 1;
+            const weightPerLoaf = totalWeight / numLoaves;
+
+            // Calculate baking time based on weight PER LOAF (not total)
             const bakingTimeBase = 40; // Base time for ~1kg loaf
-            const weightFactor = totalWeight / 1000;
+            const weightFactor = weightPerLoaf / 1000;
             const bakingTimeTotal = Math.round(bakingTimeBase * Math.sqrt(weightFactor));
             const bakingTimeCovered = Math.round(bakingTimeTotal * 0.55); // ~55% covered
             const bakingTimeUncovered = bakingTimeTotal - bakingTimeCovered;
@@ -1415,6 +1419,28 @@
                                 Vik degen ${foldIntervalText} under första 2/3 av bulkjäsningen.
                                 Detta utvecklar glutennätverket och ger bättre struktur.
                             </span>
+                        </div>
+                    </div>
+
+                    <div class="recipe-card" style="background: linear-gradient(135deg, #f5f0e8 0%, #ede5d8 100%); border: 2px solid var(--green-light);">
+                        <h3><span class="icon">🥖</span> Antal bröd</h3>
+                        <div class="recipe-card-content">
+                            <label for="numLoaves" style="display: block; margin-bottom: var(--space-2); font-size: var(--text-base);">Hur många bröd vill du forma?</label>
+                            <div class="input-wrapper" style="max-width: 200px;">
+                                <input
+                                    type="number"
+                                    id="numLoaves"
+                                    value="1"
+                                    min="1"
+                                    max="10"
+                                    step="1"
+                                    style="font-size: var(--text-lg);">
+                                <span class="unit" style="font-size: var(--text-base);">st</span>
+                            </div>
+                            <div style="margin-top: var(--space-3); font-size: var(--text-sm); color: var(--green-medium);">
+                                <strong>Per bröd:</strong> ${Math.round(weightPerLoaf)}g<br>
+                                <span style="opacity: 0.8;">Baktiden beräknas för bröd på ${Math.round(weightPerLoaf)}g</span>
+                            </div>
                         </div>
                     </div>
 
@@ -1462,6 +1488,15 @@
 
             // Show result
             resultDiv.classList.add('show');
+
+            // Add event listener for number of loaves (after element is created)
+            setTimeout(() => {
+                const numLeavesInput = document.getElementById('numLoaves');
+                if (numLeavesInput && !numLeavesInput.dataset.listenerAdded) {
+                    numLeavesInput.addEventListener('input', calculateTime);
+                    numLeavesInput.dataset.listenerAdded = 'true';
+                }
+            }, 100);
 
             // Announce to screen readers
             announceToScreenReader(`Beräkning klar. Rekommenderad jästid är ${hours} timmar och ${minutes} minuter.`);
