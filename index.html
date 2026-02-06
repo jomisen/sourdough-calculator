@@ -1004,6 +1004,24 @@
                 </div>
             </div>
 
+            <div class="input-row" id="fridgeTempRow" style="display: none;">
+                <div class="input-group">
+                    <label for="fridgeTemp">Kylskåpstemperatur</label>
+                    <div class="input-wrapper">
+                        <input
+                            type="number"
+                            id="fridgeTemp"
+                            value="4"
+                            min="2"
+                            max="15"
+                            step="0.5"
+                            aria-describedby="fridgetemp-desc">
+                        <span class="unit" aria-hidden="true">°C</span>
+                    </div>
+                    <span id="fridgetemp-desc" class="visually-hidden">Ange temperatur i kylskåp (normalt 3-6°C)</span>
+                </div>
+                <div class="input-group"></div>
+            </div>
 
             <div class="input-row">
                 <div class="input-group">
@@ -1185,17 +1203,38 @@
 
         // Auto-calculate when any input changes
         function setupAutoCalculate() {
-            const inputs = ['temperature', 'flour', 'water', 'starter', 'salt', 'coldProof'];
+            const inputs = ['temperature', 'flour', 'water', 'starter', 'salt', 'coldProof', 'fridgeTemp'];
             inputs.forEach(inputId => {
                 const element = document.getElementById(inputId);
                 if (element) {
                     element.addEventListener('input', calculateTime);
                 }
             });
+
+            // Show/hide fridge temp based on cold proof value
+            document.getElementById('coldProof').addEventListener('input', function() {
+                const fridgeTempRow = document.getElementById('fridgeTempRow');
+                const fridgeTempInput = document.getElementById('fridgeTemp');
+                if (parseFloat(this.value) > 0) {
+                    fridgeTempRow.style.display = 'grid';
+                    if (!fridgeTempInput.value || fridgeTempInput.value === '0') {
+                        fridgeTempInput.value = '4';
+                    }
+                    calculateTime();
+                } else {
+                    fridgeTempRow.style.display = 'none';
+                }
+            });
         }
 
         // Calculate on load with default values
         window.addEventListener('load', function() {
+            // Show fridge temp if cold proof is set
+            const coldProof = parseFloat(document.getElementById('coldProof').value);
+            if (coldProof > 0) {
+                document.getElementById('fridgeTempRow').style.display = 'grid';
+            }
+
             calculateTime();
             setupAutoCalculate();
         });
@@ -1207,6 +1246,7 @@
             const starter = parseFloat(document.getElementById('starter').value);
             const salt = parseFloat(document.getElementById('salt').value);
             const coldProof = parseFloat(document.getElementById('coldProof').value) || 0;
+            const fridgeTemp = parseFloat(document.getElementById('fridgeTemp').value) || 4;
 
             // Calculate percentages (baker's percentage)
             const starterPercent = (starter / flour) * 100;
@@ -1232,15 +1272,27 @@
             // Ensure reasonable bounds
             bulkTime = Math.max(2, Math.min(24, bulkTime));
 
+            // Calculate effective fermentation during cold proofing
+            let coldProofEquivalent = 0;
+            if (coldProof > 0) {
+                // Fermentation rate based on fridge temp
+                // 4°C = 10%, increases exponentially
+                const coldFermentRate = 0.10 * Math.pow(1.20, fridgeTemp - 4);
+                coldProofEquivalent = coldProof * coldFermentRate;
+
+                // Adjust bulk time by subtracting cold proof equivalent
+                bulkTime = Math.max(2, bulkTime - coldProofEquivalent);
+            }
+
             // Create range (±15%)
             const minTime = bulkTime * 0.85;
             const maxTime = bulkTime * 1.15;
 
             // Display results
-            displayResults(bulkTime, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof);
+            displayResults(bulkTime, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof, fridgeTemp, coldProofEquivalent);
         }
 
-        function displayResults(time, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof) {
+        function displayResults(time, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof, fridgeTemp, coldProofEquivalent) {
             const resultDiv = document.getElementById('result');
             const timeDisplay = document.getElementById('timeDisplay');
             const timeRange = document.getElementById('timeRange');
@@ -1299,7 +1351,15 @@
             if (coldProof > 0) {
                 const totalMin = Math.floor(minTime + coldProof);
                 const totalMax = Math.ceil(maxTime + coldProof);
+                const equivalentHours = coldProofEquivalent.toFixed(1);
+                const fermentRate = ((coldProofEquivalent / coldProof) * 100).toFixed(0);
+
                 timeInfo += `<br><strong>Total tid (bulk + kall): ${totalMin}-${totalMax}h</strong>`;
+                timeInfo += `<br><span style="font-size: var(--text-sm); opacity: 0.85;">Kalljäsning vid ${fridgeTemp}°C (${fermentRate}% jäsningshastighet = ~${equivalentHours}h effektiv jäsning)</span>`;
+
+                if (fridgeTemp > 8) {
+                    timeInfo += `<br><span style="font-size: var(--text-sm); color: #d4923f;">⚠️ Varmt kylskåp - bulkjäsningstiden är justerad ner med ${equivalentHours}h</span>`;
+                }
             }
 
             // Calculate baking time based on dough weight
