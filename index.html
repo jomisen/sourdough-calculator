@@ -923,6 +923,16 @@
             text-align: center;
         }
 
+        .temperature-section {
+            margin-bottom: var(--space-4);
+        }
+
+        .temperature-section input[type="number"]:focus {
+            outline: 3px solid var(--green-light);
+            outline-offset: 2px;
+            border-color: var(--green-light);
+        }
+
         /* Instagram Section */
         .instagram-section {
             margin-top: var(--space-5);
@@ -1152,10 +1162,11 @@
         <p class="subtitle">Beräkna optimal jästid för din surdeg</p>
 
         <form onsubmit="calculateTime(); return false;">
-            <div class="input-row">
-                <div class="input-group">
-                    <label for="temperature">Rumstemperatur</label>
-                    <div class="input-wrapper">
+            <!-- Full-width temperature section -->
+            <div class="temperature-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                    <label for="temperature" style="margin: 0; font-size: var(--text-base); font-weight: 700; color: var(--green-dark);">Rumstemperatur</label>
+                    <div style="display: flex; align-items: center; gap: var(--space-1);">
                         <input
                             type="number"
                             id="temperature"
@@ -1164,28 +1175,32 @@
                             max="30"
                             step="0.5"
                             aria-describedby="temp-desc"
-                            required>
-                        <span class="unit" aria-hidden="true">°C</span>
+                            required
+                            style="width: 60px; padding: 4px 8px; font-size: var(--text-base); font-weight: 600; color: var(--green-dark); border: 2px solid var(--green-lighter); border-radius: 6px; text-align: center;">
+                        <span style="font-size: var(--text-base); font-weight: 600; color: var(--green-medium);">°C</span>
                     </div>
-                    <input
-                        type="range"
-                        id="temperatureSlider"
-                        class="thermometer-slider"
-                        min="15"
-                        max="30"
-                        step="0.5"
-                        value="22"
-                        aria-label="Justera rumstemperatur med slider">
-                    <div class="thermometer-labels">
-                        <span>15°</span>
-                        <span>18°</span>
-                        <span>21°</span>
-                        <span>24°</span>
-                        <span>27°</span>
-                        <span>30°</span>
-                    </div>
-                    <span id="temp-desc" class="visually-hidden">Ange rumstemperatur mellan 15 och 30 grader Celsius</span>
                 </div>
+                <input
+                    type="range"
+                    id="temperatureSlider"
+                    class="thermometer-slider"
+                    min="15"
+                    max="30"
+                    step="0.5"
+                    value="22"
+                    aria-label="Justera rumstemperatur med slider">
+                <div class="thermometer-labels">
+                    <span>15°</span>
+                    <span>18°</span>
+                    <span>21°</span>
+                    <span>24°</span>
+                    <span>27°</span>
+                    <span>30°</span>
+                </div>
+                <span id="temp-desc" class="visually-hidden">Ange rumstemperatur mellan 15 och 30 grader Celsius</span>
+            </div>
+
+            <div class="input-row">
 
             </div>
 
