@@ -415,25 +415,71 @@
             </div>
 
             <div class="input-group">
-                <label for="starter">Andel surdeg i degen</label>
-                <input
-                    type="range"
-                    id="starter"
-                    min="5"
-                    max="50"
-                    value="20"
-                    step="1"
-                    aria-valuemin="5"
-                    aria-valuemax="50"
-                    aria-valuenow="20"
-                    aria-valuetext="20 procent"
-                    aria-describedby="starter-desc">
-                <div class="range-display" aria-hidden="true">
-                    <span>5%</span>
-                    <span id="starterValue">20%</span>
-                    <span>50%</span>
+                <label for="flour">Mjöl</label>
+                <div class="input-wrapper">
+                    <input
+                        type="number"
+                        id="flour"
+                        value="500"
+                        min="100"
+                        max="5000"
+                        step="10"
+                        aria-describedby="flour-desc"
+                        required>
+                    <span class="unit" aria-hidden="true">g</span>
                 </div>
-                <span id="starter-desc" class="visually-hidden">Använd piltangenterna för att justera andelen surdeg mellan 5 och 50 procent</span>
+                <span id="flour-desc" class="visually-hidden">Ange total mjölmängd i gram</span>
+            </div>
+
+            <div class="input-group">
+                <label for="water">Vatten</label>
+                <div class="input-wrapper">
+                    <input
+                        type="number"
+                        id="water"
+                        value="350"
+                        min="50"
+                        max="5000"
+                        step="10"
+                        aria-describedby="water-desc"
+                        required>
+                    <span class="unit" aria-hidden="true">g</span>
+                </div>
+                <span id="water-desc" class="visually-hidden">Ange vattenmängd i gram</span>
+            </div>
+
+            <div class="input-group">
+                <label for="starter">Surdegsstart</label>
+                <div class="input-wrapper">
+                    <input
+                        type="number"
+                        id="starter"
+                        value="100"
+                        min="10"
+                        max="1000"
+                        step="10"
+                        aria-describedby="starter-desc"
+                        required>
+                    <span class="unit" aria-hidden="true">g</span>
+                </div>
+                <span id="starter-desc" class="visually-hidden">Ange mängd surdegsstart i gram</span>
+            </div>
+
+            <div class="input-group">
+                <label for="salt">Salt</label>
+                <div class="input-wrapper">
+                    <input
+                        type="number"
+                        id="salt"
+                        value="10"
+                        min="0"
+                        max="100"
+                        step="1"
+                        aria-describedby="salt-desc"
+                        required>
+                    <span class="unit" aria-hidden="true">g</span>
+                </div>
+                <span id="salt-desc" class="visually-hidden">Ange saltmängd i gram</span>
             </div>
 
             <button type="submit" aria-label="Beräkna jästid för surdeg">Beräkna Jästid</button>
@@ -485,23 +531,13 @@
             <p>
                 <strong>Temperatur:</strong> Optimal jästtemperatur är 24-26°C. Lägre temperatur ger längsammare jäsning och mer smak.<br><br>
                 <strong>Surdegsandel:</strong> 15-20% är vanligt för grundrecept. Mer surdeg = snabbare jäsning men kan ge surare smak.<br><br>
+                <strong>Hydrering:</strong> 70-75% är typiskt för surdegsbröd. Högre hydrering ger luftigare bröd men är svårare att hantera.<br><br>
                 <strong>Testa dig fram:</strong> Kalkylatorn ger en uppskattning. Degen är klar när den nästan dubblat i storlek och är luftig.
             </p>
         </div>
     </div>
 
     <script>
-        // Update slider value display
-        const starterSlider = document.getElementById('starter');
-        const starterValue = document.getElementById('starterValue');
-
-        starterSlider.addEventListener('input', function() {
-            const value = this.value;
-            starterValue.textContent = value + '%';
-            this.setAttribute('aria-valuenow', value);
-            this.setAttribute('aria-valuetext', value + ' procent');
-        });
-
         // Timer variables
         let timerInterval = null;
         let endTime = null;
@@ -509,7 +545,15 @@
 
         function calculateTime() {
             const temp = parseFloat(document.getElementById('temperature').value);
+            const flour = parseFloat(document.getElementById('flour').value);
+            const water = parseFloat(document.getElementById('water').value);
             const starter = parseFloat(document.getElementById('starter').value);
+            const salt = parseFloat(document.getElementById('salt').value);
+
+            // Calculate percentages (baker's percentage)
+            const starterPercent = (starter / flour) * 100;
+            const hydration = (water / flour) * 100;
+            const saltPercent = (salt / flour) * 100;
 
             // Base time at 22°C with 20% starter (in hours)
             const baseTime = 5;
@@ -522,7 +566,7 @@
 
             // Starter factor: more starter = faster fermentation
             // For every 5% increase in starter, reduce time by ~15%
-            const starterFactor = Math.pow(0.85, (starter - baseStarter) / 5);
+            const starterFactor = Math.pow(0.85, (starterPercent - baseStarter) / 5);
 
             // Calculate time
             let totalTime = baseTime * tempFactor * starterFactor;
@@ -535,10 +579,10 @@
             const maxTime = totalTime * 1.15;
 
             // Display results
-            displayResults(totalTime, minTime, maxTime, temp, starter);
+            displayResults(totalTime, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt);
         }
 
-        function displayResults(time, minTime, maxTime, temp, starter) {
+        function displayResults(time, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt) {
             const resultDiv = document.getElementById('result');
             const timeDisplay = document.getElementById('timeDisplay');
             const timeRange = document.getElementById('timeRange');
@@ -557,12 +601,24 @@
             const minutes = Math.round((time - hours) * 60);
             timeDisplay.textContent = `${hours}h ${minutes}min`;
 
-            // Format range
+            // Format range with recipe info
             const minHours = Math.floor(minTime);
             const minMinutes = Math.round((minTime - minHours) * 60);
             const maxHours = Math.floor(maxTime);
             const maxMinutes = Math.round((maxTime - maxHours) * 60);
-            timeRange.textContent = `Intervall: ${minHours}h ${minMinutes}min - ${maxHours}h ${maxMinutes}min`;
+            const totalWeight = flour + water + starter + salt;
+
+            timeRange.innerHTML = `
+                <div style="margin-bottom: 12px;">Intervall: ${minHours}h ${minMinutes}min - ${maxHours}h ${maxMinutes}min</div>
+                <div style="font-size: 14px; opacity: 0.9;">
+                    <strong>Ditt recept:</strong><br>
+                    Mjöl: ${flour}g (100%)<br>
+                    Vatten: ${water}g (${hydration.toFixed(0)}% hydrering)<br>
+                    Surdeg: ${starter}g (${starterPercent.toFixed(0)}%)<br>
+                    Salt: ${salt}g (${saltPercent.toFixed(1)}%)<br>
+                    <strong>Total vikt: ${totalWeight}g</strong>
+                </div>
+            `;
 
             // Generate info text
             let info = '';
@@ -574,9 +630,9 @@
                 info = '✅ Perfekt temperatur för jäsning. Degen kommer utvecklas fint!';
             }
 
-            if (starter > 30) {
+            if (starterPercent > 30) {
                 info += ' Mycket surdeg i degen ger snabb jäsning och syrligare smak.';
-            } else if (starter < 15) {
+            } else if (starterPercent < 15) {
                 info += ' Lite surdeg ger långsammare jäsning och mildare smak.';
             }
 
