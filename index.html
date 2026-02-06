@@ -12,8 +12,8 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: Georgia, 'Times New Roman', serif;
+            background: linear-gradient(135deg, #9fb094 0%, #b5c4a9 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -22,24 +22,43 @@
         }
 
         .container {
-            background: white;
+            background: #fdfbf7;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            max-width: 500px;
+            box-shadow: 0 15px 50px rgba(70, 80, 60, 0.25);
+            padding: 20px 40px 40px;
+            max-width: 600px;
             width: 100%;
+            border: 3px solid #d4c5a0;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin: -60px auto 20px;
+        }
+
+        .logo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 4px solid #fdfbf7;
+            box-shadow: 0 8px 20px rgba(70, 80, 60, 0.3);
+            background: white;
         }
 
         h1 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-            font-size: 28px;
+            color: #3d4a36;
+            margin-bottom: 8px;
+            font-size: 32px;
+            text-align: center;
+            font-weight: 700;
         }
 
         .subtitle {
-            color: #7f8c8d;
+            color: #6b7a5e;
             margin-bottom: 30px;
-            font-size: 14px;
+            font-size: 16px;
+            text-align: center;
+            font-style: italic;
         }
 
         .input-group {
@@ -48,24 +67,26 @@
 
         label {
             display: block;
-            color: #34495e;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 14px;
+            color: #3d4a36;
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 16px;
         }
 
         .input-wrapper {
             display: flex;
             align-items: center;
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 5px 15px;
-            border: 2px solid #e9ecef;
-            transition: border-color 0.3s;
+            background: white;
+            border-radius: 12px;
+            padding: 8px 18px;
+            border: 2px solid #c5d4b8;
+            transition: all 0.3s;
+            box-shadow: 0 2px 6px rgba(70, 80, 60, 0.08);
         }
 
         .input-wrapper:focus-within {
-            border-color: #3498db;
+            border-color: #9fb094;
+            box-shadow: 0 3px 10px rgba(70, 80, 60, 0.15);
         }
 
         input[type="number"] {
@@ -73,34 +94,36 @@
             border: none;
             background: transparent;
             padding: 12px 5px;
-            font-size: 18px;
-            color: #2c3e50;
+            font-size: 20px;
+            color: #3d4a36;
             outline: none;
+            font-weight: 600;
         }
 
         input[type="number"]:focus {
-            outline: 3px solid #3498db;
+            outline: 3px solid #9fb094;
             outline-offset: 2px;
             border-radius: 4px;
         }
 
         .unit {
-            color: #7f8c8d;
-            font-size: 16px;
-            font-weight: 500;
+            color: #6b7a5e;
+            font-size: 18px;
+            font-weight: 600;
         }
 
         input[type="range"] {
             width: 100%;
-            height: 6px;
-            border-radius: 5px;
-            background: #e9ecef;
+            height: 8px;
+            border-radius: 10px;
+            background: linear-gradient(to right, #c5d4b8, #9fb094);
             outline: none;
             -webkit-appearance: none;
+            box-shadow: inset 0 1px 3px rgba(70, 80, 60, 0.2);
         }
 
         input[type="range"]:focus {
-            outline: 3px solid #3498db;
+            outline: 3px solid #9fb094;
             outline-offset: 4px;
             border-radius: 10px;
         }
@@ -108,60 +131,64 @@
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 24px;
-            height: 24px;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
-            background: #3498db;
+            background: linear-gradient(135deg, #e8a554 0%, #d4923f 100%);
             cursor: pointer;
-            border: 2px solid white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            border: 3px solid white;
+            box-shadow: 0 2px 8px rgba(70, 80, 60, 0.3);
         }
 
         input[type="range"]:focus::-webkit-slider-thumb {
-            outline: 3px solid #3498db;
+            outline: 3px solid #e8a554;
             outline-offset: 2px;
         }
 
         input[type="range"]::-moz-range-thumb {
-            width: 24px;
-            height: 24px;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
-            background: #3498db;
+            background: linear-gradient(135deg, #e8a554 0%, #d4923f 100%);
             cursor: pointer;
-            border: 2px solid white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            border: 3px solid white;
+            box-shadow: 0 2px 8px rgba(70, 80, 60, 0.3);
         }
 
         input[type="range"]:focus::-moz-range-thumb {
-            outline: 3px solid #3498db;
+            outline: 3px solid #e8a554;
             outline-offset: 2px;
         }
 
         .range-display {
             display: flex;
             justify-content: space-between;
-            margin-top: 5px;
-            font-size: 12px;
-            color: #7f8c8d;
+            margin-top: 8px;
+            font-size: 14px;
+            color: #6b7a5e;
+            font-weight: 600;
         }
 
         button {
             width: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #e8a554 0%, #d4923f 100%);
+            color: #3d4a36;
             border: none;
-            border-radius: 10px;
-            padding: 15px;
-            font-size: 16px;
-            font-weight: 600;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: 700;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            margin-top: 10px;
+            transition: all 0.2s;
+            margin-top: 12px;
+            box-shadow: 0 4px 12px rgba(232, 165, 84, 0.3);
+            text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
         }
 
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 6px 16px rgba(232, 165, 84, 0.4);
+            background: linear-gradient(135deg, #f0b166 0%, #e09f4f 100%);
         }
 
         button:active {
@@ -169,7 +196,7 @@
         }
 
         button:focus {
-            outline: 3px solid #2c3e50;
+            outline: 3px solid #3d4a36;
             outline-offset: 3px;
         }
 
@@ -178,17 +205,19 @@
         }
 
         button:focus-visible {
-            outline: 3px solid #2c3e50;
+            outline: 3px solid #3d4a36;
             outline-offset: 3px;
         }
 
         .result {
-            margin-top: 30px;
-            padding: 25px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
-            color: white;
+            margin-top: 32px;
+            padding: 28px;
+            background: linear-gradient(135deg, #7a8c6f 0%, #5d6e52 100%);
+            border-radius: 16px;
+            color: #fdfbf7;
             display: none;
+            border: 3px solid #9fb094;
+            box-shadow: 0 6px 20px rgba(70, 80, 60, 0.3);
         }
 
         .result.show {
@@ -208,78 +237,86 @@
         }
 
         .result h2 {
-            font-size: 20px;
-            margin-bottom: 15px;
+            font-size: 24px;
+            margin-bottom: 18px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
         }
 
         .time-display {
-            font-size: 36px;
+            font-size: 44px;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            color: #e8a554;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .time-range {
-            font-size: 14px;
-            opacity: 0.9;
-            margin-bottom: 15px;
+            font-size: 16px;
+            opacity: 0.95;
+            margin-bottom: 18px;
         }
 
         .info {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
+            background: rgba(253, 251, 247, 0.15);
+            padding: 18px;
             border-radius: 10px;
-            font-size: 13px;
-            line-height: 1.6;
+            font-size: 15px;
+            line-height: 1.7;
+            border-left: 4px solid #e8a554;
         }
 
         .info-box {
-            margin-top: 30px;
-            padding: 20px;
-            background: #e8f4f8;
-            border-radius: 10px;
-            border-left: 4px solid #3498db;
+            margin-top: 32px;
+            padding: 24px;
+            background: linear-gradient(135deg, #f7f5ef 0%, #ede9dd 100%);
+            border-radius: 12px;
+            border: 2px solid #c5d4b8;
+            box-shadow: 0 3px 10px rgba(70, 80, 60, 0.1);
         }
 
         .info-box h3 {
-            color: #2c3e50;
-            font-size: 14px;
-            margin-bottom: 10px;
+            color: #3d4a36;
+            font-size: 18px;
+            margin-bottom: 14px;
+            font-weight: 700;
         }
 
         .info-box p {
-            color: #546e7a;
-            font-size: 13px;
-            line-height: 1.6;
+            color: #3d4a36;
+            font-size: 15px;
+            line-height: 1.8;
         }
 
         .timer-section {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 2px solid rgba(255, 255, 255, 0.3);
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 2px solid rgba(253, 251, 247, 0.4);
         }
 
         .timer-button {
             width: 100%;
-            background: rgba(255, 255, 255, 0.9);
-            color: #667eea;
-            border: none;
+            background: rgba(253, 251, 247, 0.95);
+            color: #3d4a36;
+            border: 2px solid rgba(253, 251, 247, 0.5);
             border-radius: 10px;
-            padding: 12px;
-            font-size: 15px;
-            font-weight: 600;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
-            margin-top: 15px;
+            margin-top: 16px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
         }
 
         .timer-button:hover {
             background: white;
-            transform: scale(1.02);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
         }
 
         .timer-display {
             display: none;
-            margin-top: 15px;
+            margin-top: 16px;
         }
 
         .timer-display.active {
@@ -287,45 +324,53 @@
         }
 
         .timer-info {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 12px;
+            background: rgba(253, 251, 247, 0.2);
+            padding: 14px;
             border-radius: 8px;
-            margin-bottom: 10px;
-            font-size: 13px;
+            margin-bottom: 12px;
+            font-size: 15px;
+            border-left: 3px solid #e8a554;
         }
 
         .timer-info strong {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
+            font-weight: 700;
         }
 
         .countdown {
-            font-size: 28px;
+            font-size: 38px;
             font-weight: bold;
             text-align: center;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            background: rgba(253, 251, 247, 0.2);
             border-radius: 10px;
-            margin-top: 10px;
+            margin-top: 12px;
+            font-family: 'Courier New', monospace;
+            color: #e8a554;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 3px;
         }
 
         .countdown.finished {
-            background: #27ae60;
+            background: linear-gradient(135deg, #7a8c6f 0%, #5d6e52 100%);
             animation: pulse 1.5s infinite;
+            border: 3px solid #e8a554;
         }
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.03); }
         }
 
         .stop-button {
-            background: rgba(231, 76, 60, 0.9);
-            color: white;
+            background: linear-gradient(135deg, #c17a6b 0%, #a65e4f 100%);
+            color: #fdfbf7;
+            border-color: rgba(193, 122, 107, 0.5);
         }
 
         .stop-button:hover {
-            background: rgba(231, 76, 60, 1);
+            background: linear-gradient(135deg, #d18a7a 0%, #b86d5d 100%);
         }
 
         .visually-hidden {
@@ -343,10 +388,11 @@
 </head>
 <body>
     <div class="container" role="main">
+        <div class="logo-container">
+            <img src="logo.PNG" alt="Olofslunds Surdegsbröd - Hembakat i stenugn" class="logo">
+        </div>
         <h1>
-            <span aria-hidden="true">🥖</span>
-            <span class="visually-hidden">Bröd</span>
-            Surdegs Jästidskalkylator
+            Jästidskalkylator
         </h1>
         <p class="subtitle">Beräkna optimal jästid för din surdeg</p>
 
