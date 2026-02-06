@@ -61,8 +61,22 @@
             font-style: italic;
         }
 
-        .input-group {
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
             margin-bottom: 16px;
+        }
+
+        .input-group {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 500px) {
+            .input-row {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
         }
 
         label {
@@ -397,105 +411,111 @@
         <p class="subtitle">Beräkna optimal jästid för din surdeg</p>
 
         <form onsubmit="calculateTime(); return false;">
-            <div class="input-group">
-                <label for="temperature">Rumstemperatur</label>
-                <div class="input-wrapper">
-                    <input
-                        type="number"
-                        id="temperature"
-                        value="22"
-                        min="15"
-                        max="30"
-                        step="0.5"
-                        aria-describedby="temp-desc"
-                        required>
-                    <span class="unit" aria-hidden="true">°C</span>
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="temperature">Rumstemperatur</label>
+                    <div class="input-wrapper">
+                        <input
+                            type="number"
+                            id="temperature"
+                            value="22"
+                            min="15"
+                            max="30"
+                            step="0.5"
+                            aria-describedby="temp-desc"
+                            required>
+                        <span class="unit" aria-hidden="true">°C</span>
+                    </div>
+                    <span id="temp-desc" class="visually-hidden">Ange rumstemperatur mellan 15 och 30 grader Celsius</span>
                 </div>
-                <span id="temp-desc" class="visually-hidden">Ange rumstemperatur mellan 15 och 30 grader Celsius</span>
+
+                <div class="input-group">
+                    <label for="coldProof">Kalljäsning</label>
+                    <div class="input-wrapper">
+                        <input
+                            type="number"
+                            id="coldProof"
+                            value="0"
+                            min="0"
+                            max="72"
+                            step="1"
+                            aria-describedby="coldproof-desc">
+                        <span class="unit" aria-hidden="true">h</span>
+                    </div>
+                    <span id="coldproof-desc" class="visually-hidden">Ange kalljäsningstid i timmar (0 om ingen kalljäsning)</span>
+                </div>
             </div>
 
-            <div class="input-group">
-                <label for="flour">Mjöl</label>
-                <div class="input-wrapper">
-                    <input
-                        type="number"
-                        id="flour"
-                        value="500"
-                        min="100"
-                        max="5000"
-                        step="10"
-                        aria-describedby="flour-desc"
-                        required>
-                    <span class="unit" aria-hidden="true">g</span>
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="flour">Mjöl</label>
+                    <div class="input-wrapper">
+                        <input
+                            type="number"
+                            id="flour"
+                            value="500"
+                            min="100"
+                            max="5000"
+                            step="10"
+                            aria-describedby="flour-desc"
+                            required>
+                        <span class="unit" aria-hidden="true">g</span>
+                    </div>
+                    <span id="flour-desc" class="visually-hidden">Ange total mjölmängd i gram</span>
                 </div>
-                <span id="flour-desc" class="visually-hidden">Ange total mjölmängd i gram</span>
+
+                <div class="input-group">
+                    <label for="water">Vatten</label>
+                    <div class="input-wrapper">
+                        <input
+                            type="number"
+                            id="water"
+                            value="350"
+                            min="50"
+                            max="5000"
+                            step="10"
+                            aria-describedby="water-desc"
+                            required>
+                        <span class="unit" aria-hidden="true">g</span>
+                    </div>
+                    <span id="water-desc" class="visually-hidden">Ange vattenmängd i gram</span>
+                </div>
             </div>
 
-            <div class="input-group">
-                <label for="water">Vatten</label>
-                <div class="input-wrapper">
-                    <input
-                        type="number"
-                        id="water"
-                        value="350"
-                        min="50"
-                        max="5000"
-                        step="10"
-                        aria-describedby="water-desc"
-                        required>
-                    <span class="unit" aria-hidden="true">g</span>
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="starter">Surdegsstart</label>
+                    <div class="input-wrapper">
+                        <input
+                            type="number"
+                            id="starter"
+                            value="100"
+                            min="10"
+                            max="1000"
+                            step="10"
+                            aria-describedby="starter-desc"
+                            required>
+                        <span class="unit" aria-hidden="true">g</span>
+                    </div>
+                    <span id="starter-desc" class="visually-hidden">Ange mängd surdegsstart i gram</span>
                 </div>
-                <span id="water-desc" class="visually-hidden">Ange vattenmängd i gram</span>
-            </div>
 
-            <div class="input-group">
-                <label for="starter">Surdegsstart</label>
-                <div class="input-wrapper">
-                    <input
-                        type="number"
-                        id="starter"
-                        value="100"
-                        min="10"
-                        max="1000"
-                        step="10"
-                        aria-describedby="starter-desc"
-                        required>
-                    <span class="unit" aria-hidden="true">g</span>
+                <div class="input-group">
+                    <label for="salt">Salt</label>
+                    <div class="input-wrapper">
+                        <input
+                            type="number"
+                            id="salt"
+                            value="10"
+                            min="0"
+                            max="100"
+                            step="1"
+                            aria-describedby="salt-desc"
+                            required>
+                        <span class="unit" aria-hidden="true">g</span>
+                    </div>
+                    <span id="salt-desc" class="visually-hidden">Ange saltmängd i gram</span>
                 </div>
-                <span id="starter-desc" class="visually-hidden">Ange mängd surdegsstart i gram</span>
-            </div>
-
-            <div class="input-group">
-                <label for="salt">Salt</label>
-                <div class="input-wrapper">
-                    <input
-                        type="number"
-                        id="salt"
-                        value="10"
-                        min="0"
-                        max="100"
-                        step="1"
-                        aria-describedby="salt-desc"
-                        required>
-                    <span class="unit" aria-hidden="true">g</span>
-                </div>
-                <span id="salt-desc" class="visually-hidden">Ange saltmängd i gram</span>
-            </div>
-
-            <div class="input-group">
-                <label for="coldProof">Kalljäsning (frivilligt)</label>
-                <div class="input-wrapper">
-                    <input
-                        type="number"
-                        id="coldProof"
-                        value="0"
-                        min="0"
-                        max="72"
-                        step="1"
-                        aria-describedby="coldproof-desc">
-                    <span class="unit" aria-hidden="true">h</span>
-                </div>
-                <span id="coldproof-desc" class="visually-hidden">Ange kalljäsningstid i timmar (0 om ingen kalljäsning)</span>
             </div>
 
             <button type="submit" aria-label="Beräkna jästid för surdeg">Beräkna Jästid</button>
