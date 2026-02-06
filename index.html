@@ -840,6 +840,74 @@
             outline: none;
         }
 
+        /* Thermometer Slider */
+        .thermometer-slider {
+            width: 100%;
+            height: 12px;
+            border-radius: 6px;
+            background: linear-gradient(to right,
+                #5B9BD5 0%,      /* Cold blue at 15°C */
+                #70C0E8 20%,     /* Light blue */
+                #A8D8A8 40%,     /* Cool green */
+                #FFD966 60%,     /* Warm yellow */
+                #FFB347 80%,     /* Orange */
+                #FF6B6B 100%     /* Hot red at 30°C */
+            );
+            outline: none;
+            -webkit-appearance: none;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+            margin-top: var(--space-2);
+            position: relative;
+        }
+
+        .thermometer-slider:focus {
+            outline: 3px solid var(--green-light);
+            outline-offset: 4px;
+            border-radius: 6px;
+        }
+
+        .thermometer-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+            cursor: pointer;
+            border: 3px solid #666;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .thermometer-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .thermometer-slider::-webkit-slider-thumb:active {
+            transform: scale(1.05);
+        }
+
+        .thermometer-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+            cursor: pointer;
+            border: 3px solid #666;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .thermometer-slider::-moz-range-thumb:hover {
+            transform: scale(1.15);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .thermometer-slider::-moz-range-thumb:active {
+            transform: scale(1.05);
+        }
+
         /* Instagram Section */
         .instagram-section {
             margin-top: var(--space-5);
@@ -1084,6 +1152,15 @@
                             required>
                         <span class="unit" aria-hidden="true">°C</span>
                     </div>
+                    <input
+                        type="range"
+                        id="temperatureSlider"
+                        class="thermometer-slider"
+                        min="15"
+                        max="30"
+                        step="0.5"
+                        value="22"
+                        aria-label="Justera rumstemperatur med slider">
                     <span id="temp-desc" class="visually-hidden">Ange rumstemperatur mellan 15 och 30 grader Celsius</span>
                 </div>
 
@@ -1410,6 +1487,21 @@
             calculateTime();
         }
 
+        // Sync temperature slider with number input
+        function syncTemperature() {
+            const tempInput = document.getElementById('temperature');
+            const tempSlider = document.getElementById('temperatureSlider');
+
+            tempSlider.addEventListener('input', function() {
+                tempInput.value = this.value;
+                calculateTime();
+            });
+
+            tempInput.addEventListener('input', function() {
+                tempSlider.value = this.value;
+            });
+        }
+
         // Auto-calculate when any input changes
         function setupAutoCalculate() {
             const inputs = ['temperature', 'flour', 'water', 'starter', 'salt', 'coldProof', 'fridgeTemp', 'wholeGrainAmount'];
@@ -1468,6 +1560,7 @@
                 updateWholeGrainPercent();
             }
 
+            syncTemperature();
             calculateTime();
             setupAutoCalculate();
         });
