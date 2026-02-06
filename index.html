@@ -1196,9 +1196,9 @@
             </div>
 
             <!-- Advanced Settings Toggle -->
-            <div class="advanced-toggle" onclick="toggleAdvanced()">
-                <input type="checkbox" id="advancedToggle" onclick="event.stopPropagation(); toggleAdvanced();">
-                <label for="advancedToggle">Avancerade inställningar</label>
+            <div class="advanced-toggle" onclick="document.getElementById('advancedToggle').click();">
+                <input type="checkbox" id="advancedToggle" onchange="toggleAdvanced()" onclick="event.stopPropagation();">
+                <label for="advancedToggle" onclick="event.stopPropagation(); document.getElementById('advancedToggle').click();">Avancerade inställningar</label>
             </div>
 
             <!-- Advanced Settings Section -->
@@ -1371,8 +1371,6 @@
         function toggleAdvanced() {
             const checkbox = document.getElementById('advancedToggle');
             const section = document.getElementById('advancedSection');
-
-            checkbox.checked = !checkbox.checked;
 
             if (checkbox.checked) {
                 section.classList.add('show');
