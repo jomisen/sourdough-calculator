@@ -2381,5 +2381,48 @@
         }
 
     </script>
+
+    <!-- GoatCounter Analytics - Privacy-friendly, no cookies needed -->
+    <script data-goatcounter="https://ÄNDRA-TILL-DIN-SITECODE.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+
+    <script>
+        // Track calculator usage
+        const originalCalculateTime = window.calculateTime;
+        window.calculateTime = function() {
+            // Call original function
+            originalCalculateTime();
+
+            // Track event in GoatCounter
+            if (window.goatcounter) {
+                const temp = document.getElementById('temperature').value;
+                const starter = document.getElementById('starter').value;
+                const hydration = document.getElementById('advancedToggle').checked ?
+                    document.getElementById('hydration').value : '75';
+
+                window.goatcounter.count({
+                    path: '/event/calculator-used',
+                    title: `Kalkylator använd: ${temp}°C, ${starter}% surdeg, ${hydration}% hydrering`,
+                    event: true
+                });
+            }
+        };
+
+        // Track timer starts
+        const originalStartTimer = window.startTimer;
+        window.startTimer = function() {
+            // Call original function
+            originalStartTimer();
+
+            // Track event in GoatCounter
+            if (window.goatcounter) {
+                window.goatcounter.count({
+                    path: '/event/timer-started',
+                    title: 'Timer startad',
+                    event: true
+                });
+            }
+        };
+    </script>
 </body>
 </html>
