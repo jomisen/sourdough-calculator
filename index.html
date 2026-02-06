@@ -1509,8 +1509,18 @@
             calculateTime();
         }
 
+        // Update bread emojis display
+        function updateBreadEmojis() {
+            const numLoaves = parseInt(document.getElementById('numLoaves')?.value) || 1;
+            const breadEmojisElement = document.getElementById('breadEmojis');
+            if (breadEmojisElement) {
+                breadEmojisElement.textContent = '🍞'.repeat(Math.max(1, Math.min(10, numLoaves)));
+            }
+        }
+
         // Handle number of loaves change
         function handleNumLeavesChange() {
+            updateBreadEmojis();
             calculateTime();
         }
 
@@ -1828,16 +1838,19 @@
 
                         <div class="recipe-card-content" style="margin-bottom: var(--space-4);">
                             <label for="numLoaves" style="display: block; margin-bottom: var(--space-2); font-size: var(--text-base); font-weight: 700;">Antal bröd att forma:</label>
-                            <div class="input-wrapper" style="max-width: 200px;">
-                                <input
-                                    type="number"
-                                    id="numLoaves"
-                                    value="${currentNumLoaves}"
-                                    min="1"
-                                    max="10"
-                                    step="1"
-                                    style="font-size: var(--text-lg);">
-                                <span class="unit" style="font-size: var(--text-base);">st</span>
+                            <div style="display: flex; align-items: center; gap: var(--space-3);">
+                                <div class="input-wrapper" style="max-width: 200px;">
+                                    <input
+                                        type="number"
+                                        id="numLoaves"
+                                        value="${currentNumLoaves}"
+                                        min="1"
+                                        max="10"
+                                        step="1"
+                                        style="font-size: var(--text-lg);">
+                                    <span class="unit" style="font-size: var(--text-base);">st</span>
+                                </div>
+                                <div id="breadEmojis" style="font-size: 24px; line-height: 1;">${'🍞'.repeat(currentNumLoaves)}</div>
                             </div>
                             <div style="margin-top: var(--space-2); padding: var(--space-2); background: rgba(159, 176, 148, 0.15); border-radius: var(--radius-sm); font-size: var(--text-sm); color: var(--green-dark); font-weight: 600;">
                                 ${currentNumLoaves} bröd à ${Math.round(weightPerLoaf)}g = ${bakingTimeTotal} min gräddning/bröd
