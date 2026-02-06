@@ -862,6 +862,25 @@
                 </div>
             </div>
 
+            <div class="input-row" id="fridgeTempRow" style="display: none;">
+                <div class="input-group">
+                    <label for="fridgeTemp">Kylskåpstemperatur</label>
+                    <div class="input-wrapper">
+                        <input
+                            type="number"
+                            id="fridgeTemp"
+                            value="4"
+                            min="2"
+                            max="10"
+                            step="0.5"
+                            aria-describedby="fridgetemp-desc">
+                        <span class="unit" aria-hidden="true">°C</span>
+                    </div>
+                    <span id="fridgetemp-desc" class="visually-hidden">Ange temperatur i kylskåp (normalt 3-6°C)</span>
+                </div>
+                <div class="input-group"></div>
+            </div>
+
             <div class="input-row">
                 <div class="input-group">
                     <label for="flour">Mjöl</label>
@@ -1029,11 +1048,21 @@
 
         // Auto-calculate when any input changes
         function setupAutoCalculate() {
-            const inputs = ['temperature', 'flour', 'water', 'starter', 'salt', 'coldProof'];
+            const inputs = ['temperature', 'flour', 'water', 'starter', 'salt', 'coldProof', 'fridgeTemp'];
             inputs.forEach(inputId => {
                 const element = document.getElementById(inputId);
                 if (element) {
                     element.addEventListener('input', calculateTime);
+                }
+            });
+
+            // Show/hide fridge temp based on cold proof value
+            document.getElementById('coldProof').addEventListener('input', function() {
+                const fridgeTempRow = document.getElementById('fridgeTempRow');
+                if (parseFloat(this.value) > 0) {
+                    fridgeTempRow.style.display = 'grid';
+                } else {
+                    fridgeTempRow.style.display = 'none';
                 }
             });
         }
@@ -1051,6 +1080,7 @@
             const starter = parseFloat(document.getElementById('starter').value);
             const salt = parseFloat(document.getElementById('salt').value);
             const coldProof = parseFloat(document.getElementById('coldProof').value) || 0;
+            const fridgeTemp = parseFloat(document.getElementById('fridgeTemp').value) || 4;
 
             // Calculate percentages (baker's percentage)
             const starterPercent = (starter / flour) * 100;
@@ -1081,10 +1111,10 @@
             const maxTime = bulkTime * 1.15;
 
             // Display results
-            displayResults(bulkTime, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof);
+            displayResults(bulkTime, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof, fridgeTemp);
         }
 
-        function displayResults(time, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof) {
+        function displayResults(time, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof, fridgeTemp) {
             const resultDiv = document.getElementById('result');
             const timeDisplay = document.getElementById('timeDisplay');
             const timeRange = document.getElementById('timeRange');
@@ -1231,6 +1261,17 @@
                 info += ' Mycket surdeg i degen ger snabb jäsning och syrligare smak.';
             } else if (starterPercent < 15) {
                 info += ' Lite surdeg ger långsammare jäsning och mildare smak.';
+            }
+
+            // Add fridge temp info if cold proofing
+            if (coldProof > 0) {
+                if (fridgeTemp < 3) {
+                    info += ' 🧊 Mycket kallt kylskåp bromsar jäsningen kraftigt - degen utvecklas långsamt.';
+                } else if (fridgeTemp > 6) {
+                    info += ' 🌡️ Varmt kylskåp - degen fortsätter jäsa något snabbare under kalljäsning.';
+                } else {
+                    info += ' ❄️ Perfekt kylskåpstemperatur för kalljäsning - ger bra smakutveckling.';
+                }
             }
 
             infoText.textContent = info;
