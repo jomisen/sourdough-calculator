@@ -406,40 +406,6 @@
             font-style: italic;
         }
 
-        .api-setup {
-            background: #fff8e7;
-            border: 2px solid #e8a554;
-            border-radius: 10px;
-            padding: 16px;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        .api-setup h3 {
-            color: #3d4a36;
-            font-size: 16px;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .api-setup input {
-            width: 100%;
-            padding: 8px 12px;
-            border: 2px solid #c5d4b8;
-            border-radius: 8px;
-            font-size: 14px;
-            margin-top: 8px;
-        }
-
-        .api-setup button {
-            margin-top: 10px;
-            padding: 10px 16px;
-            font-size: 14px;
-        }
-
-        .api-setup.hidden {
-            display: none;
-        }
     </style>
 </head>
 <body>
@@ -451,13 +417,6 @@
             Jästidskalkylator
         </h1>
         <p class="subtitle">Beräkna optimal jästid för din surdeg</p>
-
-        <div class="api-setup" id="apiSetup">
-            <h3>🌤️ Väder-API Setup</h3>
-            <p>För att hämta utomhustemperatur automatiskt behöver du en gratis API-nyckel från <a href="https://openweathermap.org/api" target="_blank" style="color: #3d4a36; text-decoration: underline;">OpenWeatherMap</a>.</p>
-            <input type="text" id="apiKey" placeholder="Ange din OpenWeatherMap API-nyckel här">
-            <button type="button" onclick="saveApiKey()">Spara API-nyckel</button>
-        </div>
 
         <form onsubmit="calculateTime(); return false;">
             <div class="input-row">
@@ -633,29 +592,8 @@
         let endTime = null;
         let calculatedTime = 0;
 
-        // Weather API functions
-        function saveApiKey() {
-            const apiKey = document.getElementById('apiKey').value.trim();
-            if (apiKey) {
-                localStorage.setItem('openweather_api_key', apiKey);
-                document.getElementById('apiSetup').classList.add('hidden');
-                announceToScreenReader('API-nyckel sparad. Du kan nu hämta väderdata.');
-                // Auto-fetch weather after saving key
-                setTimeout(() => fetchWeather(), 500);
-            } else {
-                alert('Vänligen ange en giltig API-nyckel.');
-            }
-        }
-
+        // Weather API functions using Open-Meteo (no API key required)
         function fetchWeather() {
-            const apiKey = localStorage.getItem('openweather_api_key');
-
-            if (!apiKey) {
-                document.getElementById('apiSetup').classList.remove('hidden');
-                document.getElementById('weatherStatus').textContent = '⚠️ API-nyckel saknas';
-                return;
-            }
-
             if (!navigator.geolocation) {
                 document.getElementById('weatherStatus').textContent = '⚠️ Geolocation stöds inte';
                 return;
@@ -670,7 +608,8 @@
 
                     document.getElementById('weatherStatus').textContent = '🌤️ Hämtar väder...';
 
-                    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=sv`)
+                    // Using Open-Meteo API (free, no API key required)
+                    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&timezone=auto`)
                         .then(response => {
                             if (!response.ok) {
                                 throw new Error('API-fel');
@@ -678,34 +617,51 @@
                             return response.json();
                         })
                         .then(data => {
-                            const temp = Math.round(data.main.temp);
+                            const temp = Math.round(data.current_weather.temperature);
                             document.getElementById('temperature').value = temp;
-                            document.getElementById('weatherStatus').textContent =
-                                `✅ Utomhustemperatur: ${temp}°C i ${data.name}`;
+
+                            // Get location name using reverse geocoding
+                            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+                                .then(r => r.json())
+                                .then(geoData => {
+                                    const city = geoData.address.city || geoData.address.town || geoData.address.village || 'din plats';
+                                    document.getElementById('weatherStatus').textContent =
+                                        `✅ Utomhustemperatur: ${temp}°C i ${city}`;
+                                })
+                                .catch(() => {
+                                    document.getElementById('weatherStatus').textContent =
+                                        `✅ Utomhustemperatur: ${temp}°C`;
+                                });
+
                             announceToScreenReader(`Temperatur uppdaterad till ${temp} grader Celsius baserat på utomhustemperatur.`);
                         })
                         .catch(error => {
                             console.error('Weather fetch error:', error);
                             document.getElementById('weatherStatus').textContent =
-                                '⚠️ Kunde inte hämta väder. Kontrollera API-nyckel.';
+                                '⚠️ Kunde inte hämta väderdata';
                         });
                 },
                 (error) => {
                     console.error('Geolocation error:', error);
-                    document.getElementById('weatherStatus').textContent =
-                        '⚠️ Platstillgång nekad eller fel';
+                    let errorMsg = '⚠️ Kunde inte hämta plats';
+                    if (error.code === error.PERMISSION_DENIED) {
+                        errorMsg = '⚠️ Platstillgång nekad';
+                    }
+                    document.getElementById('weatherStatus').textContent = errorMsg;
                 }
             );
         }
 
-        // Check for saved API key on load
+        // Auto-fetch weather on load (with delay to not be intrusive)
         window.addEventListener('load', function() {
-            const savedKey = localStorage.getItem('openweather_api_key');
-            if (savedKey) {
-                document.getElementById('apiSetup').classList.add('hidden');
-                document.getElementById('apiKey').value = savedKey;
-            }
             calculateTime();
+            // Auto-fetch weather after 2 seconds if user hasn't interacted
+            setTimeout(() => {
+                const tempField = document.getElementById('temperature');
+                if (tempField.value === '22') { // Still default value
+                    fetchWeather();
+                }
+            }, 2000);
         });
 
         function calculateTime() {
