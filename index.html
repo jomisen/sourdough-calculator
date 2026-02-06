@@ -1663,45 +1663,49 @@
                 updateWholeGrainPercent();
             }
 
-            // Peak status is the PRIMARY factor
+            // Advanced factors - only apply if advanced settings are enabled
             let peakFactor = 1.0;
-            if (peakStatus === 'rising') peakFactor = 1.15; // Not at peak yet
-            else if (peakStatus === 'peak') peakFactor = 0.9; // Optimal
-            else if (peakStatus === 'falling') peakFactor = 1.2; // Past optimal
-
-            // Starter age is SECONDARY - small adjustment based on timing
             let ageFactor = 1.0;
-            if (peakStatus === 'peak') {
-                // At peak: timing matters less, but unusual timing adds small delay
-                if (starterAge <= 2) ageFactor = 1.05; // Too fast, might not be stable
-                else if (starterAge <= 6) ageFactor = 1.0; // Normal timing (4-6h)
-                else if (starterAge <= 8) ageFactor = 1.03; // Getting old
-                else ageFactor = 1.05; // Too old, might decline soon
-            } else if (peakStatus === 'rising') {
-                // Still rising: early is normal, late is concerning
-                if (starterAge <= 4) ageFactor = 1.0; // Normal, still building
-                else if (starterAge <= 6) ageFactor = 1.03; // Slow rise
-                else if (starterAge <= 8) ageFactor = 1.05; // Very slow
-                else ageFactor = 1.08; // Extremely slow
-            } else if (peakStatus === 'falling') {
-                // Falling: later is normal, early is concerning
-                if (starterAge <= 2) ageFactor = 1.1; // Extremely fast cycle - unusual
-                else if (starterAge <= 4) ageFactor = 1.05; // Very fast cycle
-                else if (starterAge <= 8) ageFactor = 1.0; // Normal decline timing
-                else ageFactor = 1.03; // Been falling for a while
-            }
-
-            // Feeding ratio factor
             let ratioFactor = 1.0;
-            if (feedingRatio === '1:1:1') ratioFactor = 1.1; // Less vigorous - 10% slower
-            else if (feedingRatio === '1:2:2') ratioFactor = 1.05; // 5% slower
-            else if (feedingRatio === '1:3:3') ratioFactor = 1.02; // 2% slower
-            else if (feedingRatio === '1:5:5') ratioFactor = 1.0; // Standard baseline
-            else if (feedingRatio === '1:10:10') ratioFactor = 0.9; // Very vigorous - 10% faster
-
-            // Autolyse factor
             let autolyseFactor = 1.0;
-            if (autolyse !== 'no') autolyseFactor = 0.95; // Slightly faster with autolyse
+
+            if (advancedEnabled) {
+                // Peak status is the PRIMARY factor
+                if (peakStatus === 'rising') peakFactor = 1.15; // Not at peak yet
+                else if (peakStatus === 'peak') peakFactor = 0.9; // Optimal
+                else if (peakStatus === 'falling') peakFactor = 1.2; // Past optimal
+
+                // Starter age is SECONDARY - small adjustment based on timing
+                if (peakStatus === 'peak') {
+                    // At peak: timing matters less, but unusual timing adds small delay
+                    if (starterAge <= 2) ageFactor = 1.05; // Too fast, might not be stable
+                    else if (starterAge <= 6) ageFactor = 1.0; // Normal timing (4-6h)
+                    else if (starterAge <= 8) ageFactor = 1.03; // Getting old
+                    else ageFactor = 1.05; // Too old, might decline soon
+                } else if (peakStatus === 'rising') {
+                    // Still rising: early is normal, late is concerning
+                    if (starterAge <= 4) ageFactor = 1.0; // Normal, still building
+                    else if (starterAge <= 6) ageFactor = 1.03; // Slow rise
+                    else if (starterAge <= 8) ageFactor = 1.05; // Very slow
+                    else ageFactor = 1.08; // Extremely slow
+                } else if (peakStatus === 'falling') {
+                    // Falling: later is normal, early is concerning
+                    if (starterAge <= 2) ageFactor = 1.1; // Extremely fast cycle - unusual
+                    else if (starterAge <= 4) ageFactor = 1.05; // Very fast cycle
+                    else if (starterAge <= 8) ageFactor = 1.0; // Normal decline timing
+                    else ageFactor = 1.03; // Been falling for a while
+                }
+
+                // Feeding ratio factor
+                if (feedingRatio === '1:1:1') ratioFactor = 1.1; // Less vigorous - 10% slower
+                else if (feedingRatio === '1:2:2') ratioFactor = 1.05; // 5% slower
+                else if (feedingRatio === '1:3:3') ratioFactor = 1.02; // 2% slower
+                else if (feedingRatio === '1:5:5') ratioFactor = 1.0; // Standard baseline
+                else if (feedingRatio === '1:10:10') ratioFactor = 0.9; // Very vigorous - 10% faster
+
+                // Autolyse factor
+                if (autolyse !== 'no') autolyseFactor = 0.95; // Slightly faster with autolyse
+            }
 
             // Calculate bulk fermentation time
             let bulkTime = baseTime * tempFactor * starterFactor * flourFactor * ageFactor * ratioFactor * peakFactor * autolyseFactor;
