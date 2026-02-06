@@ -1869,8 +1869,12 @@
                         <div class="recipe-card-content">
                             <strong>${folds} stretch & folds</strong><br>
                             <span style="color: var(--green-medium); font-size: var(--text-sm);">
+                                <strong style="color: var(--green-dark);">Varför ${folds} vikningar?</strong><br>
+                                Din deg har <strong>${hydration.toFixed(0)}% hydrering</strong> ${hydration > 80 ? '(mycket blöt)' : hydration > 75 ? '(blöt)' : '(medel)'}
+                                → ${hydration > 80 ? 'extra vikningar behövs för styrka' : hydration > 75 ? 'fler vikningar för struktur' : 'standard antal vikningar'}.<br><br>
+                                <strong>Så här gör du:</strong><br>
                                 Vik degen ${foldIntervalText}, sedan låt degen vila ostörd.
-                                Detta utvecklar glutennätverket och ger bättre struktur.
+                                Vikningarna utvecklar glutennätverket och ger degen struktur att hålla formen.
                             </span>
                         </div>
                     </div>
