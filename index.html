@@ -1087,40 +1087,6 @@
                     <span id="temp-desc" class="visually-hidden">Ange rumstemperatur mellan 15 och 30 grader Celsius</span>
                 </div>
 
-                <div class="input-group">
-                    <label for="coldProof">Kalljäsning</label>
-                    <div class="input-wrapper">
-                        <input
-                            type="number"
-                            id="coldProof"
-                            value="0"
-                            min="0"
-                            max="72"
-                            step="1"
-                            aria-describedby="coldproof-desc">
-                        <span class="unit" aria-hidden="true">h</span>
-                    </div>
-                    <span id="coldproof-desc" class="visually-hidden">Ange kalljäsningstid i timmar (0 om ingen kalljäsning)</span>
-                </div>
-            </div>
-
-            <div class="input-row" id="fridgeTempRow" style="display: none;">
-                <div class="input-group">
-                    <label for="fridgeTemp">Kylskåpstemperatur</label>
-                    <div class="input-wrapper">
-                        <input
-                            type="number"
-                            id="fridgeTemp"
-                            value="4"
-                            min="2"
-                            max="15"
-                            step="0.5"
-                            aria-describedby="fridgetemp-desc">
-                        <span class="unit" aria-hidden="true">°C</span>
-                    </div>
-                    <span id="fridgetemp-desc" class="visually-hidden">Ange temperatur i kylskåp (normalt 3-6°C)</span>
-                </div>
-                <div class="input-group"></div>
             </div>
 
             <div class="input-row">
@@ -1281,6 +1247,42 @@
                     </div>
                     <div class="input-group"></div>
                 </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="coldProof">Kalljäsning</label>
+                        <div class="input-wrapper" style="height: 44px;">
+                            <input
+                                type="number"
+                                id="coldProof"
+                                value="0"
+                                min="0"
+                                max="72"
+                                step="1"
+                                aria-describedby="coldproof-desc"
+                                style="padding: var(--space-1) 4px;">
+                            <span class="unit" aria-hidden="true">h</span>
+                        </div>
+                        <span id="coldproof-desc" class="visually-hidden">Ange kalljäsningstid i timmar (0 om ingen kalljäsning)</span>
+                    </div>
+
+                    <div class="input-group" id="fridgeTempGroup" style="display: none;">
+                        <label for="fridgeTemp">Kylskåpstemperatur</label>
+                        <div class="input-wrapper" style="height: 44px;">
+                            <input
+                                type="number"
+                                id="fridgeTemp"
+                                value="4"
+                                min="2"
+                                max="15"
+                                step="0.5"
+                                aria-describedby="fridgetemp-desc"
+                                style="padding: var(--space-1) 4px;">
+                            <span class="unit" aria-hidden="true">°C</span>
+                        </div>
+                        <span id="fridgetemp-desc" class="visually-hidden">Ange temperatur i kylskåp (normalt 3-6°C)</span>
+                    </div>
+                </div>
             </div>
 
             <button type="submit" aria-label="Beräkna jästid för surdeg" style="display: none;">Beräkna Jästid</button>
@@ -1427,16 +1429,16 @@
 
             // Show/hide fridge temp based on cold proof value
             document.getElementById('coldProof').addEventListener('input', function() {
-                const fridgeTempRow = document.getElementById('fridgeTempRow');
+                const fridgeTempGroup = document.getElementById('fridgeTempGroup');
                 const fridgeTempInput = document.getElementById('fridgeTemp');
                 if (parseFloat(this.value) > 0) {
-                    fridgeTempRow.style.display = 'grid';
+                    fridgeTempGroup.style.display = 'block';
                     if (!fridgeTempInput.value || fridgeTempInput.value === '0') {
                         fridgeTempInput.value = '4';
                     }
                     calculateTime();
                 } else {
-                    fridgeTempRow.style.display = 'none';
+                    fridgeTempGroup.style.display = 'none';
                 }
             });
 
@@ -1474,7 +1476,7 @@
             // Show fridge temp if cold proof is set
             const coldProof = parseFloat(document.getElementById('coldProof').value);
             if (coldProof > 0) {
-                document.getElementById('fridgeTempRow').style.display = 'grid';
+                document.getElementById('fridgeTempGroup').style.display = 'block';
             }
 
             // Show whole grain input if mixed is selected
