@@ -1201,6 +1201,11 @@
         let endTime = null;
         let calculatedTime = 0;
 
+        // Handle number of loaves change
+        function handleNumLeavesChange() {
+            calculateTime();
+        }
+
         // Auto-calculate when any input changes
         function setupAutoCalculate() {
             const inputs = ['temperature', 'flour', 'water', 'starter', 'salt', 'coldProof', 'fridgeTemp'];
@@ -1303,6 +1308,9 @@
             const timeDisplay = document.getElementById('timeDisplay');
             const timeRange = document.getElementById('timeRange');
             const infoText = document.getElementById('infoText');
+
+            // Save current numLoaves value before regenerating HTML
+            const currentNumLoaves = document.getElementById('numLoaves')?.value || 1;
 
             // Calculate total time including cold proof
             const totalTimeWithCold = time + coldProof;
@@ -1430,7 +1438,7 @@
                                 <input
                                     type="number"
                                     id="numLoaves"
-                                    value="1"
+                                    value="${currentNumLoaves}"
                                     min="1"
                                     max="10"
                                     step="1"
@@ -1492,11 +1500,13 @@
             // Add event listener for number of loaves (after element is created)
             setTimeout(() => {
                 const numLeavesInput = document.getElementById('numLoaves');
-                if (numLeavesInput && !numLeavesInput.dataset.listenerAdded) {
-                    numLeavesInput.addEventListener('input', calculateTime);
-                    numLeavesInput.dataset.listenerAdded = 'true';
+                if (numLeavesInput) {
+                    // Remove old listener if exists
+                    numLeavesInput.removeEventListener('input', handleNumLeavesChange);
+                    // Add new listener
+                    numLeavesInput.addEventListener('input', handleNumLeavesChange);
                 }
-            }, 100);
+            }, 50);
 
             // Announce to screen readers
             announceToScreenReader(`Beräkning klar. Rekommenderad jästid är ${hours} timmar och ${minutes} minuter.`);
