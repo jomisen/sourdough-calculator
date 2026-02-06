@@ -1518,6 +1518,9 @@
             } else {
                 section.classList.remove('show');
             }
+
+            // Recalculate when toggling advanced settings on/off
+            calculateTime();
         }
 
         // Handle number of loaves change
@@ -1609,15 +1612,18 @@
             const water = parseFloat(document.getElementById('water').value);
             const starter = parseFloat(document.getElementById('starter').value);
             const salt = parseFloat(document.getElementById('salt').value);
-            const coldProof = parseFloat(document.getElementById('coldProof').value) || 0;
-            const fridgeTemp = parseFloat(document.getElementById('fridgeTemp').value) || 4;
 
-            // Advanced settings
-            const flourType = document.getElementById('flourType')?.value || 'mixed';
-            const starterAge = parseFloat(document.getElementById('starterAge')?.value) || 6;
-            const feedingRatio = document.getElementById('feedingRatio')?.value || '1:5:5';
-            const peakStatus = document.getElementById('peakStatus')?.value || 'peak';
-            const autolyse = document.getElementById('autolyse')?.value || 'no';
+            // Check if advanced settings are enabled
+            const advancedEnabled = document.getElementById('advancedToggle')?.checked || false;
+
+            // Advanced settings (only used if toggle is on)
+            const coldProof = advancedEnabled ? (parseFloat(document.getElementById('coldProof').value) || 0) : 0;
+            const fridgeTemp = advancedEnabled ? (parseFloat(document.getElementById('fridgeTemp').value) || 4) : 4;
+            const flourType = advancedEnabled ? (document.getElementById('flourType')?.value || 'mixed') : 'white';
+            const starterAge = advancedEnabled ? (parseFloat(document.getElementById('starterAge')?.value) || 6) : 6;
+            const feedingRatio = advancedEnabled ? (document.getElementById('feedingRatio')?.value || '1:5:5') : '1:5:5';
+            const peakStatus = advancedEnabled ? (document.getElementById('peakStatus')?.value || 'peak') : 'peak';
+            const autolyse = advancedEnabled ? (document.getElementById('autolyse')?.value || 'no') : 'no';
 
             // Calculate percentages (baker's percentage)
             const starterPercent = (starter / flour) * 100;
