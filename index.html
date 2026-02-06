@@ -1266,7 +1266,7 @@
                         <span id="coldproof-desc" class="visually-hidden">Ange kalljäsningstid i timmar (0 om ingen kalljäsning)</span>
                     </div>
 
-                    <div class="input-group" id="fridgeTempGroup" style="display: none;">
+                    <div class="input-group">
                         <label for="fridgeTemp">Kylskåpstemperatur</label>
                         <div class="input-wrapper" style="height: 44px;">
                             <input
@@ -1427,20 +1427,6 @@
                 }
             });
 
-            // Show/hide fridge temp based on cold proof value
-            document.getElementById('coldProof').addEventListener('input', function() {
-                const fridgeTempGroup = document.getElementById('fridgeTempGroup');
-                const fridgeTempInput = document.getElementById('fridgeTemp');
-                if (parseFloat(this.value) > 0) {
-                    fridgeTempGroup.style.display = 'block';
-                    if (!fridgeTempInput.value || fridgeTempInput.value === '0') {
-                        fridgeTempInput.value = '4';
-                    }
-                    calculateTime();
-                } else {
-                    fridgeTempGroup.style.display = 'none';
-                }
-            });
 
             // Show/hide whole grain amount based on flour type
             document.getElementById('flourType').addEventListener('change', function() {
@@ -1473,12 +1459,6 @@
 
         // Calculate on load with default values
         window.addEventListener('load', function() {
-            // Show fridge temp if cold proof is set
-            const coldProof = parseFloat(document.getElementById('coldProof').value);
-            if (coldProof > 0) {
-                document.getElementById('fridgeTempGroup').style.display = 'block';
-            }
-
             // Show whole grain input if mixed is selected
             const flourType = document.getElementById('flourType').value;
             if (flourType === 'mixed') {
