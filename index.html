@@ -1105,11 +1105,11 @@
             const hours = Math.floor(time);
             const minutes = Math.round((time - hours) * 60);
 
-            let timeText = `Bulkjäsning: ${hours}h ${minutes}min`;
+            let timeText = `Bulkjäsning:<br>${hours}h ${minutes}min`;
             if (coldProof > 0) {
-                timeText = `${hours}h ${minutes}min + ${coldProof}h kalljäsning`;
+                timeText = `Bulkjäsning:<br>${hours}h ${minutes}min + ${coldProof}h kalljäsning`;
             }
-            timeDisplay.textContent = timeText;
+            timeDisplay.innerHTML = timeText;
 
             // Format range with recipe info
             const minHours = Math.floor(minTime);
