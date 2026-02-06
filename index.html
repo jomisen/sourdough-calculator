@@ -1217,7 +1217,7 @@
 
                     <div class="input-group" id="wholeGrainGroup" style="display: none;">
                         <label for="wholeGrainAmount">Fullkornsmjöl</label>
-                        <div class="input-wrapper">
+                        <div class="input-wrapper" style="height: 44px;">
                             <input
                                 type="number"
                                 id="wholeGrainAmount"
@@ -1225,7 +1225,8 @@
                                 min="0"
                                 max="5000"
                                 step="10"
-                                aria-describedby="wholegrain-desc">
+                                aria-describedby="wholegrain-desc"
+                                style="padding: var(--space-1) 4px;">
                             <span class="unit" aria-hidden="true">g</span>
                         </div>
                         <span id="wholegrain-desc" class="visually-hidden">Ange mängd fullkornsmjöl i gram</span>
