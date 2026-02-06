@@ -1220,6 +1220,8 @@
                         <label for="feedingRatio">Matningsratio</label>
                         <select id="feedingRatio" class="input-wrapper" style="width: 100%; padding: var(--space-2) var(--space-3); font-size: var(--text-base); font-weight: 600; color: var(--green-dark); background: white; border: 2px solid var(--green-lighter); border-radius: var(--radius-sm); cursor: pointer;">
                             <option value="1:1:1">1:1:1 (surdeg:mjöl:vatten)</option>
+                            <option value="1:2:2">1:2:2</option>
+                            <option value="1:3:3">1:3:3</option>
                             <option value="1:5:5" selected>1:5:5 (standard)</option>
                             <option value="1:10:10">1:10:10 (stark matning)</option>
                         </select>
@@ -1554,9 +1556,11 @@
 
             // Feeding ratio factor
             let ratioFactor = 1.0;
-            if (feedingRatio === '1:1:1') ratioFactor = 1.1; // Less vigorous
-            else if (feedingRatio === '1:5:5') ratioFactor = 1.0; // Standard
-            else if (feedingRatio === '1:10:10') ratioFactor = 0.9; // Very vigorous
+            if (feedingRatio === '1:1:1') ratioFactor = 1.1; // Less vigorous - 10% slower
+            else if (feedingRatio === '1:2:2') ratioFactor = 1.05; // 5% slower
+            else if (feedingRatio === '1:3:3') ratioFactor = 1.02; // 2% slower
+            else if (feedingRatio === '1:5:5') ratioFactor = 1.0; // Standard baseline
+            else if (feedingRatio === '1:10:10') ratioFactor = 0.9; // Very vigorous - 10% faster
 
             // Autolyse factor
             let autolyseFactor = 1.0;
