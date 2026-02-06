@@ -1059,8 +1059,13 @@
             // Show/hide fridge temp based on cold proof value
             document.getElementById('coldProof').addEventListener('input', function() {
                 const fridgeTempRow = document.getElementById('fridgeTempRow');
+                const fridgeTempInput = document.getElementById('fridgeTemp');
                 if (parseFloat(this.value) > 0) {
                     fridgeTempRow.style.display = 'grid';
+                    // Reset to default if field was hidden
+                    if (!fridgeTempInput.value || fridgeTempInput.value === '0') {
+                        fridgeTempInput.value = '4';
+                    }
                 } else {
                     fridgeTempRow.style.display = 'none';
                 }
@@ -1069,6 +1074,12 @@
 
         // Calculate on load with default values
         window.addEventListener('load', function() {
+            // Show fridge temp if cold proof is set
+            const coldProof = parseFloat(document.getElementById('coldProof').value);
+            if (coldProof > 0) {
+                document.getElementById('fridgeTempRow').style.display = 'grid';
+            }
+
             calculateTime();
             setupAutoCalculate();
         });
@@ -1106,15 +1117,29 @@
             // Ensure reasonable bounds
             bulkTime = Math.max(2, Math.min(24, bulkTime));
 
+            // Calculate effective fermentation during "cold" proofing
+            // At 4°C: ~10% fermentation rate, At 22°C: ~100% rate
+            let effectiveColdProofFermentation = 0;
+            if (coldProof > 0) {
+                // Calculate fermentation rate based on fridge temp
+                // Using exponential relationship: rate = 0.1 * 1.15^(fridgeTemp - 4)
+                const coldFermentationRate = 0.1 * Math.pow(1.15, fridgeTemp - 4);
+                effectiveColdProofFermentation = coldProof * coldFermentationRate;
+            }
+
+            // Adjust bulk time if significant fermentation happens during "cold" proof
+            const adjustedBulkTime = bulkTime - effectiveColdProofFermentation;
+            const finalBulkTime = Math.max(2, adjustedBulkTime);
+
             // Create range (±15%)
-            const minTime = bulkTime * 0.85;
-            const maxTime = bulkTime * 1.15;
+            const minTime = finalBulkTime * 0.85;
+            const maxTime = finalBulkTime * 1.15;
 
             // Display results
-            displayResults(bulkTime, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof, fridgeTemp);
+            displayResults(finalBulkTime, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof, fridgeTemp, effectiveColdProofFermentation);
         }
 
-        function displayResults(time, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof, fridgeTemp) {
+        function displayResults(time, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof, fridgeTemp, effectiveColdProofFermentation) {
             const resultDiv = document.getElementById('result');
             const timeDisplay = document.getElementById('timeDisplay');
             const timeRange = document.getElementById('timeRange');
@@ -1174,13 +1199,20 @@
                 const totalMin = Math.floor(minTime + coldProof);
                 const totalMax = Math.ceil(maxTime + coldProof);
                 let fridgeNote = '';
-                if (fridgeTemp < 4) {
-                    fridgeNote = ' (Kallt kylskåp - minimal jäsning under kalljäsning)';
-                } else if (fridgeTemp > 6) {
-                    fridgeNote = ' (Varmt kylskåp - viss jäsning fortsätter)';
+                const effectiveHours = effectiveColdProofFermentation.toFixed(1);
+
+                if (fridgeTemp >= 15) {
+                    fridgeNote = ` ⚠️ VARNING: ${fridgeTemp}°C är för varmt för kalljäsning! Degen jäser ~${effectiveHours}h under "kalljäsningen"`;
+                } else if (fridgeTemp > 8) {
+                    fridgeNote = ` (Varmt - degen jäser ~${effectiveHours}h extra under kalljäsningen)`;
+                } else if (fridgeTemp < 4) {
+                    fridgeNote = ' (Kallt kylskåp - minimal jäsning)';
+                } else {
+                    fridgeNote = ' (Bra temp - långsam jäsning fortsätter)';
                 }
+
                 timeInfo += `<br><strong>Total tid (bulk + kall): ${totalMin}-${totalMax}h</strong>${fridgeNote}`;
-                timeInfo += `<br><span style="font-size: var(--text-sm); opacity: 0.85;">Kalljäsning vid ${fridgeTemp}°C</span>`;
+                timeInfo += `<br><span style="font-size: var(--text-sm); opacity: 0.85;">Kalljäsning vid ${fridgeTemp}°C - motsvarar ~${effectiveHours}h bulkjäsning</span>`;
             }
 
             // Calculate baking time based on dough weight
@@ -1272,10 +1304,12 @@
 
             // Add fridge temp info if cold proofing
             if (coldProof > 0) {
-                if (fridgeTemp < 3) {
-                    info += ' 🧊 Mycket kallt kylskåp bromsar jäsningen kraftigt - degen utvecklas långsamt.';
-                } else if (fridgeTemp > 6) {
-                    info += ' 🌡️ Varmt kylskåp - degen fortsätter jäsa något snabbare under kalljäsning.';
+                if (fridgeTemp >= 15) {
+                    info += ` ⚠️ ${fridgeTemp}°C är inte kalljäsning - degen överjäser! Minska bulkjäsningstiden.`;
+                } else if (fridgeTemp > 8) {
+                    info += ' 🌡️ Relativt varmt - degen jäser snabbt även i "kylen". Justera bulkjäsningstiden.';
+                } else if (fridgeTemp < 3) {
+                    info += ' 🧊 Mycket kallt - jäsningen nästan stillastående. Perfekt för långsam smakutveckling.';
                 } else {
                     info += ' ❄️ Perfekt kylskåpstemperatur för kalljäsning - ger bra smakutveckling.';
                 }
