@@ -547,8 +547,11 @@
 
         .timer-section {
             margin-top: var(--space-4);
-            padding-top: var(--space-4);
-            border-top: 2px solid rgba(253, 251, 247, 0.4);
+            margin-bottom: var(--space-4);
+            padding: var(--space-4);
+            background: linear-gradient(135deg, #7a8c6f 0%, #5d6e52 100%);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
         }
 
         .timer-button {
@@ -1010,9 +1013,7 @@
                 <div class="info" id="infoText"></div>
             </div>
 
-            <div id="timeRange"></div>
-
-            <div class="time-card timer-section">
+            <div class="timer-section">
                 <button
                     class="timer-button"
                     id="startTimerBtn"
@@ -1065,7 +1066,8 @@
                     </button>
                 </div>
             </div>
-        </div>
+
+            <div id="timeRange"></div>
         </div>
 
         <!-- Screen reader announcements -->
