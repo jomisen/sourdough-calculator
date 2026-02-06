@@ -482,6 +482,22 @@
                 <span id="salt-desc" class="visually-hidden">Ange saltmängd i gram</span>
             </div>
 
+            <div class="input-group">
+                <label for="coldProof">Kalljäsning (frivilligt)</label>
+                <div class="input-wrapper">
+                    <input
+                        type="number"
+                        id="coldProof"
+                        value="0"
+                        min="0"
+                        max="72"
+                        step="1"
+                        aria-describedby="coldproof-desc">
+                    <span class="unit" aria-hidden="true">h</span>
+                </div>
+                <span id="coldproof-desc" class="visually-hidden">Ange kalljäsningstid i timmar (0 om ingen kalljäsning)</span>
+            </div>
+
             <button type="submit" aria-label="Beräkna jästid för surdeg">Beräkna Jästid</button>
         </form>
 
@@ -532,6 +548,7 @@
                 <strong>Temperatur:</strong> Optimal jästtemperatur är 24-26°C. Lägre temperatur ger längsammare jäsning och mer smak.<br><br>
                 <strong>Surdegsandel:</strong> 15-20% är vanligt för grundrecept. Mer surdeg = snabbare jäsning men kan ge surare smak.<br><br>
                 <strong>Hydrering:</strong> 70-75% är typiskt för surdegsbröd. Högre hydrering ger luftigare bröd men är svårare att hantera.<br><br>
+                <strong>Kalljäsning:</strong> 8-24h i kylskåp efter formning ger bättre smak och lättare att skåra. Degen utvecklas långsamt i kyla.<br><br>
                 <strong>Testa dig fram:</strong> Kalkylatorn ger en uppskattning. Degen är klar när den nästan dubblat i storlek och är luftig.
             </p>
         </div>
@@ -549,6 +566,7 @@
             const water = parseFloat(document.getElementById('water').value);
             const starter = parseFloat(document.getElementById('starter').value);
             const salt = parseFloat(document.getElementById('salt').value);
+            const coldProof = parseFloat(document.getElementById('coldProof').value) || 0;
 
             // Calculate percentages (baker's percentage)
             const starterPercent = (starter / flour) * 100;
@@ -568,28 +586,31 @@
             // For every 5% increase in starter, reduce time by ~15%
             const starterFactor = Math.pow(0.85, (starterPercent - baseStarter) / 5);
 
-            // Calculate time
-            let totalTime = baseTime * tempFactor * starterFactor;
+            // Calculate bulk fermentation time
+            let bulkTime = baseTime * tempFactor * starterFactor;
 
             // Ensure reasonable bounds
-            totalTime = Math.max(2, Math.min(24, totalTime));
+            bulkTime = Math.max(2, Math.min(24, bulkTime));
 
             // Create range (±15%)
-            const minTime = totalTime * 0.85;
-            const maxTime = totalTime * 1.15;
+            const minTime = bulkTime * 0.85;
+            const maxTime = bulkTime * 1.15;
 
             // Display results
-            displayResults(totalTime, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt);
+            displayResults(bulkTime, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof);
         }
 
-        function displayResults(time, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt) {
+        function displayResults(time, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof) {
             const resultDiv = document.getElementById('result');
             const timeDisplay = document.getElementById('timeDisplay');
             const timeRange = document.getElementById('timeRange');
             const infoText = document.getElementById('infoText');
 
-            // Save calculated time for timer
-            calculatedTime = time;
+            // Calculate total time including cold proof
+            const totalTimeWithCold = time + coldProof;
+
+            // Save calculated time for timer (bulk + cold proof)
+            calculatedTime = totalTimeWithCold;
 
             // Reset timer if running
             if (timerInterval) {
@@ -599,7 +620,12 @@
             // Format time display
             const hours = Math.floor(time);
             const minutes = Math.round((time - hours) * 60);
-            timeDisplay.textContent = `${hours}h ${minutes}min`;
+
+            let timeText = `Bulkjäsning: ${hours}h ${minutes}min`;
+            if (coldProof > 0) {
+                timeText = `${hours}h ${minutes}min + ${coldProof}h kalljäsning`;
+            }
+            timeDisplay.textContent = timeText;
 
             // Format range with recipe info
             const minHours = Math.floor(minTime);
@@ -608,8 +634,15 @@
             const maxMinutes = Math.round((maxTime - maxHours) * 60);
             const totalWeight = flour + water + starter + salt;
 
+            let timeInfo = `Intervall bulkjäsning: ${minHours}h ${minMinutes}min - ${maxHours}h ${maxMinutes}min`;
+            if (coldProof > 0) {
+                const totalMin = Math.floor(minTime + coldProof);
+                const totalMax = Math.ceil(maxTime + coldProof);
+                timeInfo += `<br><strong>Total tid (bulk + kall): ${totalMin}-${totalMax}h</strong>`;
+            }
+
             timeRange.innerHTML = `
-                <div style="margin-bottom: 12px;">Intervall: ${minHours}h ${minMinutes}min - ${maxHours}h ${maxMinutes}min</div>
+                <div style="margin-bottom: 12px;">${timeInfo}</div>
                 <div style="font-size: 14px; opacity: 0.9;">
                     <strong>Ditt recept:</strong><br>
                     Mjöl: ${flour}g (100%)<br>
