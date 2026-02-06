@@ -3,7 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surdegs Jästidskalkylator</title>
+
+    <!-- Primary Meta Tags -->
+    <title>Surdegs Jästidskalkylator - Beräkna Perfect Jästid för Surdegsbröd</title>
+    <meta name="title" content="Surdegs Jästidskalkylator - Beräkna Perfect Jästid för Surdegsbröd">
+    <meta name="description" content="Gratis surdegskalkylator som beräknar optimal bulkjäsning baserat på temperatur, hydrering och surdegsandel. Få exakta viknings- och gräddningsinstruktioner för perfekt surdegsbröd.">
+    <meta name="keywords" content="surdeg, surdegsbröd, surdegsrecept, jästid, bulkjäsning, surdegsstart, surdegskalkylator, baka surdeg, hydrering, kalljäsning, stretch and fold, surdegsbakning">
+    <meta name="author" content="Olofslunds Surdegsbröd">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jomisen.github.io/sourdough-calculator/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jomisen.github.io/sourdough-calculator/">
+    <meta property="og:title" content="Surdegs Jästidskalkylator - Perfekt Surdegsbröd Varje Gång">
+    <meta property="og:description" content="Beräkna exakt bulkjäsning för ditt surdegsbröd baserat på temperatur, hydrering och surdegsandel. Med timer, vikningsinstruktioner och gräddningsguide.">
+    <meta property="og:image" content="https://jomisen.github.io/sourdough-calculator/logo.PNG">
+    <meta property="og:locale" content="sv_SE">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://jomisen.github.io/sourdough-calculator/">
+    <meta property="twitter:title" content="Surdegs Jästidskalkylator - Perfekt Surdegsbröd">
+    <meta property="twitter:description" content="Beräkna optimal jästid för surdegsbröd. Gratis kalkylator med timer och detaljerade bakinstruktioner.">
+    <meta property="twitter:image" content="https://jomisen.github.io/sourdough-calculator/logo.PNG">
+
+    <!-- Structured Data (Schema.org) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Surdegs Jästidskalkylator",
+      "description": "Kalkylator för att beräkna optimal bulkjäsning för surdegsbröd baserat på temperatur, hydrering och surdegsandel",
+      "url": "https://jomisen.github.io/sourdough-calculator/",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "SEK"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Olofslunds Surdegsbröd",
+        "url": "https://instagram.com/bakpulvret"
+      },
+      "inLanguage": "sv-SE",
+      "featureList": [
+        "Beräkna bulkjäsning baserat på temperatur",
+        "Anpassa för olika hydreringsnivåer",
+        "Vikningsinstruktioner (stretch & fold)",
+        "Gräddningsinstruktioner för Dutch oven och öppen bakning",
+        "Inbyggd timer med notifikationer",
+        "Kalljäsningsberäkning",
+        "Avancerade inställningar för mjöltyp och surdegsstatus"
+      ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "Hur man använder Surdegs Jästidskalkylatorn",
+      "description": "Steg-för-steg guide för att beräkna perfekt jästid för ditt surdegsbröd",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Ange ingredienser",
+          "text": "Fyll i mängden mjöl, vatten, surdegsstart och salt i gram"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Ställ in rumstemperatur",
+          "text": "Justera termometern till din faktiska rumstemperatur (15-30°C)"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Få beräknad jästid",
+          "text": "Kalkylatorn visar optimal bulkjäsningstid, antal vikningar och gräddningsinstruktioner"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Starta timer",
+          "text": "Använd den inbyggda äggklockstimern för att hålla koll på tiden"
+        }
+      ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Hur lång ska bulkjäsningen vara?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Bulkjäsningen varierar mellan 3-8 timmar beroende på temperatur, surdegsandel och mjöltyp. Vid 22°C och 20% surdeg tar det cirka 5 timmar. Vår kalkylator anpassar tiden automatiskt efter dina förutsättningar."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Varför är temperatur så viktig för surdeg?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Jästbakterierna i surdegen är mest aktiva vid 24-28°C. Varje grad påverkar jästhastigheten med cirka 15%. Kallare = långsammare men mer smak. Varmare = snabbare men risk för överjäsning."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Vad betyder hydrering i surdeg?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hydrering är förhållandet vatten till mjöl i procent (baker's percentage). 75% hydrering = 750g vatten per 1000g mjöl. Högre hydrering ger luftigare bröd men är svårare att hantera. Standard är 70-75%."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hur vet jag när bulkjäsningen är klar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Degen ska ha ökat med cirka 50-75% i volym, vara luftig med synliga bubblor, och studsa tillbaka när du trycker lätt (fingertest). Vår timer hjälper dig hålla koll på tiden."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Varför ska man göra stretch & fold?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Vikningar (stretch & fold) utvecklar glutennätverket utan att knåda. Detta ger brödet styrka att hålla formen och fånga jäsgaserna. Antal vikningar anpassas efter hydreringen - blötare deg behöver fler vikningar."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Vad är kalljäsning och behöver jag det?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Kalljäsning innebär att degen vilar i kylskåpet (2-24h) efter formning. Det ger bättre smak, lättare att skåra, och är bekvämt för timing. Inte nödvändigt men rekommenderat för bästa resultat."
+          }
+        }
+      ]
+    }
+    </script>
+
     <style>
         /* ===== Design System ===== */
         :root {
@@ -1221,9 +1366,9 @@
             <img src="logo.PNG" alt="Olofslunds Surdegsbröd - Hembakat i stenugn" class="logo">
         </div>
         <h1>
-            Jästidskalkylator
+            Surdegs Jästidskalkylator
         </h1>
-        <p class="subtitle">Beräkna optimal jästid för din surdeg</p>
+        <p class="subtitle">Beräkna optimal bulkjäsning för perfekt surdegsbröd - med timer, viknings- och gräddningsinstruktioner</p>
 
         <form onsubmit="calculateTime(); return false;">
             <!-- Full-width temperature section -->
@@ -1544,6 +1689,58 @@
                 <strong>Kalljäsning:</strong> 8-24h i kylskåp efter formning ger bättre smak och lättare att skåra. Degen utvecklas långsamt i kyla.<br><br>
                 <strong>Testa dig fram:</strong> Kalkylatorn ger en uppskattning. Degen är klar när den nästan dubblat i storlek och är luftig.
             </p>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="info-box" role="complementary" aria-labelledby="faq-heading" style="margin-top: var(--space-5);">
+            <h2 id="faq-heading" style="font-size: var(--text-2xl); margin-bottom: var(--space-4); color: var(--green-dark);">
+                <span aria-hidden="true">❓</span>
+                Vanliga frågor om surdeg och jästid
+            </h2>
+
+            <div style="text-align: left;">
+                <h3 style="font-size: var(--text-lg); color: var(--green-dark); margin-top: var(--space-3); margin-bottom: var(--space-2);">
+                    Hur lång ska bulkjäsningen vara?
+                </h3>
+                <p style="margin-bottom: var(--space-3);">
+                    Bulkjäsningen varierar mellan 3-8 timmar beroende på temperatur, surdegsandel och mjöltyp. Vid 22°C och 20% surdeg tar det cirka 5 timmar. Vår kalkylator anpassar tiden automatiskt efter dina förutsättningar.
+                </p>
+
+                <h3 style="font-size: var(--text-lg); color: var(--green-dark); margin-top: var(--space-3); margin-bottom: var(--space-2);">
+                    Varför är temperatur så viktig för surdeg?
+                </h3>
+                <p style="margin-bottom: var(--space-3);">
+                    Jästbakterierna i surdegen är mest aktiva vid 24-28°C. Varje grad påverkar jästhastigheten med cirka 15%. Kallare = långsammare men mer smak. Varmare = snabbare men risk för överjäsning.
+                </p>
+
+                <h3 style="font-size: var(--text-lg); color: var(--green-dark); margin-top: var(--space-3); margin-bottom: var(--space-2);">
+                    Vad betyder hydrering i surdeg?
+                </h3>
+                <p style="margin-bottom: var(--space-3);">
+                    Hydrering är förhållandet vatten till mjöl i procent (baker's percentage). 75% hydrering = 750g vatten per 1000g mjöl. Högre hydrering ger luftigare bröd men är svårare att hantera. Standard är 70-75%.
+                </p>
+
+                <h3 style="font-size: var(--text-lg); color: var(--green-dark); margin-top: var(--space-3); margin-bottom: var(--space-2);">
+                    Hur vet jag när bulkjäsningen är klar?
+                </h3>
+                <p style="margin-bottom: var(--space-3);">
+                    Degen ska ha ökat med cirka 50-75% i volym, vara luftig med synliga bubblor, och studsa tillbaka när du trycker lätt (fingertest). Vår timer hjälper dig hålla koll på tiden.
+                </p>
+
+                <h3 style="font-size: var(--text-lg); color: var(--green-dark); margin-top: var(--space-3); margin-bottom: var(--space-2);">
+                    Varför ska man göra stretch & fold?
+                </h3>
+                <p style="margin-bottom: var(--space-3);">
+                    Vikningar (stretch & fold) utvecklar glutennätverket utan att knåda. Detta ger brödet styrka att hålla formen och fånga jäsgaserna. Antal vikningar anpassas efter hydreringen - blötare deg behöver fler vikningar.
+                </p>
+
+                <h3 style="font-size: var(--text-lg); color: var(--green-dark); margin-top: var(--space-3); margin-bottom: var(--space-2);">
+                    Vad är kalljäsning och behöver jag det?
+                </h3>
+                <p style="margin-bottom: var(--space-3);">
+                    Kalljäsning innebär att degen vilar i kylskåpet (2-24h) efter formning. Det ger bättre smak, lättare att skåra, och är bekvämt för timing. Inte nödvändigt men rekommenderat för bästa resultat.
+                </p>
+            </div>
         </div>
 
         <div class="instagram-section">
