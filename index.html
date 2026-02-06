@@ -675,6 +675,143 @@
             border: 0;
         }
 
+        /* Mobile Responsive Styles */
+        @media (max-width: 640px) {
+            body {
+                padding: var(--space-2);
+            }
+
+            .container {
+                padding: var(--space-2) var(--space-3) var(--space-4);
+                border-radius: var(--radius-md);
+            }
+
+            .logo-container {
+                margin: -50px auto var(--space-3);
+            }
+
+            .logo {
+                width: 140px;
+                height: 140px;
+            }
+
+            h1 {
+                font-size: var(--text-2xl);
+            }
+
+            .subtitle {
+                font-size: var(--text-sm);
+                margin-bottom: var(--space-4);
+            }
+
+            .input-wrapper {
+                padding: var(--space-1) var(--space-2);
+            }
+
+            input[type="number"] {
+                font-size: var(--text-base);
+            }
+
+            .time-card {
+                padding: var(--space-4);
+                border-radius: var(--radius-sm);
+            }
+
+            .time-card h2 {
+                font-size: var(--text-xl);
+            }
+
+            .time-display {
+                font-size: 36px;
+                margin-bottom: var(--space-2);
+            }
+
+            .time-range {
+                font-size: var(--text-sm);
+            }
+
+            .info {
+                padding: var(--space-2);
+                font-size: var(--text-sm);
+            }
+
+            .recipe-card {
+                padding: var(--space-3);
+            }
+
+            .recipe-card h3 {
+                font-size: var(--text-base);
+            }
+
+            .recipe-card-content {
+                font-size: var(--text-sm);
+            }
+
+            .ingredient-item {
+                font-size: var(--text-sm);
+            }
+
+            .baking-step {
+                font-size: var(--text-xs);
+            }
+
+            .info-box {
+                padding: var(--space-3);
+            }
+
+            .info-box h3 {
+                font-size: var(--text-base);
+            }
+
+            .info-box p {
+                font-size: var(--text-sm);
+            }
+
+            .countdown {
+                width: 240px;
+                height: 240px;
+                padding: var(--space-3);
+                margin: var(--space-4) auto;
+            }
+
+            .countdown-time {
+                font-size: 36px;
+            }
+
+            .countdown-label {
+                font-size: 11px;
+                bottom: 55px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .container {
+                padding: var(--space-2);
+            }
+
+            .logo {
+                width: 120px;
+                height: 120px;
+            }
+
+            h1 {
+                font-size: var(--text-xl);
+            }
+
+            .time-display {
+                font-size: 32px;
+            }
+
+            .countdown {
+                width: 200px;
+                height: 200px;
+                padding: var(--space-2);
+            }
+
+            .countdown-time {
+                font-size: 28px;
+            }
+        }
 
     </style>
 </head>
