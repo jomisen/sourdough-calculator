@@ -5,6 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Surdegs Jästidskalkylator</title>
     <style>
+        /* ===== Design System ===== */
+        :root {
+            /* Typography Scale */
+            --text-xs: 13px;
+            --text-sm: 14px;
+            --text-base: 15px;
+            --text-lg: 18px;
+            --text-xl: 24px;
+            --text-2xl: 28px;
+            --text-3xl: 36px;
+
+            /* Spacing Scale */
+            --space-1: 8px;
+            --space-2: 12px;
+            --space-3: 16px;
+            --space-4: 24px;
+            --space-5: 32px;
+            --space-6: 48px;
+
+            /* Border Radius */
+            --radius-sm: 12px;
+            --radius-md: 16px;
+            --radius-lg: 20px;
+
+            /* Shadows */
+            --shadow-sm: 0 2px 8px rgba(70, 80, 60, 0.08);
+            --shadow-md: 0 4px 16px rgba(70, 80, 60, 0.12);
+            --shadow-lg: 0 8px 32px rgba(70, 80, 60, 0.16);
+
+            /* Colors */
+            --green-dark: #3d4a36;
+            --green-medium: #6b7a5e;
+            --green-light: #9fb094;
+            --green-lighter: #c5d4b8;
+            --cream: #fdfbf7;
+            --cream-dark: #f7f5ef;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -18,45 +56,49 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: var(--space-4);
         }
 
         .container {
-            background: #fdfbf7;
-            border-radius: 20px;
-            box-shadow: 0 15px 50px rgba(70, 80, 60, 0.25);
-            padding: 20px 40px 40px;
-            max-width: 600px;
+            background: var(--cream);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg), 0 0 0 3px #d4c5a0;
+            padding: var(--space-3) var(--space-6) var(--space-6);
+            max-width: 680px;
             width: 100%;
-            border: 3px solid #d4c5a0;
         }
 
         .logo-container {
             text-align: center;
-            margin: -60px auto 20px;
+            margin: -60px auto var(--space-4);
         }
 
         .logo {
             width: 180px;
             height: 180px;
             border-radius: 50%;
-            border: 4px solid #fdfbf7;
-            box-shadow: 0 8px 20px rgba(70, 80, 60, 0.3);
+            border: 4px solid var(--cream);
+            box-shadow: 0 8px 24px rgba(70, 80, 60, 0.3);
             background: white;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         h1 {
-            color: #3d4a36;
-            margin-bottom: 8px;
-            font-size: 32px;
+            color: var(--green-dark);
+            margin-bottom: var(--space-1);
+            font-size: var(--text-3xl);
             text-align: center;
             font-weight: 700;
         }
 
         .subtitle {
-            color: #6b7a5e;
-            margin-bottom: 30px;
-            font-size: 16px;
+            color: var(--green-medium);
+            margin-bottom: var(--space-5);
+            font-size: var(--text-base);
             text-align: center;
             font-style: italic;
         }
@@ -64,8 +106,8 @@
         .input-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 16px;
+            gap: var(--space-3);
+            margin-bottom: var(--space-3);
         }
 
         .input-group {
@@ -75,71 +117,79 @@
         @media (max-width: 500px) {
             .input-row {
                 grid-template-columns: 1fr;
-                gap: 16px;
+                gap: var(--space-3);
             }
         }
 
         label {
             display: block;
-            color: #3d4a36;
+            color: var(--green-dark);
             font-weight: 700;
-            margin-bottom: 6px;
-            font-size: 15px;
+            margin-bottom: var(--space-1);
+            font-size: var(--text-base);
+            transition: color 0.2s ease;
         }
 
         .input-wrapper {
             display: flex;
             align-items: center;
             background: white;
-            border-radius: 10px;
-            padding: 6px 14px;
-            border: 2px solid #c5d4b8;
-            transition: all 0.3s;
-            box-shadow: 0 2px 6px rgba(70, 80, 60, 0.08);
+            border-radius: var(--radius-sm);
+            padding: var(--space-2) var(--space-3);
+            border: 2px solid var(--green-lighter);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .input-wrapper:hover {
+            border-color: var(--green-light);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
         }
 
         .input-wrapper:focus-within {
-            border-color: #9fb094;
-            box-shadow: 0 3px 10px rgba(70, 80, 60, 0.15);
+            border-color: var(--green-light);
+            box-shadow: 0 0 0 3px rgba(159, 176, 148, 0.2), var(--shadow-md);
+            transform: translateY(-2px);
         }
 
         input[type="number"] {
             flex: 1;
             border: none;
             background: transparent;
-            padding: 8px 5px;
-            font-size: 18px;
-            color: #3d4a36;
+            padding: var(--space-1) 4px;
+            font-size: var(--text-lg);
+            color: var(--green-dark);
             outline: none;
             font-weight: 600;
         }
 
         input[type="number"]:focus {
-            outline: 3px solid #9fb094;
+            outline: 3px solid var(--green-light);
             outline-offset: 2px;
             border-radius: 4px;
         }
 
         .unit {
-            color: #6b7a5e;
-            font-size: 16px;
+            color: var(--green-medium);
+            font-size: var(--text-base);
             font-weight: 600;
         }
 
         input[type="range"] {
             width: 100%;
             height: 8px;
-            border-radius: 10px;
-            background: linear-gradient(to right, #c5d4b8, #9fb094);
+            border-radius: var(--radius-sm);
+            background: linear-gradient(to right, var(--green-lighter), var(--green-light));
             outline: none;
             -webkit-appearance: none;
             box-shadow: inset 0 1px 3px rgba(70, 80, 60, 0.2);
         }
 
         input[type="range"]:focus {
-            outline: 3px solid #9fb094;
+            outline: 3px solid var(--green-light);
             outline-offset: 4px;
-            border-radius: 10px;
+            border-radius: var(--radius-sm);
         }
 
         input[type="range"]::-webkit-slider-thumb {
@@ -148,14 +198,19 @@
             width: 26px;
             height: 26px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #9fb094 0%, #7a8c6f 100%);
+            background: linear-gradient(135deg, var(--green-light) 0%, #7a8c6f 100%);
             cursor: pointer;
             border: 3px solid white;
-            box-shadow: 0 2px 8px rgba(70, 80, 60, 0.3);
+            box-shadow: var(--shadow-md);
+            transition: transform 0.2s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
         }
 
         input[type="range"]:focus::-webkit-slider-thumb {
-            outline: 3px solid #9fb094;
+            outline: 3px solid var(--green-light);
             outline-offset: 2px;
         }
 
@@ -163,45 +218,45 @@
             width: 26px;
             height: 26px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #9fb094 0%, #7a8c6f 100%);
+            background: linear-gradient(135deg, var(--green-light) 0%, #7a8c6f 100%);
             cursor: pointer;
             border: 3px solid white;
-            box-shadow: 0 2px 8px rgba(70, 80, 60, 0.3);
+            box-shadow: var(--shadow-md);
         }
 
         input[type="range"]:focus::-moz-range-thumb {
-            outline: 3px solid #9fb094;
+            outline: 3px solid var(--green-light);
             outline-offset: 2px;
         }
 
         .range-display {
             display: flex;
             justify-content: space-between;
-            margin-top: 8px;
-            font-size: 14px;
-            color: #6b7a5e;
+            margin-top: var(--space-1);
+            font-size: var(--text-sm);
+            color: var(--green-medium);
             font-weight: 600;
         }
 
         button {
             width: 100%;
             background: linear-gradient(135deg, #7a8c6f 0%, #5d6e52 100%);
-            color: #fdfbf7;
+            color: var(--cream);
             border: none;
-            border-radius: 12px;
-            padding: 16px;
-            font-size: 18px;
+            border-radius: var(--radius-sm);
+            padding: var(--space-3);
+            font-size: var(--text-lg);
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 12px;
-            box-shadow: 0 4px 12px rgba(70, 80, 60, 0.3);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: var(--space-2);
+            box-shadow: var(--shadow-md);
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
         }
 
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(70, 80, 60, 0.4);
+            box-shadow: var(--shadow-lg);
             background: linear-gradient(135deg, #8a9c7f 0%, #6d7e62 100%);
         }
 
@@ -210,7 +265,7 @@
         }
 
         button:focus {
-            outline: 3px solid #3d4a36;
+            outline: 3px solid var(--green-dark);
             outline-offset: 3px;
         }
 
@@ -219,30 +274,24 @@
         }
 
         button:focus-visible {
-            outline: 3px solid #3d4a36;
+            outline: 3px solid var(--green-dark);
             outline-offset: 3px;
         }
 
         .result {
-            margin-top: 32px;
-            padding: 28px;
-            background: linear-gradient(135deg, #7a8c6f 0%, #5d6e52 100%);
-            border-radius: 16px;
-            color: #fdfbf7;
+            margin-top: var(--space-5);
             display: none;
-            border: 3px solid #9fb094;
-            box-shadow: 0 6px 20px rgba(70, 80, 60, 0.3);
         }
 
         .result.show {
             display: block;
-            animation: slideIn 0.4s ease-out;
+            animation: slideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         @keyframes slideIn {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
@@ -250,87 +299,225 @@
             }
         }
 
-        .result h2 {
-            font-size: 24px;
-            margin-bottom: 18px;
+        /* Main Time Card */
+        .time-card {
+            background: linear-gradient(135deg, #7a8c6f 0%, #5d6e52 100%);
+            border-radius: var(--radius-md);
+            padding: var(--space-5);
+            color: var(--cream);
+            box-shadow: var(--shadow-lg);
+            margin-bottom: var(--space-4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .time-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .time-card h2 {
+            font-size: var(--text-2xl);
+            margin-bottom: var(--space-3);
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            position: relative;
         }
 
         .time-display {
-            font-size: 44px;
-            font-weight: bold;
-            margin-bottom: 12px;
-            color: #fdfbf7;
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: var(--space-2);
+            color: var(--cream);
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            letter-spacing: -1px;
         }
 
         .time-range {
-            font-size: 16px;
+            font-size: var(--text-base);
             opacity: 0.95;
-            margin-bottom: 18px;
+            margin-bottom: var(--space-3);
+            position: relative;
         }
 
         .info {
             background: rgba(253, 251, 247, 0.15);
-            padding: 18px;
-            border-radius: 10px;
-            font-size: 15px;
+            padding: var(--space-3);
+            border-radius: var(--radius-sm);
+            font-size: var(--text-base);
             line-height: 1.7;
-            border-left: 4px solid #9fb094;
+            border-left: 4px solid var(--green-light);
+            position: relative;
+        }
+
+        /* Recipe Cards Grid */
+        .recipe-cards {
+            display: grid;
+            gap: var(--space-3);
+            margin-bottom: var(--space-4);
+        }
+
+        .recipe-card {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: var(--space-4);
+            box-shadow: var(--shadow-sm);
+            border: 2px solid var(--green-lighter);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .recipe-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+            border-color: var(--green-light);
+        }
+
+        .recipe-card h3 {
+            font-size: var(--text-lg);
+            color: var(--green-dark);
+            margin-bottom: var(--space-3);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .recipe-card h3 .icon {
+            font-size: var(--text-xl);
+            flex-shrink: 0;
+        }
+
+        .recipe-card-content {
+            font-size: var(--text-base);
+            color: var(--green-dark);
+            line-height: 1.7;
+        }
+
+        .recipe-card-content strong {
+            font-weight: 700;
+            color: var(--green-dark);
+        }
+
+        .ingredient-list {
+            display: grid;
+            gap: var(--space-2);
+        }
+
+        .ingredient-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: var(--space-1) 0;
+            border-bottom: 1px solid rgba(197, 212, 184, 0.3);
+        }
+
+        .ingredient-item:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            font-size: var(--text-lg);
+            padding-top: var(--space-2);
+            margin-top: var(--space-1);
+            border-top: 2px solid var(--green-lighter);
+        }
+
+        .ingredient-name {
+            color: var(--green-medium);
+        }
+
+        .ingredient-value {
+            font-weight: 600;
+            color: var(--green-dark);
+        }
+
+        .baking-instructions {
+            display: grid;
+            gap: var(--space-2);
+            margin-top: var(--space-2);
+        }
+
+        .baking-step {
+            display: flex;
+            gap: var(--space-2);
+            font-size: var(--text-sm);
+            color: var(--green-medium);
+            line-height: 1.6;
+        }
+
+        .baking-step::before {
+            content: '•';
+            color: var(--green-light);
+            font-weight: 700;
+            flex-shrink: 0;
         }
 
         .info-box {
-            margin-top: 32px;
-            padding: 24px;
+            margin-top: var(--space-5);
+            padding: var(--space-5);
             background: linear-gradient(135deg, #f7f5ef 0%, #ede9dd 100%);
-            border-radius: 12px;
-            border: 2px solid #c5d4b8;
-            box-shadow: 0 3px 10px rgba(70, 80, 60, 0.1);
+            border-radius: var(--radius-md);
+            border: 2px solid var(--green-lighter);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+
+        .info-box:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
         }
 
         .info-box h3 {
-            color: #3d4a36;
-            font-size: 18px;
-            margin-bottom: 14px;
+            color: var(--green-dark);
+            font-size: var(--text-lg);
+            margin-bottom: var(--space-3);
             font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
         }
 
         .info-box p {
-            color: #3d4a36;
-            font-size: 15px;
+            color: var(--green-dark);
+            font-size: var(--text-base);
             line-height: 1.8;
         }
 
         .timer-section {
-            margin-top: 24px;
-            padding-top: 24px;
+            margin-top: var(--space-4);
+            padding-top: var(--space-4);
             border-top: 2px solid rgba(253, 251, 247, 0.4);
         }
 
         .timer-button {
             width: 100%;
             background: rgba(253, 251, 247, 0.95);
-            color: #3d4a36;
+            color: var(--green-dark);
             border: 2px solid rgba(253, 251, 247, 0.5);
-            border-radius: 10px;
-            padding: 14px;
-            font-size: 16px;
+            border-radius: var(--radius-sm);
+            padding: var(--space-3);
+            font-size: var(--text-base);
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 16px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: var(--space-3);
+            box-shadow: var(--shadow-sm);
         }
 
         .timer-button:hover {
             background: white;
-            transform: translateY(-1px);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
         }
 
         .timer-display {
             display: none;
-            margin-top: 16px;
+            margin-top: var(--space-3);
+            animation: slideIn 0.4s ease-out;
         }
 
         .timer-display.active {
@@ -339,16 +526,16 @@
 
         .timer-info {
             background: rgba(253, 251, 247, 0.2);
-            padding: 14px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            font-size: 15px;
-            border-left: 3px solid #9fb094;
+            padding: var(--space-3);
+            border-radius: var(--radius-sm);
+            margin-bottom: var(--space-2);
+            font-size: var(--text-base);
+            border-left: 3px solid var(--green-light);
         }
 
         .timer-info strong {
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: var(--space-1);
             font-weight: 700;
         }
 
@@ -356,14 +543,15 @@
             position: relative;
             width: 280px;
             height: 280px;
-            margin: 30px auto;
+            margin: var(--space-5) auto;
             background: radial-gradient(circle at 30% 30%, rgba(253, 251, 247, 0.15), rgba(122, 140, 111, 0.3));
             border-radius: 50%;
             box-shadow:
                 0 10px 40px rgba(0, 0, 0, 0.3),
                 inset 0 -5px 20px rgba(0, 0, 0, 0.2),
                 inset 0 5px 20px rgba(255, 255, 255, 0.1);
-            padding: 20px;
+            padding: var(--space-4);
+            transition: all 0.3s ease;
         }
 
         .countdown-circle {
@@ -407,7 +595,7 @@
             font-size: 42px;
             font-weight: 700;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            color: #fdfbf7;
+            color: var(--cream);
             text-shadow:
                 0 2px 4px rgba(0, 0, 0, 0.5),
                 0 0 20px rgba(253, 251, 247, 0.3);
@@ -420,7 +608,7 @@
             bottom: 65px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 13px;
+            font-size: var(--text-xs);
             color: rgba(253, 251, 247, 0.9);
             text-transform: uppercase;
             letter-spacing: 3px;
@@ -434,7 +622,7 @@
         }
 
         .countdown.finished .countdown-circle {
-            background: radial-gradient(circle at 35% 35%, #9fb094, #7a8c6f);
+            background: radial-gradient(circle at 35% 35%, var(--green-light), #7a8c6f);
         }
 
         .countdown.finished .countdown-circle-progress {
@@ -442,7 +630,7 @@
         }
 
         .countdown.finished .countdown-time {
-            color: #fdfbf7;
+            color: var(--cream);
             font-size: 28px;
             animation: pulse-text 1.5s infinite;
         }
@@ -471,7 +659,7 @@
 
         .stop-button {
             background: linear-gradient(135deg, #c17a6b 0%, #a65e4f 100%);
-            color: #fdfbf7;
+            color: var(--cream);
             border-color: rgba(193, 122, 107, 0.5);
         }
 
@@ -616,12 +804,15 @@
         </form>
 
         <div class="result" id="result" role="region" aria-live="polite" aria-atomic="true">
-            <h2>Rekommenderad jästid</h2>
-            <div class="time-display" id="timeDisplay" role="status"></div>
-            <div class="time-range" id="timeRange"></div>
-            <div class="info" id="infoText"></div>
+            <div class="time-card">
+                <h2>Rekommenderad jästid</h2>
+                <div class="time-display" id="timeDisplay" role="status"></div>
+                <div class="info" id="infoText"></div>
+            </div>
 
-            <div class="timer-section">
+            <div id="timeRange"></div>
+
+            <div class="time-card timer-section">
                 <button
                     class="timer-button"
                     id="startTimerBtn"
@@ -674,6 +865,7 @@
                     </button>
                 </div>
             </div>
+        </div>
         </div>
 
         <!-- Screen reader announcements -->
@@ -828,34 +1020,66 @@
             const bakingTimeUncovered = bakingTimeTotal - bakingTimeCovered;
 
             timeRange.innerHTML = `
-                <div style="margin-bottom: 12px;">${timeInfo}</div>
-                <div style="font-size: 14px; opacity: 0.9;">
-                    <strong>Ditt recept:</strong><br>
-                    Mjöl: ${flour}g (100%)<br>
-                    Vatten: ${water}g (${hydration.toFixed(0)}% hydrering)<br>
-                    Surdeg: ${starter}g (${starterPercent.toFixed(0)}%)<br>
-                    Salt: ${salt}g (${saltPercent.toFixed(1)}%)<br>
-                    <strong>Total vikt: ${totalWeight}g</strong><br><br>
+                <div style="margin-bottom: var(--space-3);">${timeInfo}</div>
 
-                    <strong>🙌 Vik: ${folds} st</strong><br>
-                    <span style="font-size: 13px; opacity: 0.85;">Stretch & fold ${foldIntervalText} under första hälften</span><br><br>
+                <div class="recipe-cards">
+                    <div class="recipe-card">
+                        <h3><span class="icon">📋</span> Ditt recept</h3>
+                        <div class="ingredient-list">
+                            <div class="ingredient-item">
+                                <span class="ingredient-name">Mjöl</span>
+                                <span class="ingredient-value">${flour}g (100%)</span>
+                            </div>
+                            <div class="ingredient-item">
+                                <span class="ingredient-name">Vatten</span>
+                                <span class="ingredient-value">${water}g (${hydration.toFixed(0)}%)</span>
+                            </div>
+                            <div class="ingredient-item">
+                                <span class="ingredient-name">Surdeg</span>
+                                <span class="ingredient-value">${starter}g (${starterPercent.toFixed(0)}%)</span>
+                            </div>
+                            <div class="ingredient-item">
+                                <span class="ingredient-name">Salt</span>
+                                <span class="ingredient-value">${salt}g (${saltPercent.toFixed(1)}%)</span>
+                            </div>
+                            <div class="ingredient-item">
+                                <span class="ingredient-name">Total vikt</span>
+                                <span class="ingredient-value">${totalWeight}g</span>
+                            </div>
+                        </div>
+                    </div>
 
-                    <strong>🔥 Bakning Dutch Oven:</strong><br>
-                    <span style="font-size: 13px; opacity: 0.85;">
-                    • Förvärm: 250°C (med gryta)<br>
-                    • Med lock: 230°C i ${bakingTimeCovered} min<br>
-                    • Utan lock: 220°C i ${bakingTimeUncovered} min<br>
-                    • Total tid: ~${bakingTimeTotal} min
-                    </span><br><br>
+                    <div class="recipe-card">
+                        <h3><span class="icon">🙌</span> Vikning av degen</h3>
+                        <div class="recipe-card-content">
+                            <strong>${folds} stretch & folds</strong><br>
+                            <span style="color: var(--green-medium); font-size: var(--text-sm);">
+                                Vik degen ${foldIntervalText} under första 2/3 av bulkjäsningen.
+                                Detta utvecklar glutennätverket och ger bättre struktur.
+                            </span>
+                        </div>
+                    </div>
 
-                    <strong>🔥 Öppen bakning:</strong><br>
-                    <span style="font-size: 13px; opacity: 0.85;">
-                    • Förvärm: 250°C<br>
-                    • Med ånga: 240°C i ${bakingTimeCovered} min<br>
-                    • Utan ånga: 210°C i ${bakingTimeUncovered} min<br>
-                    • Total tid: ~${bakingTimeTotal} min<br>
-                    • Kräver bakugn med ångfunktion
-                    </span>
+                    <div class="recipe-card">
+                        <h3><span class="icon">🔥</span> Bakning Dutch Oven</h3>
+                        <div class="baking-instructions">
+                            <div class="baking-step">Förvärm ugn till 250°C med gryta i ugnen</div>
+                            <div class="baking-step">Baka med lock: 230°C i ${bakingTimeCovered} min</div>
+                            <div class="baking-step">Baka utan lock: 220°C i ${bakingTimeUncovered} min</div>
+                            <div class="baking-step"><strong>Total tid: ~${bakingTimeTotal} min</strong></div>
+                        </div>
+                    </div>
+
+                    <div class="recipe-card">
+                        <h3><span class="icon">💨</span> Öppen bakning</h3>
+                        <div class="baking-instructions">
+                            <div class="baking-step">Förvärm ugn till 250°C</div>
+                            <div class="baking-step">Baka med ånga: 240°C i ${bakingTimeCovered} min</div>
+                            <div class="baking-step">Baka utan ånga: 210°C i ${bakingTimeUncovered} min</div>
+                            <div class="baking-step"><strong>Total tid: ~${bakingTimeTotal} min</strong></div>
+                            <div class="baking-step" style="color: var(--green-light); font-style: italic;">Kräver bakugn med ångfunktion</div>
+                        </div>
+                    </div>
                 </div>
             `;
 
