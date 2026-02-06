@@ -1341,25 +1341,18 @@
             const totalWeight = flour + water + starter + salt;
 
             // Calculate recommended number of folds
-            // Base: 3-4 folds for medium hydration and medium time
-            // Add folds for higher hydration (>75%) or longer fermentation
+            // Base: 3-4 folds for medium hydration
+            // Add folds for higher hydration (>75%)
             let folds = 3;
             if (hydration > 75) folds = 4;
             if (hydration > 80) folds = 5;
-            if (time > 6) folds = Math.min(folds + 1, 6); // Max 6 folds
-            if (time < 3) folds = Math.max(folds - 1, 2); // Min 2 folds
+            if (hydration > 85) folds = 6;
 
-            // Calculate fold interval (spread evenly during first 2/3 of bulk fermentation)
-            const foldPeriod = (time * 0.67) / folds;
-            const foldMinutes = Math.round(foldPeriod * 60);
-            let foldIntervalText = `var ${foldMinutes}:e minut`;
-            if (foldMinutes >= 60) {
-                const foldHours = Math.floor(foldMinutes / 60);
-                const remainingMins = foldMinutes % 60;
-                foldIntervalText = remainingMins > 0
-                    ? `var ${foldHours}h ${remainingMins}min`
-                    : `var ${foldHours}:e timme`;
-            }
+            // Use 15-20 minute intervals (more frequent for high hydration)
+            const foldInterval = hydration > 80 ? 15 : (hydration > 75 ? 18 : 20);
+            const totalFoldingTime = Math.round((folds * foldInterval) / 60 * 10) / 10; // in hours
+
+            const foldIntervalText = `var ${foldInterval}:e minut under första ${totalFoldingTime}h`;
 
             let timeInfo = `Intervall bulkjäsning: ${minHours}h ${minMinutes}min - ${maxHours}h ${maxMinutes}min`;
             if (coldProof > 0) {
@@ -1424,7 +1417,7 @@
                         <div class="recipe-card-content">
                             <strong>${folds} stretch & folds</strong><br>
                             <span style="color: var(--green-medium); font-size: var(--text-sm);">
-                                Vik degen ${foldIntervalText} under första 2/3 av bulkjäsningen.
+                                Vik degen ${foldIntervalText}, sedan låt degen vila ostörd.
                                 Detta utvecklar glutennätverket och ger bättre struktur.
                             </span>
                         </div>
