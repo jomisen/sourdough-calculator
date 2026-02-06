@@ -399,12 +399,6 @@
             border: 0;
         }
 
-        .weather-status {
-            font-size: 13px;
-            color: #6b7a5e;
-            margin-top: 4px;
-            font-style: italic;
-        }
 
     </style>
 </head>
@@ -421,10 +415,7 @@
         <form onsubmit="calculateTime(); return false;">
             <div class="input-row">
                 <div class="input-group">
-                    <label for="temperature">
-                        Rumstemperatur
-                        <button type="button" onclick="fetchWeather()" style="background: none; border: none; cursor: pointer; padding: 0; margin-left: 8px; font-size: 18px;" title="Hämta utomhustemperatur" aria-label="Hämta utomhustemperatur baserat på din plats">🌡️</button>
-                    </label>
+                    <label for="temperature">Rumstemperatur</label>
                     <div class="input-wrapper">
                         <input
                             type="number"
@@ -438,7 +429,6 @@
                         <span class="unit" aria-hidden="true">°C</span>
                     </div>
                     <span id="temp-desc" class="visually-hidden">Ange rumstemperatur mellan 15 och 30 grader Celsius</span>
-                    <div class="weather-status" id="weatherStatus"></div>
                 </div>
 
                 <div class="input-group">
@@ -592,76 +582,9 @@
         let endTime = null;
         let calculatedTime = 0;
 
-        // Weather API functions using Open-Meteo (no API key required)
-        function fetchWeather() {
-            if (!navigator.geolocation) {
-                document.getElementById('weatherStatus').textContent = '⚠️ Geolocation stöds inte';
-                return;
-            }
-
-            document.getElementById('weatherStatus').textContent = '📍 Hämtar plats...';
-
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
-
-                    document.getElementById('weatherStatus').textContent = '🌤️ Hämtar väder...';
-
-                    // Using Open-Meteo API (free, no API key required)
-                    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&timezone=auto`)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('API-fel');
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            const temp = Math.round(data.current_weather.temperature);
-                            document.getElementById('temperature').value = temp;
-
-                            // Get location name using reverse geocoding
-                            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
-                                .then(r => r.json())
-                                .then(geoData => {
-                                    const city = geoData.address.city || geoData.address.town || geoData.address.village || 'din plats';
-                                    document.getElementById('weatherStatus').textContent =
-                                        `✅ Utomhustemperatur: ${temp}°C i ${city}`;
-                                })
-                                .catch(() => {
-                                    document.getElementById('weatherStatus').textContent =
-                                        `✅ Utomhustemperatur: ${temp}°C`;
-                                });
-
-                            announceToScreenReader(`Temperatur uppdaterad till ${temp} grader Celsius baserat på utomhustemperatur.`);
-                        })
-                        .catch(error => {
-                            console.error('Weather fetch error:', error);
-                            document.getElementById('weatherStatus').textContent =
-                                '⚠️ Kunde inte hämta väderdata';
-                        });
-                },
-                (error) => {
-                    console.error('Geolocation error:', error);
-                    let errorMsg = '⚠️ Kunde inte hämta plats';
-                    if (error.code === error.PERMISSION_DENIED) {
-                        errorMsg = '⚠️ Platstillgång nekad';
-                    }
-                    document.getElementById('weatherStatus').textContent = errorMsg;
-                }
-            );
-        }
-
-        // Auto-fetch weather on load (with delay to not be intrusive)
+        // Calculate on load with default values
         window.addEventListener('load', function() {
             calculateTime();
-            // Auto-fetch weather after 2 seconds if user hasn't interacted
-            setTimeout(() => {
-                const tempField = document.getElementById('temperature');
-                if (tempField.value === '22') { // Still default value
-                    fetchWeather();
-                }
-            }, 2000);
         });
 
         function calculateTime() {
