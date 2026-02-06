@@ -41,9 +41,6 @@
             --green-lighter: #c5d4b8;
             --cream: #fdfbf7;
             --cream-dark: #f7f5ef;
-            --beige: #e8dcc4;
-            --sand: #d4c5a0;
-            --warm-accent: #c9a875;
         }
 
         * {
@@ -69,7 +66,7 @@
                     rgba(0, 0, 0, 0.04) 8px,
                     rgba(0, 0, 0, 0.04) 16px
                 ),
-                linear-gradient(135deg, #a8b09a 0%, #c9b8a0 50%, #b5c4a9 100%);
+                linear-gradient(135deg, #9fb094 0%, #b5c4a9 100%);
             min-height: 100vh;
             padding: 100px var(--space-4) var(--space-4);
             position: relative;
@@ -83,9 +80,9 @@
             right: 0;
             bottom: 0;
             background-image:
-                radial-gradient(circle at 20% 20%, rgba(255, 248, 235, 0.18) 0%, transparent 40%),
-                radial-gradient(circle at 80% 80%, rgba(212, 197, 160, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 50% 50%, rgba(232, 220, 196, 0.08) 0%, transparent 60%);
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(139, 155, 128, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(253, 251, 247, 0.05) 0%, transparent 60%);
             pointer-events: none;
             z-index: 0;
         }
@@ -155,9 +152,7 @@
             margin-bottom: var(--space-1);
             font-size: var(--text-3xl);
             text-align: center;
-            font-weight: 600;
-            font-family: 'Georgia', 'Iowan Old Style', 'Times New Roman', serif;
-            letter-spacing: -0.5px;
+            font-weight: 700;
         }
 
         .subtitle {
@@ -207,14 +202,14 @@
         }
 
         .input-wrapper:hover {
-            border-color: var(--warm-accent);
+            border-color: var(--green-light);
             box-shadow: var(--shadow-md);
             transform: translateY(-1px);
         }
 
         .input-wrapper:focus-within {
-            border-color: var(--warm-accent);
-            box-shadow: 0 0 0 3px rgba(201, 168, 117, 0.2), var(--shadow-md);
+            border-color: var(--green-light);
+            box-shadow: 0 0 0 3px rgba(159, 176, 148, 0.2), var(--shadow-md);
             transform: translateY(-2px);
         }
 
@@ -305,8 +300,8 @@
 
         button {
             width: 100%;
-            background: linear-gradient(135deg, #c9a875 0%, #b89660 100%);
-            color: white;
+            background: linear-gradient(135deg, #7a8c6f 0%, #5d6e52 100%);
+            color: var(--cream);
             border: none;
             border-radius: var(--radius-sm);
             padding: var(--space-3);
@@ -322,7 +317,7 @@
         button:hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow-lg);
-            background: linear-gradient(135deg, #d4b585 0%, #c8a670 100%);
+            background: linear-gradient(135deg, #8a9c7f 0%, #6d7e62 100%);
         }
 
         button:active {
@@ -366,15 +361,14 @@
 
         /* Main Time Card */
         .time-card {
-            background: linear-gradient(135deg, #f5f0e8 0%, #ede5d8 100%);
+            background: linear-gradient(135deg, #7a8c6f 0%, #5d6e52 100%);
             border-radius: var(--radius-md);
             padding: var(--space-5);
-            color: var(--green-dark);
+            color: var(--cream);
             box-shadow: var(--shadow-lg);
             margin-bottom: var(--space-4);
             position: relative;
             overflow: hidden;
-            border: 2px solid var(--warm-accent);
         }
 
         .time-card::before {
@@ -384,7 +378,7 @@
             right: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(201, 168, 117, 0.08) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
             pointer-events: none;
         }
 
@@ -393,38 +387,33 @@
             margin-bottom: var(--space-3);
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
             position: relative;
-            font-family: 'Georgia', 'Iowan Old Style', 'Times New Roman', serif;
-            font-weight: 600;
-            letter-spacing: -0.3px;
         }
 
         .time-display {
             font-size: 48px;
             font-weight: 800;
             margin-bottom: var(--space-2);
-            color: var(--green-dark);
-            text-shadow: 1px 1px 2px rgba(201, 168, 117, 0.3);
+            color: var(--cream);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             position: relative;
             letter-spacing: -1px;
         }
 
         .time-range {
             font-size: var(--text-base);
-            opacity: 0.9;
+            opacity: 0.95;
             margin-bottom: var(--space-3);
             position: relative;
-            color: var(--green-dark);
         }
 
         .info {
-            background: rgba(201, 168, 117, 0.12);
+            background: rgba(253, 251, 247, 0.15);
             padding: var(--space-3);
             border-radius: var(--radius-sm);
             font-size: var(--text-base);
             line-height: 1.7;
-            border-left: 4px solid var(--warm-accent);
+            border-left: 4px solid var(--green-light);
             position: relative;
-            color: var(--green-dark);
         }
 
         /* Recipe Cards Grid */
@@ -458,8 +447,6 @@
             display: flex;
             align-items: center;
             gap: var(--space-2);
-            font-family: 'Georgia', 'Iowan Old Style', 'Times New Roman', serif;
-            font-weight: 600;
         }
 
         .recipe-card h3 .icon {
@@ -546,11 +533,10 @@
             color: var(--green-dark);
             font-size: var(--text-lg);
             margin-bottom: var(--space-3);
-            font-weight: 600;
+            font-weight: 700;
             display: flex;
             align-items: center;
             gap: var(--space-2);
-            font-family: 'Georgia', 'Iowan Old Style', 'Times New Roman', serif;
         }
 
         .info-box p {
@@ -563,10 +549,9 @@
             margin-top: var(--space-4);
             margin-bottom: var(--space-4);
             padding: var(--space-4);
-            background: linear-gradient(135deg, #8a9b7f 0%, #a0a898 100%);
+            background: linear-gradient(135deg, #7a8c6f 0%, #5d6e52 100%);
             border-radius: var(--radius-md);
             box-shadow: var(--shadow-lg);
-            border: 2px solid var(--beige);
         }
 
         .timer-button {
