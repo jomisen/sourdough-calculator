@@ -1215,6 +1215,25 @@
                         </select>
                     </div>
 
+                    <div class="input-group" id="wholeGrainGroup" style="display: none;">
+                        <label for="wholeGrainAmount">Fullkornsmjöl</label>
+                        <div class="input-wrapper">
+                            <input
+                                type="number"
+                                id="wholeGrainAmount"
+                                value="0"
+                                min="0"
+                                max="5000"
+                                step="10"
+                                aria-describedby="wholegrain-desc">
+                            <span class="unit" aria-hidden="true">g</span>
+                        </div>
+                        <span id="wholegrain-desc" class="visually-hidden">Ange mängd fullkornsmjöl i gram</span>
+                        <div id="wholeGrainPercent" style="margin-top: var(--space-1); font-size: var(--text-sm); color: var(--green-medium); font-weight: 600;"></div>
+                    </div>
+                </div>
+
+                <div class="input-row">
                     <div class="input-group">
                         <label for="starterAge">Surdeg matad för</label>
                         <select id="starterAge" class="input-wrapper" style="width: 100%; padding: var(--space-2) var(--space-3); font-size: var(--text-base); font-weight: 600; color: var(--green-dark); background: white; border: 2px solid var(--green-lighter); border-radius: var(--radius-sm); cursor: pointer;">
@@ -1225,6 +1244,8 @@
                             <option value="12">12+ timmar sen</option>
                         </select>
                     </div>
+
+                    <div class="input-group"></div>
                 </div>
 
                 <div class="input-row">
@@ -1386,7 +1407,7 @@
 
         // Auto-calculate when any input changes
         function setupAutoCalculate() {
-            const inputs = ['temperature', 'flour', 'water', 'starter', 'salt', 'coldProof', 'fridgeTemp'];
+            const inputs = ['temperature', 'flour', 'water', 'starter', 'salt', 'coldProof', 'fridgeTemp', 'wholeGrainAmount'];
             inputs.forEach(inputId => {
                 const element = document.getElementById(inputId);
                 if (element) {
@@ -1417,6 +1438,34 @@
                     fridgeTempRow.style.display = 'none';
                 }
             });
+
+            // Show/hide whole grain amount based on flour type
+            document.getElementById('flourType').addEventListener('change', function() {
+                const wholeGrainGroup = document.getElementById('wholeGrainGroup');
+                if (this.value === 'mixed') {
+                    wholeGrainGroup.style.display = 'block';
+                    updateWholeGrainPercent();
+                } else {
+                    wholeGrainGroup.style.display = 'none';
+                }
+            });
+        }
+
+        // Update whole grain percentage display
+        function updateWholeGrainPercent() {
+            const flour = parseFloat(document.getElementById('flour').value) || 0;
+            const wholeGrain = parseFloat(document.getElementById('wholeGrainAmount').value) || 0;
+            const percentDisplay = document.getElementById('wholeGrainPercent');
+
+            if (flour > 0 && wholeGrain > 0) {
+                const percent = Math.round((wholeGrain / flour) * 100);
+                const whitePercent = 100 - percent;
+                percentDisplay.textContent = `${percent}% fullkorn, ${whitePercent}% vitt mjöl`;
+            } else if (flour > 0) {
+                percentDisplay.textContent = '100% vitt mjöl';
+            } else {
+                percentDisplay.textContent = '';
+            }
         }
 
         // Calculate on load with default values
@@ -1425,6 +1474,13 @@
             const coldProof = parseFloat(document.getElementById('coldProof').value);
             if (coldProof > 0) {
                 document.getElementById('fridgeTempRow').style.display = 'grid';
+            }
+
+            // Show whole grain input if mixed is selected
+            const flourType = document.getElementById('flourType').value;
+            if (flourType === 'mixed') {
+                document.getElementById('wholeGrainGroup').style.display = 'block';
+                updateWholeGrainPercent();
             }
 
             calculateTime();
@@ -1468,9 +1524,22 @@
             // Advanced factors
             // Flour type factor
             let flourFactor = 1.0;
-            if (flourType === 'white') flourFactor = 1.0;
-            else if (flourType === 'whole') flourFactor = 0.85; // Faster with whole grain
-            else if (flourType === 'mixed') flourFactor = 0.92;
+            if (flourType === 'white') {
+                flourFactor = 1.0;
+            } else if (flourType === 'whole') {
+                flourFactor = 0.85; // Faster with whole grain
+            } else if (flourType === 'mixed') {
+                // Calculate weighted factor based on whole grain proportion
+                const wholeGrainAmount = parseFloat(document.getElementById('wholeGrainAmount')?.value) || 0;
+                const wholeGrainPercent = Math.min(wholeGrainAmount / flour, 1.0); // Cap at 100%
+                const whitePercent = 1.0 - wholeGrainPercent;
+
+                // Weighted average: white flour factor (1.0) and whole grain factor (0.85)
+                flourFactor = (whitePercent * 1.0) + (wholeGrainPercent * 0.85);
+
+                // Update percentage display
+                updateWholeGrainPercent();
+            }
 
             // Starter age factor (hours since feeding)
             let ageFactor = 1.0;
