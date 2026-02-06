@@ -72,17 +72,43 @@
         }
 
         .logo {
-            width: 180px;
-            height: 180px;
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
-            border: 4px solid var(--cream);
-            box-shadow: 0 8px 24px rgba(70, 80, 60, 0.3);
+            border: 5px solid var(--cream);
+            box-shadow:
+                0 12px 40px rgba(70, 80, 60, 0.35),
+                0 4px 12px rgba(70, 80, 60, 0.25),
+                inset 0 -2px 8px rgba(0, 0, 0, 0.1);
             background: white;
-            transition: transform 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(159, 176, 148, 0.3), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
         }
 
         .logo:hover {
-            transform: scale(1.05);
+            transform: translateY(-4px) scale(1.03);
+            box-shadow:
+                0 16px 48px rgba(70, 80, 60, 0.4),
+                0 6px 16px rgba(70, 80, 60, 0.3),
+                inset 0 -2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo:hover::after {
+            opacity: 1;
         }
 
         h1 {
@@ -691,9 +717,12 @@
             }
 
             .logo {
-                width: 120px;
-                height: 120px;
-                border: 3px solid var(--cream);
+                width: 140px;
+                height: 140px;
+                border: 4px solid var(--cream);
+                box-shadow:
+                    0 8px 32px rgba(70, 80, 60, 0.35),
+                    0 4px 12px rgba(70, 80, 60, 0.25);
             }
 
             h1 {
