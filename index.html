@@ -689,6 +689,13 @@
                 timeInfo += `<br><strong>Total tid (bulk + kall): ${totalMin}-${totalMax}h</strong>`;
             }
 
+            // Calculate baking time based on dough weight
+            const bakingTimeBase = 40; // Base time for ~1kg loaf
+            const weightFactor = totalWeight / 1000;
+            const bakingTimeTotal = Math.round(bakingTimeBase * Math.sqrt(weightFactor));
+            const bakingTimeCovered = Math.round(bakingTimeTotal * 0.55); // ~55% covered
+            const bakingTimeUncovered = bakingTimeTotal - bakingTimeCovered;
+
             timeRange.innerHTML = `
                 <div style="margin-bottom: 12px;">${timeInfo}</div>
                 <div style="font-size: 14px; opacity: 0.9;">
@@ -698,8 +705,25 @@
                     Surdeg: ${starter}g (${starterPercent.toFixed(0)}%)<br>
                     Salt: ${salt}g (${saltPercent.toFixed(1)}%)<br>
                     <strong>Total vikt: ${totalWeight}g</strong><br><br>
-                    <strong>🙌 Rekommenderat: ${folds} vik</strong><br>
-                    <span style="font-size: 13px; opacity: 0.85;">Gör stretch & fold ${foldIntervalText} under första hälften av bulkjäsningen</span>
+
+                    <strong>🙌 Vik: ${folds} st</strong><br>
+                    <span style="font-size: 13px; opacity: 0.85;">Stretch & fold ${foldIntervalText} under första hälften</span><br><br>
+
+                    <strong>🔥 Bakning Dutch Oven:</strong><br>
+                    <span style="font-size: 13px; opacity: 0.85;">
+                    • Förvärm: 250°C (med gryta)<br>
+                    • Med lock: 230°C i ${bakingTimeCovered} min<br>
+                    • Utan lock: 220°C i ${bakingTimeUncovered} min<br>
+                    • Total tid: ~${bakingTimeTotal} min
+                    </span><br><br>
+
+                    <strong>🔥 Öppen bakning:</strong><br>
+                    <span style="font-size: 13px; opacity: 0.85;">
+                    • Förvärm: 250°C (med stekpanna för ånga)<br>
+                    • Med ånga: 240°C i ${bakingTimeCovered} min<br>
+                    • Utan ånga: 210°C i ${bakingTimeUncovered} min<br>
+                    • Total tid: ~${bakingTimeTotal} min
+                    </span>
                 </div>
             `;
 
