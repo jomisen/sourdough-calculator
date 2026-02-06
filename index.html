@@ -603,27 +603,66 @@
         .countdown {
             position: relative;
             width: 280px;
-            height: 280px;
+            height: 320px;
             margin: var(--space-5) auto;
-            background: radial-gradient(circle at 30% 30%, rgba(253, 251, 247, 0.15), rgba(122, 140, 111, 0.3));
-            border-radius: 50%;
+            background: linear-gradient(180deg,
+                #E74C3C 0%,      /* Red top dome */
+                #C0392B 25%,     /* Darker red */
+                #ffffff 25%,     /* White body start */
+                #f5f5f5 50%,
+                #e8e8e8 75%,
+                #d0d0d0 100%     /* Silver base */
+            );
+            border-radius: 140px 140px 20px 20px;
             box-shadow:
-                0 10px 40px rgba(0, 0, 0, 0.3),
-                inset 0 -5px 20px rgba(0, 0, 0, 0.2),
-                inset 0 5px 20px rgba(255, 255, 255, 0.1);
+                0 15px 50px rgba(0, 0, 0, 0.4),
+                inset 0 -3px 10px rgba(0, 0, 0, 0.15),
+                inset 0 2px 5px rgba(255, 255, 255, 0.5);
             padding: var(--space-4);
             transition: all 0.3s ease;
+        }
+
+        .countdown::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 40px;
+            background: linear-gradient(180deg, #95a5a6, #7f8c8d);
+            border-radius: 15px 15px 5px 5px;
+            box-shadow: inset 0 -2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .countdown::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 260px;
+            height: 15px;
+            background: radial-gradient(ellipse, rgba(0, 0, 0, 0.3), transparent);
+            border-radius: 50%;
         }
 
         .countdown-circle {
             position: relative;
             width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 35% 35%, #8a9c7f, #5d6e52);
+            height: 85%;
+            margin-top: 15%;
+            background: radial-gradient(circle at 50% 40%,
+                #ffffff,
+                #f8f8f8 50%,
+                #e0e0e0 100%
+            );
             border-radius: 50%;
             box-shadow:
-                inset 0 0 30px rgba(0, 0, 0, 0.5),
-                inset 0 5px 10px rgba(255, 255, 255, 0.1);
+                inset 0 0 40px rgba(0, 0, 0, 0.1),
+                inset 0 3px 10px rgba(255, 255, 255, 0.8),
+                0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 8px solid #d0d0d0;
         }
 
         .countdown-svg {
@@ -635,55 +674,57 @@
 
         .countdown-circle-bg {
             fill: none;
-            stroke: rgba(253, 251, 247, 0.15);
-            stroke-width: 14;
+            stroke: rgba(200, 200, 200, 0.3);
+            stroke-width: 10;
         }
 
         .countdown-circle-progress {
             fill: none;
             stroke: url(#progressGradient);
-            stroke-width: 14;
+            stroke-width: 10;
             stroke-linecap: round;
             transition: stroke-dashoffset 1s linear;
-            filter: drop-shadow(0 0 4px rgba(253, 251, 247, 0.5));
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
         }
 
         .countdown-time {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -55%);
+            transform: translate(-50%, -50%);
             font-size: 42px;
             font-weight: 700;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            color: var(--cream);
-            text-shadow:
-                0 2px 4px rgba(0, 0, 0, 0.5),
-                0 0 20px rgba(253, 251, 247, 0.3);
+            color: #2c3e50;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
             letter-spacing: 2px;
             text-align: center;
         }
 
         .countdown-label {
             position: absolute;
-            bottom: 65px;
+            bottom: 50px;
             left: 50%;
             transform: translateX(-50%);
             font-size: var(--text-xs);
-            color: rgba(253, 251, 247, 0.9);
+            color: #7f8c8d;
             text-transform: uppercase;
             letter-spacing: 3px;
             font-weight: 600;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
         }
 
         .countdown.finished {
-            background: radial-gradient(circle at 30% 30%, rgba(255, 177, 20, 0.2), rgba(212, 146, 63, 0.3));
             animation: pulse-glow 1.5s infinite;
         }
 
         .countdown.finished .countdown-circle {
-            background: radial-gradient(circle at 35% 35%, var(--green-light), #7a8c6f);
+            background: radial-gradient(circle at 50% 40%,
+                #ffe6e6,
+                #ffcccc 50%,
+                #ffb3b3 100%
+            );
+            border-color: #E74C3C;
         }
 
         .countdown.finished .countdown-circle-progress {
@@ -691,25 +732,28 @@
         }
 
         .countdown.finished .countdown-time {
-            color: var(--cream);
+            color: #E74C3C;
             font-size: 28px;
             animation: pulse-text 1.5s infinite;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
         }
 
         @keyframes pulse-glow {
             0%, 100% {
                 box-shadow:
-                    0 10px 40px rgba(0, 0, 0, 0.3),
-                    inset 0 -5px 20px rgba(0, 0, 0, 0.2),
-                    inset 0 5px 20px rgba(255, 255, 255, 0.1),
-                    0 0 30px rgba(255, 177, 20, 0.4);
+                    0 15px 50px rgba(0, 0, 0, 0.4),
+                    inset 0 -3px 10px rgba(0, 0, 0, 0.15),
+                    inset 0 2px 5px rgba(255, 255, 255, 0.5),
+                    0 0 30px rgba(231, 76, 60, 0.5);
+                transform: scale(1);
             }
             50% {
                 box-shadow:
-                    0 10px 40px rgba(0, 0, 0, 0.3),
-                    inset 0 -5px 20px rgba(0, 0, 0, 0.2),
-                    inset 0 5px 20px rgba(255, 255, 255, 0.1),
-                    0 0 50px rgba(255, 177, 20, 0.6);
+                    0 15px 50px rgba(0, 0, 0, 0.4),
+                    inset 0 -3px 10px rgba(0, 0, 0, 0.15),
+                    inset 0 2px 5px rgba(255, 255, 255, 0.5),
+                    0 0 50px rgba(231, 76, 60, 0.8);
+                transform: scale(1.02);
             }
         }
 
@@ -1420,12 +1464,12 @@
                             <svg class="countdown-svg" viewBox="0 0 200 200">
                                 <defs>
                                     <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" style="stop-color:#fdfbf7;stop-opacity:1" />
-                                        <stop offset="100%" style="stop-color:#e8e4d8;stop-opacity:1" />
+                                        <stop offset="0%" style="stop-color:#E74C3C;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#C0392B;stop-opacity:1" />
                                     </linearGradient>
                                     <linearGradient id="finishedGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" style="stop-color:#FFB114;stop-opacity:1" />
-                                        <stop offset="100%" style="stop-color:#ffd700;stop-opacity:1" />
+                                        <stop offset="0%" style="stop-color:#27AE60;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#229954;stop-opacity:1" />
                                     </linearGradient>
                                 </defs>
                                 <circle class="countdown-circle-bg" cx="100" cy="100" r="90"></circle>
