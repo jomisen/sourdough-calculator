@@ -520,7 +520,7 @@
                 </div>
             </div>
 
-            <button type="submit" aria-label="Beräkna jästid för surdeg">Beräkna Jästid</button>
+            <button type="submit" aria-label="Beräkna jästid för surdeg" style="display: none;">Beräkna Jästid</button>
         </form>
 
         <div class="result" id="result" role="region" aria-live="polite" aria-atomic="true">
@@ -582,9 +582,21 @@
         let endTime = null;
         let calculatedTime = 0;
 
+        // Auto-calculate when any input changes
+        function setupAutoCalculate() {
+            const inputs = ['temperature', 'flour', 'water', 'starter', 'salt', 'coldProof'];
+            inputs.forEach(inputId => {
+                const element = document.getElementById(inputId);
+                if (element) {
+                    element.addEventListener('input', calculateTime);
+                }
+            });
+        }
+
         // Calculate on load with default values
         window.addEventListener('load', function() {
             calculateTime();
+            setupAutoCalculate();
         });
 
         function calculateTime() {
