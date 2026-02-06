@@ -908,6 +908,21 @@
             transform: scale(1.05);
         }
 
+        .thermometer-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: var(--space-1);
+            padding: 0 2px;
+            font-size: var(--text-xs);
+            color: var(--green-medium);
+            font-weight: 600;
+        }
+
+        .thermometer-labels span {
+            flex: 0 0 auto;
+            text-align: center;
+        }
+
         /* Instagram Section */
         .instagram-section {
             margin-top: var(--space-5);
@@ -1161,6 +1176,14 @@
                         step="0.5"
                         value="22"
                         aria-label="Justera rumstemperatur med slider">
+                    <div class="thermometer-labels">
+                        <span>15°</span>
+                        <span>18°</span>
+                        <span>21°</span>
+                        <span>24°</span>
+                        <span>27°</span>
+                        <span>30°</span>
+                    </div>
                     <span id="temp-desc" class="visually-hidden">Ange rumstemperatur mellan 15 och 30 grader Celsius</span>
                 </div>
 
