@@ -1345,8 +1345,9 @@
                     <div class="input-group">
                         <label for="peakStatus">Surdegens status</label>
                         <select id="peakStatus" class="input-wrapper" style="width: 100%; padding: var(--space-2) var(--space-3); font-size: var(--text-base); font-weight: 600; color: var(--green-dark); background: white; border: 2px solid var(--green-lighter); border-radius: var(--radius-sm); cursor: pointer;">
+                            <option value="normal" selected>Normal/Standard</option>
                             <option value="rising">Stigande (växer)</option>
-                            <option value="peak" selected>Peak (toppen)</option>
+                            <option value="peak">Peak (toppen)</option>
                             <option value="falling">Fallande (efter peak)</option>
                         </select>
                     </div>
@@ -1622,7 +1623,7 @@
             const flourType = advancedEnabled ? (document.getElementById('flourType')?.value || 'mixed') : 'white';
             const starterAge = advancedEnabled ? (parseFloat(document.getElementById('starterAge')?.value) || 6) : 6;
             const feedingRatio = advancedEnabled ? (document.getElementById('feedingRatio')?.value || '1:5:5') : '1:5:5';
-            const peakStatus = advancedEnabled ? (document.getElementById('peakStatus')?.value || 'peak') : 'peak';
+            const peakStatus = advancedEnabled ? (document.getElementById('peakStatus')?.value || 'normal') : 'normal';
             const autolyse = advancedEnabled ? (document.getElementById('autolyse')?.value || 'no') : 'no';
 
             // Calculate percentages (baker's percentage)
@@ -1671,12 +1672,19 @@
 
             if (advancedEnabled) {
                 // Peak status is the PRIMARY factor
-                if (peakStatus === 'rising') peakFactor = 1.15; // Not at peak yet
+                if (peakStatus === 'normal') peakFactor = 1.0; // Standard/baseline
+                else if (peakStatus === 'rising') peakFactor = 1.15; // Not at peak yet
                 else if (peakStatus === 'peak') peakFactor = 0.9; // Optimal
                 else if (peakStatus === 'falling') peakFactor = 1.2; // Past optimal
 
                 // Starter age is SECONDARY - small adjustment based on timing
-                if (peakStatus === 'peak') {
+                if (peakStatus === 'normal') {
+                    // Normal/standard: use moderate adjustments based on timing
+                    if (starterAge <= 4) ageFactor = 1.0; // Normal timing
+                    else if (starterAge <= 6) ageFactor = 1.0; // Still normal
+                    else if (starterAge <= 8) ageFactor = 1.02; // Getting old
+                    else ageFactor = 1.05; // Quite old
+                } else if (peakStatus === 'peak') {
                     // At peak: timing matters less, but unusual timing adds small delay
                     if (starterAge <= 2) ageFactor = 1.05; // Too fast, might not be stable
                     else if (starterAge <= 6) ageFactor = 1.0; // Normal timing (4-6h)
