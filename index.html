@@ -661,6 +661,27 @@
             const maxMinutes = Math.round((maxTime - maxHours) * 60);
             const totalWeight = flour + water + starter + salt;
 
+            // Calculate recommended number of folds
+            // Base: 3-4 folds for medium hydration and medium time
+            // Add folds for higher hydration (>75%) or longer fermentation
+            let folds = 3;
+            if (hydration > 75) folds = 4;
+            if (hydration > 80) folds = 5;
+            if (time > 6) folds = Math.min(folds + 1, 6); // Max 6 folds
+            if (time < 3) folds = Math.max(folds - 1, 2); // Min 2 folds
+
+            // Calculate fold interval (spread evenly during first 2/3 of bulk fermentation)
+            const foldPeriod = (time * 0.67) / folds;
+            const foldMinutes = Math.round(foldPeriod * 60);
+            let foldIntervalText = `var ${foldMinutes}:e minut`;
+            if (foldMinutes >= 60) {
+                const foldHours = Math.floor(foldMinutes / 60);
+                const remainingMins = foldMinutes % 60;
+                foldIntervalText = remainingMins > 0
+                    ? `var ${foldHours}h ${remainingMins}min`
+                    : `var ${foldHours}:e timme`;
+            }
+
             let timeInfo = `Intervall bulkjäsning: ${minHours}h ${minMinutes}min - ${maxHours}h ${maxMinutes}min`;
             if (coldProof > 0) {
                 const totalMin = Math.floor(minTime + coldProof);
@@ -676,7 +697,9 @@
                     Vatten: ${water}g (${hydration.toFixed(0)}% hydrering)<br>
                     Surdeg: ${starter}g (${starterPercent.toFixed(0)}%)<br>
                     Salt: ${salt}g (${saltPercent.toFixed(1)}%)<br>
-                    <strong>Total vikt: ${totalWeight}g</strong>
+                    <strong>Total vikt: ${totalWeight}g</strong><br><br>
+                    <strong>🙌 Rekommenderat: ${folds} vik</strong><br>
+                    <span style="font-size: 13px; opacity: 0.85;">Gör stretch & fold ${foldIntervalText} under första hälften av bulkjäsningen</span>
                 </div>
             `;
 
