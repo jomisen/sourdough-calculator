@@ -1173,7 +1173,14 @@
             if (coldProof > 0) {
                 const totalMin = Math.floor(minTime + coldProof);
                 const totalMax = Math.ceil(maxTime + coldProof);
-                timeInfo += `<br><strong>Total tid (bulk + kall): ${totalMin}-${totalMax}h</strong>`;
+                let fridgeNote = '';
+                if (fridgeTemp < 4) {
+                    fridgeNote = ' (Kallt kylskåp - minimal jäsning under kalljäsning)';
+                } else if (fridgeTemp > 6) {
+                    fridgeNote = ' (Varmt kylskåp - viss jäsning fortsätter)';
+                }
+                timeInfo += `<br><strong>Total tid (bulk + kall): ${totalMin}-${totalMax}h</strong>${fridgeNote}`;
+                timeInfo += `<br><span style="font-size: var(--text-sm); opacity: 0.85;">Kalljäsning vid ${fridgeTemp}°C</span>`;
             }
 
             // Calculate baking time based on dough weight
