@@ -740,6 +740,106 @@
             border: 0;
         }
 
+        /* Advanced Toggle */
+        .advanced-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-2);
+            margin: var(--space-4) 0;
+            padding: var(--space-3);
+            background: rgba(159, 176, 148, 0.1);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .advanced-toggle:hover {
+            background: rgba(159, 176, 148, 0.15);
+            border-color: var(--green-lighter);
+        }
+
+        .advanced-toggle input[type="checkbox"] {
+            width: 48px;
+            height: 24px;
+            position: relative;
+            cursor: pointer;
+            appearance: none;
+            background: var(--green-lighter);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .advanced-toggle input[type="checkbox"]:checked {
+            background: var(--green-light);
+        }
+
+        .advanced-toggle input[type="checkbox"]::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            background: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .advanced-toggle input[type="checkbox"]:checked::before {
+            left: 26px;
+        }
+
+        .advanced-toggle label {
+            font-weight: 600;
+            color: var(--green-dark);
+            cursor: pointer;
+            margin: 0;
+            font-size: var(--text-base);
+        }
+
+        .advanced-section {
+            display: none;
+            margin: var(--space-4) 0;
+            padding: var(--space-4);
+            background: linear-gradient(135deg, rgba(159, 176, 148, 0.08), rgba(181, 196, 169, 0.08));
+            border-radius: var(--radius-md);
+            border: 2px dashed var(--green-lighter);
+            animation: slideIn 0.3s ease;
+        }
+
+        .advanced-section.show {
+            display: block;
+        }
+
+        .advanced-section h3 {
+            color: var(--green-dark);
+            font-size: var(--text-lg);
+            margin-bottom: var(--space-3);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .advanced-section select {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .advanced-section select:hover {
+            border-color: var(--green-light);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+
+        .advanced-section select:focus {
+            border-color: var(--green-light);
+            box-shadow: 0 0 0 3px rgba(159, 176, 148, 0.2), var(--shadow-md);
+            transform: translateY(-2px);
+            outline: none;
+        }
+
         /* Instagram Section */
         .instagram-section {
             margin-top: var(--space-5);
@@ -1095,6 +1195,72 @@
                 </div>
             </div>
 
+            <!-- Advanced Settings Toggle -->
+            <div class="advanced-toggle" onclick="toggleAdvanced()">
+                <input type="checkbox" id="advancedToggle" onclick="event.stopPropagation(); toggleAdvanced();">
+                <label for="advancedToggle">Avancerade inställningar</label>
+            </div>
+
+            <!-- Advanced Settings Section -->
+            <div class="advanced-section" id="advancedSection">
+                <h3><span aria-hidden="true">⚙️</span> Avancerade inställningar</h3>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="flourType">Mjöltyp</label>
+                        <select id="flourType" class="input-wrapper" style="width: 100%; padding: var(--space-2) var(--space-3); font-size: var(--text-base); font-weight: 600; color: var(--green-dark); background: white; border: 2px solid var(--green-lighter); border-radius: var(--radius-sm); cursor: pointer;">
+                            <option value="white">Vitt mjöl</option>
+                            <option value="whole">Fullkornsmjöl</option>
+                            <option value="mixed" selected>Blandning</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="starterAge">Surdeg matad för</label>
+                        <select id="starterAge" class="input-wrapper" style="width: 100%; padding: var(--space-2) var(--space-3); font-size: var(--text-base); font-weight: 600; color: var(--green-dark); background: white; border: 2px solid var(--green-lighter); border-radius: var(--radius-sm); cursor: pointer;">
+                            <option value="2">2 timmar sen</option>
+                            <option value="4">4 timmar sen</option>
+                            <option value="6" selected>6 timmar sen</option>
+                            <option value="8">8 timmar sen</option>
+                            <option value="12">12+ timmar sen</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="feedingRatio">Matningsratio</label>
+                        <select id="feedingRatio" class="input-wrapper" style="width: 100%; padding: var(--space-2) var(--space-3); font-size: var(--text-base); font-weight: 600; color: var(--green-dark); background: white; border: 2px solid var(--green-lighter); border-radius: var(--radius-sm); cursor: pointer;">
+                            <option value="1:1:1">1:1:1 (surdeg:mjöl:vatten)</option>
+                            <option value="1:5:5" selected>1:5:5 (standard)</option>
+                            <option value="1:10:10">1:10:10 (stark matning)</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="peakStatus">Surdegens status</label>
+                        <select id="peakStatus" class="input-wrapper" style="width: 100%; padding: var(--space-2) var(--space-3); font-size: var(--text-base); font-weight: 600; color: var(--green-dark); background: white; border: 2px solid var(--green-lighter); border-radius: var(--radius-sm); cursor: pointer;">
+                            <option value="rising">Stigande (växer)</option>
+                            <option value="peak" selected>Peak (toppen)</option>
+                            <option value="falling">Fallande (efter peak)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="autolyse">Autolyse</label>
+                        <select id="autolyse" class="input-wrapper" style="width: 100%; padding: var(--space-2) var(--space-3); font-size: var(--text-base); font-weight: 600; color: var(--green-dark); background: white; border: 2px solid var(--green-lighter); border-radius: var(--radius-sm); cursor: pointer;">
+                            <option value="no" selected>Ingen autolyse</option>
+                            <option value="30">30 min autolyse</option>
+                            <option value="60">60 min autolyse</option>
+                            <option value="120">2h autolyse</option>
+                        </select>
+                    </div>
+                    <div class="input-group"></div>
+                </div>
+            </div>
+
             <button type="submit" aria-label="Beräkna jästid för surdeg" style="display: none;">Beräkna Jästid</button>
         </form>
 
@@ -1201,6 +1367,20 @@
         let endTime = null;
         let calculatedTime = 0;
 
+        // Toggle advanced settings
+        function toggleAdvanced() {
+            const checkbox = document.getElementById('advancedToggle');
+            const section = document.getElementById('advancedSection');
+
+            checkbox.checked = !checkbox.checked;
+
+            if (checkbox.checked) {
+                section.classList.add('show');
+            } else {
+                section.classList.remove('show');
+            }
+        }
+
         // Handle number of loaves change
         function handleNumLeavesChange() {
             calculateTime();
@@ -1213,6 +1393,15 @@
                 const element = document.getElementById(inputId);
                 if (element) {
                     element.addEventListener('input', calculateTime);
+                }
+            });
+
+            // Advanced settings
+            const advancedInputs = ['flourType', 'starterAge', 'feedingRatio', 'peakStatus', 'autolyse'];
+            advancedInputs.forEach(inputId => {
+                const element = document.getElementById(inputId);
+                if (element) {
+                    element.addEventListener('change', calculateTime);
                 }
             });
 
@@ -1253,6 +1442,13 @@
             const coldProof = parseFloat(document.getElementById('coldProof').value) || 0;
             const fridgeTemp = parseFloat(document.getElementById('fridgeTemp').value) || 4;
 
+            // Advanced settings
+            const flourType = document.getElementById('flourType')?.value || 'mixed';
+            const starterAge = parseFloat(document.getElementById('starterAge')?.value) || 6;
+            const feedingRatio = document.getElementById('feedingRatio')?.value || '1:5:5';
+            const peakStatus = document.getElementById('peakStatus')?.value || 'peak';
+            const autolyse = document.getElementById('autolyse')?.value || 'no';
+
             // Calculate percentages (baker's percentage)
             const starterPercent = (starter / flour) * 100;
             const hydration = (water / flour) * 100;
@@ -1271,8 +1467,39 @@
             // For every 5% increase in starter, reduce time by ~15%
             const starterFactor = Math.pow(0.85, (starterPercent - baseStarter) / 5);
 
+            // Advanced factors
+            // Flour type factor
+            let flourFactor = 1.0;
+            if (flourType === 'white') flourFactor = 1.0;
+            else if (flourType === 'whole') flourFactor = 0.85; // Faster with whole grain
+            else if (flourType === 'mixed') flourFactor = 0.92;
+
+            // Starter age factor (hours since feeding)
+            let ageFactor = 1.0;
+            if (starterAge <= 2) ageFactor = 1.2; // Too young
+            else if (starterAge <= 4) ageFactor = 1.0; // Approaching peak
+            else if (starterAge <= 6) ageFactor = 0.9; // At peak
+            else if (starterAge <= 8) ageFactor = 1.1; // Past peak
+            else ageFactor = 1.3; // Well past peak
+
+            // Feeding ratio factor
+            let ratioFactor = 1.0;
+            if (feedingRatio === '1:1:1') ratioFactor = 1.1; // Less vigorous
+            else if (feedingRatio === '1:5:5') ratioFactor = 1.0; // Standard
+            else if (feedingRatio === '1:10:10') ratioFactor = 0.9; // Very vigorous
+
+            // Peak status factor
+            let peakFactor = 1.0;
+            if (peakStatus === 'rising') peakFactor = 1.15; // Not at peak yet
+            else if (peakStatus === 'peak') peakFactor = 0.9; // Optimal
+            else if (peakStatus === 'falling') peakFactor = 1.2; // Past optimal
+
+            // Autolyse factor
+            let autolyseFactor = 1.0;
+            if (autolyse !== 'no') autolyseFactor = 0.95; // Slightly faster with autolyse
+
             // Calculate bulk fermentation time
-            let bulkTime = baseTime * tempFactor * starterFactor;
+            let bulkTime = baseTime * tempFactor * starterFactor * flourFactor * ageFactor * ratioFactor * peakFactor * autolyseFactor;
 
             // Ensure reasonable bounds
             bulkTime = Math.max(2, Math.min(24, bulkTime));
