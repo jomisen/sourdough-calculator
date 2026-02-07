@@ -386,6 +386,24 @@
             outline-offset: 2px;
         }
 
+        .select-input {
+            width: 100%;
+            padding: var(--space-2) var(--space-3);
+            font-size: var(--text-base);
+            font-weight: 600;
+            color: var(--green-dark);
+            background: white;
+            border: 2px solid var(--green-lighter);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+        }
+
+        .select-input:focus {
+            outline: 3px solid var(--green-light);
+            outline-offset: 2px;
+            border-color: var(--green-light);
+        }
+
         .unit {
             color: var(--green-medium);
             font-size: var(--text-base);
@@ -1518,7 +1536,7 @@
                 <div class="input-row">
                     <div class="input-group">
                         <label for="flourType">Mjöltyp</label>
-                        <select id="flourType" class="input-wrapper" style="width: 100%; padding: var(--space-2) var(--space-3); font-size: var(--text-base); font-weight: 600; color: var(--green-dark); background: white; border: 2px solid var(--green-lighter); border-radius: var(--radius-sm); cursor: pointer;">
+                        <select id="flourType" class="select-input">
                             <option value="white">Vitt mjöl</option>
                             <option value="whole">Fullkornsmjöl</option>
                             <option value="mixed" selected>Blandning</option>
@@ -1547,7 +1565,7 @@
                 <div class="input-row">
                     <div class="input-group">
                         <label for="feedingRatio">Matningsratio</label>
-                        <select id="feedingRatio" class="input-wrapper" style="width: 100%; padding: var(--space-2) var(--space-3); font-size: var(--text-base); font-weight: 600; color: var(--green-dark); background: white; border: 2px solid var(--green-lighter); border-radius: var(--radius-sm); cursor: pointer;">
+                        <select id="feedingRatio" class="select-input">
                             <option value="1:1:1">1:1:1 (surdeg:mjöl:vatten)</option>
                             <option value="1:2:2">1:2:2</option>
                             <option value="1:3:3">1:3:3</option>
@@ -1558,7 +1576,7 @@
 
                     <div class="input-group">
                         <label for="peakStatus">Surdegens status</label>
-                        <select id="peakStatus" class="input-wrapper" style="width: 100%; padding: var(--space-2) var(--space-3); font-size: var(--text-base); font-weight: 600; color: var(--green-dark); background: white; border: 2px solid var(--green-lighter); border-radius: var(--radius-sm); cursor: pointer;">
+                        <select id="peakStatus" class="select-input">
                             <option value="normal" selected>Normal/Standard</option>
                             <option value="rising">Stigande (växer)</option>
                             <option value="peak">Peak (toppen)</option>
@@ -1570,7 +1588,7 @@
                 <div class="input-row">
                     <div class="input-group">
                         <label for="autolyse">Autolys</label>
-                        <select id="autolyse" class="input-wrapper" style="width: 100%; padding: var(--space-2) var(--space-3); font-size: var(--text-base); font-weight: 600; color: var(--green-dark); background: white; border: 2px solid var(--green-lighter); border-radius: var(--radius-sm); cursor: pointer;">
+                        <select id="autolyse" class="select-input">
                             <option value="no" selected>Ingen autolys</option>
                             <option value="30">30 min autolys</option>
                             <option value="60">60 min autolys</option>
@@ -1844,10 +1862,12 @@
     </div>
 
     <script>
-        // Timer variables
-        let timerInterval = null;
-        let endTime = null;
-        let calculatedTime = 0;
+        // Namespace for app state to avoid global variable conflicts
+        const SourdoughApp = {
+            timerInterval: null,
+            endTime: null,
+            calculatedTime: 0
+        };
 
         // Input validation function
         function validateInputs() {
@@ -2192,7 +2212,7 @@
             calculatedTime = totalTimeWithCold;
 
             // Reset timer if running
-            if (timerInterval) {
+            if (SourdoughApp.timerInterval) {
                 stopTimer();
             }
 
@@ -2365,7 +2385,7 @@
 
         function startTimer() {
             const now = new Date();
-            endTime = new Date(now.getTime() + calculatedTime * 60 * 60 * 1000);
+            SourdoughApp.endTime = new Date(now.getTime() + calculatedTime * 60 * 60 * 1000);
 
             // Update UI
             document.getElementById('startTimerBtn').style.display = 'none';
@@ -2377,7 +2397,7 @@
 
             // Start countdown
             updateTimer();
-            timerInterval = setInterval(updateTimer, 1000);
+            SourdoughApp.timerInterval = setInterval(updateTimer, 1000);
 
             // Update button states
             document.getElementById('startTimerBtn').setAttribute('aria-hidden', 'true');
@@ -2392,9 +2412,9 @@
         }
 
         function stopTimer() {
-            if (timerInterval) {
-                clearInterval(timerInterval);
-                timerInterval = null;
+            if (SourdoughApp.timerInterval) {
+                clearInterval(SourdoughApp.timerInterval);
+                SourdoughApp.timerInterval = null;
             }
 
             document.getElementById('startTimerBtn').style.display = 'block';
@@ -2415,8 +2435,8 @@
                 // Timer finished
                 document.getElementById('countdownTime').textContent = '🎉 Klar!';
                 document.getElementById('countdown').classList.add('finished');
-                clearInterval(timerInterval);
-                timerInterval = null;
+                clearInterval(SourdoughApp.timerInterval);
+                SourdoughApp.timerInterval = null;
 
                 // Announce to screen readers
                 announceToScreenReader('Tiden är ute! Din surdeg är klar att bakas!');
