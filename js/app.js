@@ -434,12 +434,16 @@ function showTroubleshootingForm(problemType) {
             causes: [
                 '⚠️ För svag surdegsstart (VANLIGASTE ORSAKEN!)',
                 'Överjäst deg - jäste för länge',
+                'För lite ånga under gräddning',
+                'För få vikningar under bulkjäsning',
                 'För låg ugnstemperatur',
                 'Glömde skåra brödet',
                 'Degen formades för löst'
             ],
             solutions: [
                 '💪 <strong>Starkare surdegsstart (FIX DETTA FÖRST!)</strong> - Mata 1:5:5 dagligen i 3-5 dagar. Din surdeg ska dubblas på 4-6h och flyta i vatten (flyttest). Använd vid peak!',
+                '💨 <strong>Mer ånga!</strong> - Dutch oven: släng in 3-4 isbitar när du lägger i brödet. Öppen bakning: häll 1 dl vatten på en het plåt längst ner i ugnen',
+                '🙌 <strong>Fler vikningar</strong> - gör 4-5 stretch & folds under bulkjäsningen för att bygga styrka',
                 '⏱️ <strong>Korta ner bulkjäsningen</strong> - använd kalkylatorn och fingertestet',
                 '🔥 <strong>Högre temperatur</strong> - 250°C och förvärm i 60 min',
                 '🔪 <strong>Skåra djupare</strong> - använd riktigt vass kniv/lame',
@@ -465,17 +469,19 @@ function showTroubleshootingForm(problemType) {
         'spread': {
             title: '🌊 Spretig form (degen rann ut)',
             causes: [
-                'För hög hydrering för din erfarenhetsnivå',
-                'För lite glutenutveckling',
+                'För lite glutenutveckling (för få vikningar)',
+                'För hög hydrering',
+                'Mjöl med låg proteinhalt',
                 'Överjäst',
                 'Formades för löst'
             ],
             solutions: [
-                '💧 <strong>Sänk hydreringen</strong> - börja med 70% och öka gradvis',
-                '🙌 <strong>Fler vikningar</strong> - gör 4-5 stretch & folds',
+                '🙌 <strong>Arbeta mer med vikningarna!</strong> - Gör 4-5 stretch & folds under bulkjäsningen. Detta bygger styrka i degen så den håller formen bättre',
+                '🌾 <strong>Högre proteinhalt</strong> - Byt till mjöl med minst 12% protein (t.ex. Manitoba, starkt brödjöl). Lågt protein = svagare glutennätverk',
+                '💧 <strong>Sänk hydreringen</strong> - Om vikningar inte hjälper, prova 5% mindre vatten',
                 '⏱️ <strong>Korta jästiden</strong> - överjäst deg tappar struktur',
                 '🤲 <strong>Tight formning</strong> - bygg stark ytspänning',
-                '❄️ <strong>Kalljäsning</strong> - gör degen lättare att hantera'
+                '❄️ <strong>Kalljäsning</strong> - gör degen fastare och lättare att hantera'
             ]
         },
         'dense': {
@@ -561,14 +567,15 @@ function showTroubleshootingForm(problemType) {
             causes: [
                 'För lite salt',
                 'För kort jästning',
-                'Ingen kalljäsning',
+                'Ingen kalljäsning (mjölksyran får inte utvecklas)',
                 'Ung surdegsstart'
             ],
             solutions: [
                 '🧂 <strong>Mer salt</strong> - använd 2% (20g per 1000g mjöl)',
-                '⏱️ <strong>Längre jästning</strong> - mer tid = mer smak',
-                '❄️ <strong>Kalljäsning</strong> - 12-24h i kylen ger mycket smak',
-                '💪 <strong>Mogen surdeg</strong> - använd surdeg vid peak för bäst smak'
+                '❄️ <strong>Kalljäsning (BÄSTA SMAKTRICKET!)</strong> - Kalljäs den formade degen i 12-24h. Detta låter mjölksyrabakterierna arbeta långsamt och utveckla komplex, god smak',
+                '⏱️ <strong>Längre bulkjäsning</strong> - mer tid vid rumstemperatur = mer smak',
+                '💪 <strong>Mogen surdeg</strong> - använd surdeg vid peak för bäst smak',
+                '🌾 <strong>Prova surdegsbröd med fullkorn</strong> - ger mer smak än rent vitt mjöl'
             ]
         },
         'sour': {
