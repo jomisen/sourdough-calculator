@@ -98,20 +98,30 @@ export function startTimer() {
  * Pause timer (keeps display visible)
  */
 export function stopTimer() {
+    console.log('stopTimer called'); // Debug log
+
     if (SourdoughApp.timerInterval) {
         clearInterval(SourdoughApp.timerInterval);
         SourdoughApp.timerInterval = null;
+        console.log('Interval cleared'); // Debug log
 
         // Save remaining time
         const now = new Date();
         SourdoughApp.remainingTime = SourdoughApp.endTime - now;
         SourdoughApp.isPaused = true;
+        console.log('Remaining time saved:', SourdoughApp.remainingTime); // Debug log
     }
 
-    // Update button visibility
-    document.getElementById('pauseBtn').style.display = 'none';
-    document.getElementById('resumeBtn').style.display = 'inline-block';
-    document.getElementById('restartBtn').style.display = 'inline-block';
+    // Update button visibility with error checking
+    const pauseBtn = document.getElementById('pauseBtn');
+    const resumeBtn = document.getElementById('resumeBtn');
+    const restartBtn = document.getElementById('restartBtn');
+
+    if (pauseBtn) pauseBtn.style.display = 'none';
+    if (resumeBtn) resumeBtn.style.display = 'inline-block';
+    if (restartBtn) restartBtn.style.display = 'inline-block';
+
+    console.log('Buttons updated'); // Debug log
 
     // Announce to screen readers
     announceToScreenReader('Timer pausad.');
