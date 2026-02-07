@@ -1859,9 +1859,60 @@
     <!-- Load modular JavaScript application -->
     <script type="module" src="js/app.js"></script>
 
+
     <!-- GoatCounter Analytics - Privacy-friendly, no cookies needed -->
     <script data-goatcounter="https://jomis.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
 
+    <script>
+        // Track calculator usage
+        const originalCalculateTime = window.calculateTime;
+        window.calculateTime = function() {
+            // Call original function
+            originalCalculateTime();
+
+            // Track event in GoatCounter
+            if (window.goatcounter) {
+                const temp = document.getElementById('temperature').value;
+                const flour = parseFloat(document.getElementById('flour').value) || 0;
+                const water = parseFloat(document.getElementById('water').value) || 0;
+                const starter = parseFloat(document.getElementById('starter').value) || 0;
+
+                // Calculate percentages for tracking
+                const hydration = calculateHydration(water, flour).toFixed(0);
+                const starterPercent = flour > 0 ? ((starter / flour) * 100).toFixed(0) : 0;
+
+                window.goatcounter.count({
+                    path: '/event/calculator-used',
+                    title: `Kalkylator använd: ${temp}°C, ${starterPercent}% surdeg, ${hydration}% hydrering`,
+                    event: true
+                });
+            }
+        };
+
+        // Track timer starts
+        const originalStartTimer = window.startTimer;
+        window.startTimer = function() {
+            // Call original function
+            originalStartTimer();
+
+            // Track event in GoatCounter
+            if (window.goatcounter) {
+                window.goatcounter.count({
+                    path: '/event/timer-started',
+                    title: 'Timer startad',
+                    event: true
+                });
+            }
+        };
+
+        // Prevent memory leak: stop timer when user navigates away
+        window.addEventListener('beforeunload', () => {
+            if (SourdoughApp.timerInterval) {
+                clearInterval(SourdoughApp.timerInterval);
+                SourdoughApp.timerInterval = null;
+            }
+        });
+    </script>
 </body>
 </html>
