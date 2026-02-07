@@ -387,3 +387,5 @@ if (document.readyState === 'loading') {
 // Export for external use (e.g., inline scripts)
 window.calculateTime = calculateTime;
 window.updateWholeGrainPercent = updateWholeGrainPercent;
+window.startTimer = startTimer;
+window.stopTimer = stopTimer;
