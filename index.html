@@ -375,6 +375,17 @@
             border-radius: 4px;
         }
 
+        input[type="number"].invalid {
+            border: 2px solid #e74c3c;
+            outline: 2px solid #e74c3c;
+            background-color: #fef5f5;
+        }
+
+        input[type="number"].invalid:focus {
+            outline: 3px solid #e74c3c;
+            outline-offset: 2px;
+        }
+
         .unit {
             color: var(--green-medium);
             font-size: var(--text-base);
@@ -1838,6 +1849,36 @@
         let endTime = null;
         let calculatedTime = 0;
 
+        // Input validation function
+        function validateInputs() {
+            const inputs = [
+                { id: 'temperature', min: 15, max: 30, name: 'Temperatur' },
+                { id: 'starter', min: 5, max: 50, name: 'Surdegsandel' },
+                { id: 'flour', min: 100, max: 10000, name: 'Mjöl' },
+                { id: 'water', min: 50, max: 10000, name: 'Vatten' },
+                { id: 'salt', min: 0, max: 500, name: 'Salt' }
+            ];
+
+            let isValid = true;
+            for (const input of inputs) {
+                const element = document.getElementById(input.id);
+                if (!element) continue;
+
+                const value = parseFloat(element.value);
+                if (isNaN(value) || value < input.min || value > input.max) {
+                    element.classList.add('invalid');
+                    element.setAttribute('aria-invalid', 'true');
+                    element.setAttribute('aria-describedby', `${input.id}-error`);
+                    isValid = false;
+                } else {
+                    element.classList.remove('invalid');
+                    element.removeAttribute('aria-invalid');
+                    element.removeAttribute('aria-describedby');
+                }
+            }
+            return isValid;
+        }
+
         // Toggle advanced settings
         function toggleAdvanced() {
             const checkbox = document.getElementById('advancedToggle');
@@ -1891,7 +1932,13 @@
                     oscillator.stop(now + ring.duration);
                 });
             } catch (e) {
-                console.log('Could not play timer sound:', e);
+                console.error('Kunde inte spela timer-ljud:', e);
+                // Fallback: Use vibration API if available
+                if ('vibrate' in navigator) {
+                    // Pattern: vibrate 200ms, pause 100ms, vibrate 200ms, pause 100ms, vibrate 200ms
+                    navigator.vibrate([200, 100, 200, 100, 200]);
+                }
+                announceToScreenReader('Timern har gått ut! Degen är redo att formas.');
             }
         }
 
@@ -2014,6 +2061,11 @@
         });
 
         function calculateTime() {
+            // Validate inputs first
+            if (!validateInputs()) {
+                return; // Don't calculate if inputs are invalid
+            }
+
             const temp = parseFloat(document.getElementById('temperature').value);
             const flour = parseFloat(document.getElementById('flour').value);
             const water = parseFloat(document.getElementById('water').value);
