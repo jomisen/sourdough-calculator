@@ -315,7 +315,7 @@ function setupKeyboardNavigation() {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 const nextInput = inputs[index + 1];
-                if (nextInput && !nextInput.closest('.advanced-section')?.style.display === 'none') {
+                if (nextInput) {
                     nextInput.focus();
                     nextInput.select();
                 }
