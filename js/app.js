@@ -439,12 +439,28 @@ function showTroubleshootingForm(problemType) {
                 'Degen formades för löst'
             ],
             solutions: [
-                '💪 <strong>FIX SURDEGEN FÖRST!</strong> - Kolla "Surdegsstart stark?" rutan ovan. Mata 1:5:5 i 3-5 dagar och använd vid peak',
+                '💪 <strong>Starkare surdegsstart (FIX DETTA FÖRST!)</strong> - Mata 1:5:5 dagligen i 3-5 dagar. Din surdeg ska dubblas på 4-6h och flyta i vatten (flyttest). Använd vid peak!',
                 '⏱️ <strong>Korta ner bulkjäsningen</strong> - använd kalkylatorn och fingertestet',
                 '🔥 <strong>Högre temperatur</strong> - 250°C och förvärm i 60 min',
                 '🔪 <strong>Skåra djupare</strong> - använd riktigt vass kniv/lame',
                 '🤲 <strong>Forma tightare</strong> - bygg mer ytspänning vid formning'
-            ]
+            ],
+            starterCheck: {
+                title: '⚠️ Är din surdegsstart tillräckligt stark?',
+                strong: [
+                    'Dubblad på 4-6 timmar efter matning',
+                    'Många bubblor på ytan',
+                    'Flyter i vatten (flyttest)',
+                    'Doftar fruktigt/syrligt (inte illa)'
+                ],
+                weak: [
+                    'Dubbleras INTE inom 6-8h',
+                    'Få eller inga bubblor',
+                    'Sjunker i vatten',
+                    'Obehaglig lukt eller hooch (vattenskikt)'
+                ],
+                fix: 'Mata 1:5:5 (1 del surdeg : 5 delar vatten : 5 delar mjöl) varje dag vid 24-26°C tills den är stark'
+            }
         },
         'spread': {
             title: '🌊 Spretig form (degen rann ut)',
@@ -472,12 +488,28 @@ function showTroubleshootingForm(problemType) {
                 'För mycket knådning/vikningar'
             ],
             solutions: [
-                '💪 <strong>STARKARE SURDEG!</strong> - Detta är nästan alltid lösningen. Kolla rutan ovan om surdegsstart. Mata 1:5:5 dagligen tills den dubblats på 4-6h',
+                '💪 <strong>Starkare surdegsstart (FIX DETTA FÖRST!)</strong> - 90% av alla täta bröd beror på svag surdeg! Mata 1:5:5 dagligen. Surdegen ska dubblas på 4-6h och flyta i vatten.',
                 '⏱️ <strong>Längre bulkjäsning</strong> - degen ska växa 50-75% (men funkar inte om surdegen är svag!)',
                 '📊 <strong>Mer surdeg</strong> - prova 20-25% surdegsandel',
                 '🌡️ <strong>Varmare miljö</strong> - sikta på 24-26°C',
                 '🙌 <strong>Färre vikningar</strong> - max 3-4 för vitt mjöl'
-            ]
+            ],
+            starterCheck: {
+                title: '⚠️ Är din surdegsstart tillräckligt stark?',
+                strong: [
+                    'Dubblad på 4-6 timmar efter matning',
+                    'Många bubblor på ytan',
+                    'Flyter i vatten (flyttest)',
+                    'Doftar fruktigt/syrligt (inte illa)'
+                ],
+                weak: [
+                    'Dubbleras INTE inom 6-8h',
+                    'Få eller inga bubblor',
+                    'Sjunker i vatten',
+                    'Obehaglig lukt eller hooch (vattenskikt)'
+                ],
+                fix: 'Mata 1:5:5 (1 del surdeg : 5 delar vatten : 5 delar mjöl) varje dag vid 24-26°C tills den är stark'
+            }
         },
         'too-open': {
             title: '🎈 För luftigt / jättehål',
@@ -573,6 +605,41 @@ function showTroubleshootingForm(problemType) {
     const diagnosis = diagnoses[problemType];
     if (!diagnosis) return;
 
+    // Build starter check section if it exists
+    let starterCheckHTML = '';
+    if (diagnosis.starterCheck) {
+        starterCheckHTML = `
+            <div style="background: linear-gradient(135deg, #fff5e6 0%, #ffe8cc 100%);
+                        border: 3px solid #ff9933;
+                        border-radius: var(--radius-sm);
+                        padding: var(--space-3);
+                        margin: var(--space-4) 0;
+                        box-shadow: var(--shadow-sm);">
+                <h4 style="color: #d97706; font-size: var(--text-base); margin: 0 0 var(--space-2) 0; font-weight: 700;">
+                    ${diagnosis.starterCheck.title}
+                </h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-bottom: var(--space-2);">
+                    <div>
+                        <strong style="color: var(--green-dark); display: block; margin-bottom: var(--space-1);">✅ Stark surdeg:</strong>
+                        <ul style="margin-left: var(--space-4); font-size: var(--text-sm); color: var(--green-dark); line-height: 1.6;">
+                            ${diagnosis.starterCheck.strong.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div>
+                        <strong style="color: var(--green-dark); display: block; margin-bottom: var(--space-1);">❌ Svag surdeg:</strong>
+                        <ul style="margin-left: var(--space-4); font-size: var(--text-sm); color: var(--green-dark); line-height: 1.6;">
+                            ${diagnosis.starterCheck.weak.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.7); padding: var(--space-2); border-radius: 4px; border-left: 3px solid #ff9933;">
+                    <strong style="color: var(--green-dark); font-size: var(--text-sm);">🚀 Fix: </strong>
+                    <span style="color: var(--green-dark); font-size: var(--text-sm);">${diagnosis.starterCheck.fix}</span>
+                </div>
+            </div>
+        `;
+    }
+
     resultDiv.innerHTML = `
         <div class="recipe-card" style="margin-bottom: var(--space-4);">
             <h3 style="color: var(--green-dark); font-size: var(--text-xl); margin-bottom: var(--space-3);">
@@ -585,6 +652,8 @@ function showTroubleshootingForm(problemType) {
             <ul style="margin-left: var(--space-5); line-height: 1.8; color: var(--green-medium);">
                 ${diagnosis.causes.map(cause => `<li>${cause}</li>`).join('')}
             </ul>
+
+            ${starterCheckHTML}
 
             <h4 style="color: var(--green-dark); font-size: var(--text-base); margin: var(--space-4) 0 var(--space-2) 0; font-weight: 700;">
                 💡 Så här fixar du det:
