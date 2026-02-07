@@ -98,18 +98,21 @@ export function startTimer() {
  * Pause timer (keeps display visible)
  */
 export function stopTimer() {
-    console.log('stopTimer called'); // Debug log
+    console.log('stopTimer called, interval ID:', SourdoughApp.timerInterval); // Debug log
 
     if (SourdoughApp.timerInterval) {
-        clearInterval(SourdoughApp.timerInterval);
+        const intervalId = SourdoughApp.timerInterval;
+        clearInterval(intervalId);
         SourdoughApp.timerInterval = null;
-        console.log('Interval cleared'); // Debug log
+        console.log('Interval cleared, ID was:', intervalId); // Debug log
 
         // Save remaining time
         const now = new Date();
         SourdoughApp.remainingTime = SourdoughApp.endTime - now;
         SourdoughApp.isPaused = true;
-        console.log('Remaining time saved:', SourdoughApp.remainingTime); // Debug log
+        console.log('Remaining time saved:', SourdoughApp.remainingTime, 'isPaused:', SourdoughApp.isPaused); // Debug log
+    } else {
+        console.warn('No interval to clear!'); // Debug log
     }
 
     // Update button visibility with error checking
@@ -178,6 +181,12 @@ export function restartTimer() {
  * Update timer countdown
  */
 function updateTimer() {
+    // Debug: check if we should even be updating
+    if (SourdoughApp.isPaused) {
+        console.warn('updateTimer called but timer is paused! Should not happen.');
+        return;
+    }
+
     const now = new Date();
     const remaining = SourdoughApp.endTime - now;
     const totalDuration = SourdoughApp.calculatedTime * 60 * 60 * 1000; // Total time in ms
