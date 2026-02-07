@@ -18,5 +18,7 @@ export const FERMENTATION_CONSTANTS = {
 export const SourdoughApp = {
     timerInterval: null,
     endTime: null,
-    calculatedTime: 0
+    calculatedTime: 0,
+    isPaused: false,
+    remainingTime: 0  // milliseconds remaining when paused
 };

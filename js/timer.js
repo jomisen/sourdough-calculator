@@ -65,6 +65,7 @@ function playKitchenTimerSound() {
 export function startTimer() {
     const now = new Date();
     SourdoughApp.endTime = new Date(now.getTime() + SourdoughApp.calculatedTime * 60 * 60 * 1000);
+    SourdoughApp.isPaused = false;
 
     // Update UI
     document.getElementById('startTimerBtn').style.display = 'none';
@@ -80,6 +81,9 @@ export function startTimer() {
 
     // Update button states
     document.getElementById('startTimerBtn').setAttribute('aria-hidden', 'true');
+    document.getElementById('pauseBtn').style.display = 'inline-block';
+    document.getElementById('resumeBtn').style.display = 'none';
+    document.getElementById('restartBtn').style.display = 'none';
 
     // Announce to screen readers
     announceToScreenReader(`Timer startad. Degen är klar klockan ${formatTime(SourdoughApp.endTime)}.`);
@@ -91,21 +95,73 @@ export function startTimer() {
 }
 
 /**
- * Stop timer
+ * Pause timer (keeps display visible)
  */
 export function stopTimer() {
     if (SourdoughApp.timerInterval) {
         clearInterval(SourdoughApp.timerInterval);
         SourdoughApp.timerInterval = null;
+
+        // Save remaining time
+        const now = new Date();
+        SourdoughApp.remainingTime = SourdoughApp.endTime - now;
+        SourdoughApp.isPaused = true;
     }
 
-    document.getElementById('startTimerBtn').style.display = 'block';
-    document.getElementById('startTimerBtn').removeAttribute('aria-hidden');
-    document.getElementById('timerDisplay').classList.remove('active');
-    document.getElementById('countdown').classList.remove('finished');
+    // Update button visibility
+    document.getElementById('pauseBtn').style.display = 'none';
+    document.getElementById('resumeBtn').style.display = 'inline-block';
+    document.getElementById('restartBtn').style.display = 'inline-block';
 
     // Announce to screen readers
-    announceToScreenReader('Timer stoppad.');
+    announceToScreenReader('Timer pausad.');
+}
+
+/**
+ * Resume timer from paused state
+ */
+export function resumeTimer() {
+    if (SourdoughApp.isPaused && SourdoughApp.remainingTime > 0) {
+        const now = new Date();
+        SourdoughApp.endTime = new Date(now.getTime() + SourdoughApp.remainingTime);
+        SourdoughApp.isPaused = false;
+
+        // Start countdown
+        updateTimer();
+        SourdoughApp.timerInterval = setInterval(updateTimer, 1000);
+
+        // Update button visibility
+        document.getElementById('pauseBtn').style.display = 'inline-block';
+        document.getElementById('resumeBtn').style.display = 'none';
+        document.getElementById('restartBtn').style.display = 'none';
+
+        // Update finish time display
+        document.getElementById('finishTime').textContent = formatTime(SourdoughApp.endTime);
+
+        // Announce to screen readers
+        announceToScreenReader('Timer återupptagen.');
+    }
+}
+
+/**
+ * Restart timer from beginning
+ */
+export function restartTimer() {
+    // Stop current timer if running
+    if (SourdoughApp.timerInterval) {
+        clearInterval(SourdoughApp.timerInterval);
+        SourdoughApp.timerInterval = null;
+    }
+
+    // Reset state
+    SourdoughApp.isPaused = false;
+    SourdoughApp.remainingTime = 0;
+
+    // Start fresh timer
+    startTimer();
+
+    // Announce to screen readers
+    announceToScreenReader('Timer startad om från början.');
 }
 
 /**

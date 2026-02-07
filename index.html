@@ -1809,12 +1809,32 @@
                             <div class="countdown-label">ÅTERSTÅR</div>
                         </div>
                     </div>
-                    <button
-                        class="timer-button stop-button"
-                        onclick="stopTimer()"
-                        aria-label="Stoppa och återställ timer">
-                        <span aria-hidden="true">⏹️</span> Stoppa Timer
-                    </button>
+                    <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+                        <button
+                            class="timer-button stop-button"
+                            id="pauseBtn"
+                            onclick="stopTimer()"
+                            aria-label="Pausa timer"
+                            style="flex: 1; min-width: 150px;">
+                            <span aria-hidden="true">⏸️</span> Pausa
+                        </button>
+                        <button
+                            class="timer-button"
+                            id="resumeBtn"
+                            onclick="resumeTimer()"
+                            aria-label="Fortsätt timer"
+                            style="flex: 1; min-width: 150px; display: none;">
+                            <span aria-hidden="true">▶️</span> Fortsätt
+                        </button>
+                        <button
+                            class="timer-button"
+                            id="restartBtn"
+                            onclick="restartTimer()"
+                            aria-label="Starta om timer från början"
+                            style="flex: 1; min-width: 150px; display: none;">
+                            <span aria-hidden="true">🔄</span> Starta om
+                        </button>
+                    </div>
                 </div>
             </div>
 

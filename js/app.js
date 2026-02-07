@@ -21,7 +21,7 @@ import {
     updateWholeGrainPercent,
     updateRecipeSummary
 } from './display.js';
-import { startTimer, stopTimer } from './timer.js';
+import { startTimer, stopTimer, resumeTimer, restartTimer } from './timer.js';
 import { validateInputs } from './validation.js';
 import { trackCalculatorUsed, trackTimerStarted } from './analytics.js';
 
@@ -389,3 +389,5 @@ window.calculateTime = calculateTime;
 window.updateWholeGrainPercent = updateWholeGrainPercent;
 window.startTimer = startTimer;
 window.stopTimer = stopTimer;
+window.resumeTimer = resumeTimer;
+window.restartTimer = restartTimer;
