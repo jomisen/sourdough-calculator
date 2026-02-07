@@ -367,10 +367,65 @@
 
         .subtitle {
             color: var(--green-medium);
-            margin-bottom: var(--space-5);
+            margin-bottom: var(--space-4);
             font-size: var(--text-base);
             text-align: center;
             font-style: italic;
+        }
+
+        /* Tab Navigation */
+        .tabs {
+            display: flex;
+            gap: var(--space-1);
+            border-bottom: 3px solid var(--green-lighter);
+            margin-bottom: var(--space-5);
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: var(--space-3) var(--space-4);
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--green-medium);
+            font-size: var(--text-base);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: -3px;
+            border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+        }
+
+        .tab-button:hover {
+            background: rgba(159, 176, 148, 0.1);
+            color: var(--green-dark);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .tab-button.active {
+            color: var(--green-dark);
+            background: rgba(159, 176, 148, 0.15);
+            border-bottom-color: var(--green-dark);
+        }
+
+        .tab-button:focus {
+            outline: 2px solid var(--green-dark);
+            outline-offset: -2px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .input-row {
@@ -1506,6 +1561,30 @@
         </h1>
         <p class="subtitle">Beräkna optimal bulkjäsning för perfekt surdegsbröd - med timer, viknings- och gräddningsinstruktioner</p>
 
+        <!-- Tab Navigation -->
+        <div class="tabs" role="tablist">
+            <button
+                class="tab-button active"
+                role="tab"
+                aria-selected="true"
+                aria-controls="calculator-tab"
+                id="calculator-tab-button"
+                onclick="switchTab('calculator')">
+                🧮 Jästningsberäknare
+            </button>
+            <button
+                class="tab-button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="troubleshoot-tab"
+                id="troubleshoot-tab-button"
+                onclick="switchTab('troubleshoot')">
+                🔍 Felsök ditt bröd
+            </button>
+        </div>
+
+        <!-- Calculator Tab Content -->
+        <div class="tab-content active" id="calculator-tab" role="tabpanel" aria-labelledby="calculator-tab-button">
         <h2 class="visually-hidden">Ange ingredienser och inställningar</h2>
 
         <p class="visually-hidden" id="form-instructions">Alla fält är obligatoriska. Använd Tab-tangenten för att navigera mellan fält. Tryck Escape för att stänga avancerade inställningar.</p>
@@ -1843,6 +1922,60 @@
 
         <!-- Screen reader announcements -->
         <div id="sr-announcements" class="visually-hidden" role="status" aria-live="assertive" aria-atomic="true"></div>
+
+        </div>
+        <!-- End Calculator Tab -->
+
+        <!-- Troubleshooting Tab Content -->
+        <div class="tab-content" id="troubleshoot-tab" role="tabpanel" aria-labelledby="troubleshoot-tab-button">
+            <h2 style="color: var(--green-dark); font-size: var(--text-2xl); margin-bottom: var(--space-4); text-align: center;">
+                🔍 Felsök ditt surdegsbröd
+            </h2>
+
+            <p style="text-align: center; color: var(--green-medium); margin-bottom: var(--space-5); font-size: var(--text-base);">
+                Fick inte ditt bröd som du ville? Svara på frågorna nedan så hjälper vi dig hitta orsaken!
+            </p>
+
+            <!-- Problem Selection -->
+            <div style="margin-bottom: var(--space-5);">
+                <label for="problem-select" style="display: block; color: var(--green-dark); font-weight: 700; margin-bottom: var(--space-2); font-size: var(--text-lg);">
+                    Vad blev problemet?
+                </label>
+                <select id="problem-select" class="select-input" onchange="showTroubleshootingForm(this.value)" style="width: 100%; padding: var(--space-3); font-size: var(--text-base);">
+                    <option value="">Välj problem...</option>
+                    <option value="flat">📏 Platt bröd / ingen "oven spring"</option>
+                    <option value="spread">🌊 Spretig form (degen rann ut)</option>
+                    <option value="dense">🕳️ För tätt / inga hål / kompakt</option>
+                    <option value="too-open">🎈 För luftigt / jättehål</option>
+                    <option value="burnt">🔥 Bränd skorpa</option>
+                    <option value="gummy">🥖 Gummiartat / rått inuti</option>
+                    <option value="bland">😐 Ingen smak / för blant</option>
+                    <option value="sour">🍋 För surt</option>
+                    <option value="crust">❌ Problem med skorpan</option>
+                </select>
+            </div>
+
+            <!-- Diagnosis Results (hidden initially) -->
+            <div id="diagnosis-result" style="display: none;">
+                <!-- Results will be inserted here by JavaScript -->
+            </div>
+
+            <!-- Quick Tips (always visible) -->
+            <div class="info-box" style="margin-top: var(--space-5);">
+                <h3 style="color: var(--green-dark); font-size: var(--text-lg); margin-bottom: var(--space-3);">
+                    💡 Vanliga misstag att undvika
+                </h3>
+                <ul style="margin-left: var(--space-5); line-height: 1.8;">
+                    <li><strong>Överjäst:</strong> Degen får inte jäsa för länge - använd kalkylatorn och fingertestet!</li>
+                    <li><strong>Underjäst:</strong> Ge degen tillräckligt med tid - den ska växa 50-75%</li>
+                    <li><strong>För blöt deg:</strong> Börja med 70% hydrering om du är ny</li>
+                    <li><strong>Dålig surdegsstart:</strong> Mata din surdeg regelbundet och se till att den dubblats</li>
+                    <li><strong>För lite salt:</strong> 2% salt är standard (t.ex. 20g salt per 1000g mjöl)</li>
+                    <li><strong>Ugnstemperatur:</strong> Förvärm ugnen ordentligt i minst 45-60 min!</li>
+                </ul>
+            </div>
+        </div>
+        <!-- End Troubleshooting Tab -->
 
         <!-- Tips Section -->
         <div class="info-box" role="complementary" style="margin-top: var(--space-5);">
