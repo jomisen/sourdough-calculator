@@ -290,6 +290,41 @@ function setupAutoCalculate() {
 }
 
 /**
+ * Setup keyboard navigation for accessibility
+ */
+function setupKeyboardNavigation() {
+    // Escape key to close advanced settings
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' || e.key === 'Esc') {
+            const advancedToggle = document.getElementById('advancedToggle');
+            const advancedSection = document.getElementById('advancedSection');
+
+            if (advancedToggle && advancedToggle.checked && advancedSection) {
+                advancedToggle.checked = false;
+                advancedSection.classList.remove('show');
+                announceToScreenReader('Avancerade inställningar stängda med Escape.');
+                advancedToggle.focus(); // Return focus to toggle
+            }
+        }
+    });
+
+    // Enter key on number inputs to move to next field
+    const inputs = document.querySelectorAll('input[type="number"]');
+    inputs.forEach((input, index) => {
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const nextInput = inputs[index + 1];
+                if (nextInput && !nextInput.closest('.advanced-section')?.style.display === 'none') {
+                    nextInput.focus();
+                    nextInput.select();
+                }
+            }
+        });
+    });
+}
+
+/**
  * Initialize application
  */
 function init() {
@@ -298,6 +333,9 @@ function init() {
 
     // Setup auto-calculate
     setupAutoCalculate();
+
+    // Setup keyboard navigation
+    setupKeyboardNavigation();
 
     // Calculate on load with default values
     updateRecipeSummary();
