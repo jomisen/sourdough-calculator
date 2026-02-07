@@ -122,16 +122,26 @@ function calculateTimeInternal() {
             throw new Error('Mjölmängden kan inte vara 0.');
         }
 
-        // Check for recipe warnings (extreme values)
-        const warnings = validateRecipeWarnings(
-            inputs.flour,
-            inputs.water,
-            inputs.starter,
-            inputs.salt
-        );
+        // Clear any previous error messages from failed calculations
+        const oldError = document.getElementById('calculation-error');
+        if (oldError) {
+            oldError.remove();
+        }
 
-        // Display warnings if any (doesn't block calculation)
-        displayWarnings(warnings);
+        // Check for recipe warnings (extreme values)
+        // Wrap in try-catch to prevent DOM errors from breaking calculation
+        try {
+            const warnings = validateRecipeWarnings(
+                inputs.flour,
+                inputs.water,
+                inputs.starter,
+                inputs.salt
+            );
+            displayWarnings(warnings);
+        } catch (warningError) {
+            console.error('Warning display failed (non-critical):', warningError);
+            // Continue with calculation even if warnings fail
+        }
 
         // Calculate baker's percentages
         const percentages = calculateBakersPercentages(inputs);
@@ -183,18 +193,40 @@ function calculateTimeInternal() {
         // Handle calculation errors gracefully
         console.error('Fel vid beräkning:', error);
 
+        // Remove any warnings that might be showing
+        try {
+            const oldWarning = document.getElementById('recipe-warnings');
+            if (oldWarning) oldWarning.remove();
+        } catch (e) {
+            console.warn('Could not remove warnings during error handling');
+        }
+
         const resultDiv = document.getElementById('result');
-        resultDiv.innerHTML = `
-            <div style="background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
-                        border-left: 4px solid #dc3545;
-                        padding: var(--space-4);
-                        border-radius: 12px;
-                        margin-top: var(--space-4);">
-                <h3 style="color: #dc3545; margin-top: 0;">⚠️ Ett fel uppstod</h3>
-                <p style="margin-bottom: 0;">${error.message || 'Kunde inte beräkna jästid. Kontrollera att alla värden är korrekta och försök igen.'}</p>
-            </div>
-        `;
-        resultDiv.classList.add('show');
+        if (resultDiv) {
+            // Don't use innerHTML to avoid destroying child elements
+            // Instead, create a separate error message div
+            let errorDiv = document.getElementById('calculation-error');
+            if (!errorDiv) {
+                errorDiv = document.createElement('div');
+                errorDiv.id = 'calculation-error';
+                resultDiv.insertBefore(errorDiv, resultDiv.firstChild);
+            }
+
+            errorDiv.innerHTML = `
+                <div style="background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
+                            border-left: 4px solid #dc3545;
+                            padding: var(--space-4);
+                            border-radius: 12px;
+                            margin-bottom: var(--space-4);">
+                    <h3 style="color: #dc3545; margin-top: 0;">⚠️ Ett fel uppstod</h3>
+                    <p style="margin-bottom: var(--space-2);">${error.message || 'Kunde inte beräkna jästid. Kontrollera att alla värden är korrekta och försök igen.'}</p>
+                    <button onclick="location.reload()" style="width: auto; padding: var(--space-2) var(--space-3); font-size: var(--text-sm); margin-top: var(--space-2);">
+                        🔄 Ladda om sidan
+                    </button>
+                </div>
+            `;
+            resultDiv.classList.add('show');
+        }
 
         // Announce error to screen readers
         announceToScreenReader(`Fel: ${error.message}`);
