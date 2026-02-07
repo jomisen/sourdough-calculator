@@ -437,7 +437,7 @@ function showTroubleshootingForm(problemType) {
                 'För lite ånga under gräddning',
                 'För få vikningar under bulkjäsning',
                 'För låg ugnstemperatur',
-                'Glömde skåra brödet',
+                'Glömde snitta brödet',
                 'Degen formades för löst'
             ],
             solutions: [
@@ -446,7 +446,7 @@ function showTroubleshootingForm(problemType) {
                 '🙌 <strong>Fler vikningar</strong> - gör 4-5 stretch & folds under bulkjäsningen för att bygga styrka',
                 '⏱️ <strong>Korta ner bulkjäsningen</strong> - använd kalkylatorn och fingertestet',
                 '🔥 <strong>Högre temperatur</strong> - 250°C och förvärm i 60 min',
-                '🔪 <strong>Skåra djupare</strong> - använd riktigt vass kniv/lame',
+                '🔪 <strong>Snitta djupare</strong> - använd riktigt vass snittkniv',
                 '🤲 <strong>Forma tightare</strong> - bygg mer ytspänning vid formning'
             ],
             starterCheck: {
