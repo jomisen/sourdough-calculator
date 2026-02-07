@@ -2102,14 +2102,24 @@
         });
 
         function calculateTime() {
-            // Validate inputs (shows visual feedback but doesn't block calculation)
-            validateInputs();
+            try {
+                // Validate inputs (shows visual feedback but doesn't block calculation)
+                validateInputs();
 
-            const temp = parseFloat(document.getElementById('temperature').value);
-            const flour = parseFloat(document.getElementById('flour').value);
-            const water = parseFloat(document.getElementById('water').value);
-            const starter = parseFloat(document.getElementById('starter').value);
-            const salt = parseFloat(document.getElementById('salt').value);
+                const temp = parseFloat(document.getElementById('temperature').value);
+                const flour = parseFloat(document.getElementById('flour').value);
+                const water = parseFloat(document.getElementById('water').value);
+                const starter = parseFloat(document.getElementById('starter').value);
+                const salt = parseFloat(document.getElementById('salt').value);
+
+                // Check for invalid input values
+                if (isNaN(temp) || isNaN(flour) || isNaN(water) || isNaN(starter) || isNaN(salt)) {
+                    throw new Error('Ogiltiga inmatningsvärden. Kontrollera att alla fält innehåller nummer.');
+                }
+
+                if (flour === 0) {
+                    throw new Error('Mjölmängden kan inte vara 0.');
+                }
 
             // Check if advanced settings are enabled
             const advancedEnabled = document.getElementById('advancedToggle')?.checked || false;
@@ -2207,12 +2217,32 @@
                 }
             }
 
-            // Create range (±15%)
-            const minTime = bulkTime * 0.85;
-            const maxTime = bulkTime * 1.15;
+                // Create range (±15%)
+                const minTime = bulkTime * 0.85;
+                const maxTime = bulkTime * 1.15;
 
-            // Display results
-            displayResults(bulkTime, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof, fridgeTemp, coldProofEquivalent, bulkAdjustment);
+                // Display results
+                displayResults(bulkTime, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof, fridgeTemp, coldProofEquivalent, bulkAdjustment);
+            } catch (error) {
+                // Handle calculation errors gracefully
+                console.error('Fel vid beräkning:', error);
+
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = `
+                    <div style="background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
+                                border-left: 4px solid #dc3545;
+                                padding: var(--space-4);
+                                border-radius: 12px;
+                                margin-top: var(--space-4);">
+                        <h3 style="color: #dc3545; margin-top: 0;">⚠️ Ett fel uppstod</h3>
+                        <p style="margin-bottom: 0;">${error.message || 'Kunde inte beräkna jästid. Kontrollera att alla värden är korrekta och försök igen.'}</p>
+                    </div>
+                `;
+                resultDiv.classList.add('show');
+
+                // Announce error to screen readers
+                announceToScreenReader(`Fel: ${error.message}`);
+            }
         }
 
         function displayResults(time, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof, fridgeTemp, coldProofEquivalent, bulkAdjustment) {
@@ -2404,7 +2434,7 @@
 
         function startTimer() {
             const now = new Date();
-            SourdoughApp.endTime = new Date(now.getTime() + calculatedTime * 60 * 60 * 1000);
+            SourdoughApp.endTime = new Date(now.getTime() + SourdoughApp.calculatedTime * 60 * 60 * 1000);
 
             // Update UI
             document.getElementById('startTimerBtn').style.display = 'none';
@@ -2412,7 +2442,7 @@
 
             // Format and display times
             document.getElementById('startTime').textContent = formatTime(now);
-            document.getElementById('finishTime').textContent = formatTime(endTime);
+            document.getElementById('finishTime').textContent = formatTime(SourdoughApp.endTime);
 
             // Start countdown
             updateTimer();
@@ -2422,7 +2452,7 @@
             document.getElementById('startTimerBtn').setAttribute('aria-hidden', 'true');
 
             // Announce to screen readers
-            announceToScreenReader(`Timer startad. Degen är klar klockan ${formatTime(endTime)}.`);
+            announceToScreenReader(`Timer startad. Degen är klar klockan ${formatTime(SourdoughApp.endTime)}.`);
 
             // Request notification permission
             if ("Notification" in window && Notification.permission === "default") {
@@ -2530,15 +2560,17 @@
             // Track event in GoatCounter
             if (window.goatcounter) {
                 const temp = document.getElementById('temperature').value;
-                const starter = document.getElementById('starter').value;
-                // Calculate hydration from water/flour ratio
                 const flour = parseFloat(document.getElementById('flour').value) || 0;
                 const water = parseFloat(document.getElementById('water').value) || 0;
+                const starter = parseFloat(document.getElementById('starter').value) || 0;
+
+                // Calculate percentages for tracking
                 const hydration = calculateHydration(water, flour).toFixed(0);
+                const starterPercent = flour > 0 ? ((starter / flour) * 100).toFixed(0) : 0;
 
                 window.goatcounter.count({
                     path: '/event/calculator-used',
-                    title: `Kalkylator använd: ${temp}°C, ${starter}% surdeg, ${hydration}% hydrering`,
+                    title: `Kalkylator använd: ${temp}°C, ${starterPercent}% surdeg, ${hydration}% hydrering`,
                     event: true
                 });
             }
