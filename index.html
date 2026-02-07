@@ -2107,10 +2107,8 @@
         });
 
         function calculateTime() {
-            // Validate inputs first
-            if (!validateInputs()) {
-                return; // Don't calculate if inputs are invalid
-            }
+            // Validate inputs (shows visual feedback but doesn't block calculation)
+            validateInputs();
 
             const temp = parseFloat(document.getElementById('temperature').value);
             const flour = parseFloat(document.getElementById('flour').value);
