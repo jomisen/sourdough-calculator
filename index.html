@@ -152,16 +152,18 @@
     <style>
         /* ===== Design System ===== */
         :root {
-            /* Typography Scale */
-            --text-xs: 13px;
+            /* Typography Scale - Modern 2026 standard (16px base) */
+            --text-xs: 12px;
             --text-sm: 14px;
-            --text-base: 15px;
+            --text-base: 16px;
             --text-lg: 18px;
-            --text-xl: 24px;
-            --text-2xl: 28px;
-            --text-3xl: 36px;
+            --text-xl: 20px;
+            --text-2xl: 24px;
+            --text-3xl: 28px;
+            --text-4xl: 32px;
+            --text-5xl: 36px;
 
-            /* Spacing Scale */
+            /* Spacing Scale (8px base) */
             --space-1: 8px;
             --space-2: 12px;
             --space-3: 16px;
@@ -169,23 +171,92 @@
             --space-5: 32px;
             --space-6: 48px;
 
-            /* Border Radius */
-            --radius-sm: 12px;
-            --radius-md: 16px;
-            --radius-lg: 20px;
+            /* Border Radius - Reduced for 2026 trends */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
 
             /* Shadows */
             --shadow-sm: 0 2px 8px rgba(70, 80, 60, 0.08);
             --shadow-md: 0 4px 16px rgba(70, 80, 60, 0.12);
             --shadow-lg: 0 8px 32px rgba(70, 80, 60, 0.16);
 
-            /* Colors */
+            /* Brand Colors */
             --green-dark: #3d4a36;
-            --green-medium: #5a6850; /* Darkened for WCAG AA contrast (4.5:1) */
-            --green-light: #9fb094;
-            --green-lighter: #c5d4b8;
+            --green-medium: #5a6850;
+            --green-light: #7a8c6f;
+            --green-lighter: #9fb094;
             --cream: #fdfbf7;
             --cream-dark: #f7f5ef;
+            --text-color: #2d3328;
+
+            /* Semantic Colors */
+            --color-success: #27ae60;
+            --color-error: #e74c3c;
+            --color-warning: #f39c12;
+            --color-info: #3498db;
+        }
+
+        /* Dark Mode Support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                /* Dark mode colors */
+                --cream: #1a1a1a;
+                --cream-dark: #252525;
+                --green-dark: #c5d4b8;
+                --green-medium: #9fb094;
+                --green-light: #7a8c6f;
+                --green-lighter: #5a6850;
+                --text-color: #e8e8e8;
+
+                /* Adjust shadows for dark mode */
+                --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+                --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+                --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+            }
+
+            /* Dark mode specific adjustments */
+            body {
+                background:
+                    repeating-linear-gradient(
+                        45deg,
+                        transparent,
+                        transparent 8px,
+                        rgba(255, 255, 255, 0.02) 8px,
+                        rgba(255, 255, 255, 0.02) 16px
+                    ),
+                    repeating-linear-gradient(
+                        -45deg,
+                        transparent,
+                        transparent 8px,
+                        rgba(0, 0, 0, 0.2) 8px,
+                        rgba(0, 0, 0, 0.2) 16px
+                    ),
+                    linear-gradient(135deg, #2d3a26 0%, #3d4a36 100%);
+            }
+
+            body::before {
+                background-image:
+                    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 40%),
+                    radial-gradient(circle at 80% 80%, rgba(197, 212, 184, 0.1) 0%, transparent 40%),
+                    radial-gradient(circle at 50% 50%, rgba(253, 251, 247, 0.02) 0%, transparent 60%);
+            }
+
+            .container {
+                box-shadow: var(--shadow-lg), 0 0 0 3px #3d4a36;
+            }
+
+            input[type="number"],
+            input[type="range"],
+            select {
+                background: var(--cream-dark);
+                color: var(--text-color);
+                border-color: var(--green-lighter);
+            }
+
+            input[type="number"]::placeholder {
+                color: #888;
+            }
         }
 
         * {
@@ -196,6 +267,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--text-color);
             background:
                 repeating-linear-gradient(
                     45deg,
@@ -363,10 +435,11 @@
             border: none;
             background: transparent;
             padding: var(--space-1) 4px;
-            font-size: var(--text-lg);
+            font-size: var(--text-base);
             color: var(--green-dark);
             outline: none;
             font-weight: 600;
+            line-height: 1.5;
         }
 
         input[type="number"]:focus {
@@ -376,13 +449,13 @@
         }
 
         input[type="number"].invalid {
-            border: 2px solid #e74c3c;
-            outline: 2px solid #e74c3c;
+            border: 2px solid var(--color-error);
+            outline: 2px solid var(--color-error);
             background-color: #fef5f5;
         }
 
         input[type="number"].invalid:focus {
-            outline: 3px solid #e74c3c;
+            outline: 3px solid var(--color-error);
             outline-offset: 2px;
         }
 
