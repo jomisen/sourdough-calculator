@@ -1873,9 +1873,159 @@
             };
         }
 
-        // Helper function to calculate hydration percentage
+        // ========================================
+        // CALCULATION HELPER FUNCTIONS
+        // ========================================
+
+        /**
+         * Fermentation calculation constants
+         * Baseline: 5 hours at 22°C with 20% starter
+         */
+        const FERMENTATION_CONSTANTS = {
+            BASE_TIME: 5,           // Hours
+            BASE_TEMP: 22,          // Celsius
+            BASE_STARTER: 20,       // Percent
+            TEMP_FACTOR: 1.15,      // Each degree changes time by 15%
+            STARTER_FACTOR: 0.85,   // Each 5% starter changes time by 15%
+            MIN_TIME: 2,            // Minimum bulk time (hours)
+            MAX_TIME: 24            // Maximum bulk time (hours)
+        };
+
+        /**
+         * Calculate hydration percentage
+         */
         function calculateHydration(water, flour) {
             return flour > 0 ? (water / flour) * 100 : 0;
+        }
+
+        /**
+         * Read all input values from the form
+         */
+        function getInputValues() {
+            const advancedEnabled = document.getElementById('advancedToggle')?.checked || false;
+
+            return {
+                // Basic inputs
+                temp: parseFloat(document.getElementById('temperature').value),
+                flour: parseFloat(document.getElementById('flour').value),
+                water: parseFloat(document.getElementById('water').value),
+                starter: parseFloat(document.getElementById('starter').value),
+                salt: parseFloat(document.getElementById('salt').value),
+
+                // Advanced settings
+                advancedEnabled,
+                coldProof: advancedEnabled ? (parseFloat(document.getElementById('coldProof').value) || 0) : 0,
+                fridgeTemp: advancedEnabled ? (parseFloat(document.getElementById('fridgeTemp').value) || 4) : 4,
+                flourType: advancedEnabled ? (document.getElementById('flourType')?.value || 'mixed') : 'white',
+                feedingRatio: advancedEnabled ? (document.getElementById('feedingRatio')?.value || '1:5:5') : '1:5:5',
+                peakStatus: advancedEnabled ? (document.getElementById('peakStatus')?.value || 'normal') : 'normal',
+                autolyse: advancedEnabled ? (document.getElementById('autolyse')?.value || 'no') : 'no'
+            };
+        }
+
+        /**
+         * Calculate baker's percentages
+         */
+        function calculateBakersPercentages(inputs) {
+            return {
+                starterPercent: (inputs.starter / inputs.flour) * 100,
+                hydration: calculateHydration(inputs.water, inputs.flour),
+                saltPercent: (inputs.salt / inputs.flour) * 100
+            };
+        }
+
+        /**
+         * Calculate temperature factor
+         * Higher temp = faster fermentation, lower temp = slower
+         */
+        function calculateTemperatureFactor(temp) {
+            return Math.pow(
+                FERMENTATION_CONSTANTS.TEMP_FACTOR,
+                FERMENTATION_CONSTANTS.BASE_TEMP - temp
+            );
+        }
+
+        /**
+         * Calculate starter factor
+         * More starter = faster fermentation
+         */
+        function calculateStarterFactor(starterPercent) {
+            return Math.pow(
+                FERMENTATION_CONSTANTS.STARTER_FACTOR,
+                (starterPercent - FERMENTATION_CONSTANTS.BASE_STARTER) / 5
+            );
+        }
+
+        /**
+         * Calculate flour type factor
+         * Whole grain ferments faster than white flour
+         */
+        function calculateFlourFactor(flourType, flour) {
+            if (flourType === 'white') {
+                return 1.0;
+            } else if (flourType === 'whole') {
+                return 0.85; // Faster with whole grain
+            } else if (flourType === 'mixed') {
+                const wholeGrainAmount = parseFloat(document.getElementById('wholeGrainAmount')?.value) || 0;
+                const wholeGrainPercent = Math.min(wholeGrainAmount / flour, 1.0);
+                const whitePercent = 1.0 - wholeGrainPercent;
+
+                // Weighted average: white (1.0) and whole grain (0.85)
+                updateWholeGrainPercent();
+                return (whitePercent * 1.0) + (wholeGrainPercent * 0.85);
+            }
+            return 1.0;
+        }
+
+        /**
+         * Calculate advanced factors (peak status, feeding ratio, autolyse)
+         */
+        function calculateAdvancedFactors(inputs) {
+            if (!inputs.advancedEnabled) {
+                return { peakFactor: 1.0, ratioFactor: 1.0, autolyseFactor: 1.0 };
+            }
+
+            // Peak status factor
+            let peakFactor = 1.0;
+            if (inputs.peakStatus === 'rising') peakFactor = 1.15;      // Not at peak yet
+            else if (inputs.peakStatus === 'peak') peakFactor = 0.9;    // Optimal
+            else if (inputs.peakStatus === 'falling') peakFactor = 1.2; // Past optimal
+
+            // Feeding ratio factor
+            let ratioFactor = 1.0;
+            if (inputs.feedingRatio === '1:1:1') ratioFactor = 1.1;     // Less vigorous
+            else if (inputs.feedingRatio === '1:2:2') ratioFactor = 1.05;
+            else if (inputs.feedingRatio === '1:3:3') ratioFactor = 1.02;
+            else if (inputs.feedingRatio === '1:10:10') ratioFactor = 0.9; // Very vigorous
+
+            // Autolyse factor
+            const autolyseFactor = inputs.autolyse !== 'no' ? 0.95 : 1.0;
+
+            return { peakFactor, ratioFactor, autolyseFactor };
+        }
+
+        /**
+         * Calculate cold proofing adjustment
+         */
+        function calculateColdProofAdjustment(coldProof, fridgeTemp, bulkTime) {
+            if (coldProof <= 0) {
+                return { coldProofEquivalent: 0, bulkAdjustment: 0 };
+            }
+
+            // Fermentation rate based on fridge temp
+            // 4°C = 10%, increases exponentially
+            const coldFermentRate = 0.10 * Math.pow(1.20, fridgeTemp - 4);
+            const coldProofEquivalent = coldProof * coldFermentRate;
+
+            let bulkAdjustment = 0;
+            // Only adjust bulk time slightly for warm fridges
+            // Cold proofing CANNOT replace bulk fermentation!
+            if (fridgeTemp > 7 && coldProofEquivalent > 2) {
+                // Only reduce bulk by max 20% or 2h, whichever is less
+                bulkAdjustment = Math.min(coldProofEquivalent * 0.3, bulkTime * 0.2, 2);
+            }
+
+            return { coldProofEquivalent, bulkAdjustment };
         }
 
         // Input validation function
@@ -2101,128 +2251,74 @@
             setupAutoCalculate();
         });
 
+        /**
+         * Main calculation function
+         * Orchestrates all helper functions to calculate fermentation time
+         */
         function calculateTime() {
             try {
                 // Validate inputs (shows visual feedback but doesn't block calculation)
                 validateInputs();
 
-                const temp = parseFloat(document.getElementById('temperature').value);
-                const flour = parseFloat(document.getElementById('flour').value);
-                const water = parseFloat(document.getElementById('water').value);
-                const starter = parseFloat(document.getElementById('starter').value);
-                const salt = parseFloat(document.getElementById('salt').value);
+                // Read all input values
+                const inputs = getInputValues();
 
-                // Check for invalid input values
-                if (isNaN(temp) || isNaN(flour) || isNaN(water) || isNaN(starter) || isNaN(salt)) {
+                // Validate basic inputs
+                if (isNaN(inputs.temp) || isNaN(inputs.flour) || isNaN(inputs.water) ||
+                    isNaN(inputs.starter) || isNaN(inputs.salt)) {
                     throw new Error('Ogiltiga inmatningsvärden. Kontrollera att alla fält innehåller nummer.');
                 }
 
-                if (flour === 0) {
+                if (inputs.flour === 0) {
                     throw new Error('Mjölmängden kan inte vara 0.');
                 }
 
-            // Check if advanced settings are enabled
-            const advancedEnabled = document.getElementById('advancedToggle')?.checked || false;
+                // Calculate baker's percentages
+                const percentages = calculateBakersPercentages(inputs);
 
-            // Advanced settings (only used if toggle is on)
-            const coldProof = advancedEnabled ? (parseFloat(document.getElementById('coldProof').value) || 0) : 0;
-            const fridgeTemp = advancedEnabled ? (parseFloat(document.getElementById('fridgeTemp').value) || 4) : 4;
-            const flourType = advancedEnabled ? (document.getElementById('flourType')?.value || 'mixed') : 'white';
-            const feedingRatio = advancedEnabled ? (document.getElementById('feedingRatio')?.value || '1:5:5') : '1:5:5';
-            const peakStatus = advancedEnabled ? (document.getElementById('peakStatus')?.value || 'normal') : 'normal';
-            const autolyse = advancedEnabled ? (document.getElementById('autolyse')?.value || 'no') : 'no';
+                // Calculate fermentation factors
+                const tempFactor = calculateTemperatureFactor(inputs.temp);
+                const starterFactor = calculateStarterFactor(percentages.starterPercent);
+                const flourFactor = calculateFlourFactor(inputs.flourType, inputs.flour);
+                const { peakFactor, ratioFactor, autolyseFactor } = calculateAdvancedFactors(inputs);
 
-            // Calculate percentages (baker's percentage)
-            const starterPercent = (starter / flour) * 100;
-            const hydration = calculateHydration(water, flour);
-            const saltPercent = (salt / flour) * 100;
+                // Calculate bulk fermentation time
+                let bulkTime = FERMENTATION_CONSTANTS.BASE_TIME *
+                              tempFactor *
+                              starterFactor *
+                              flourFactor *
+                              ratioFactor *
+                              peakFactor *
+                              autolyseFactor;
 
-            // Base time at 22°C with 20% starter (in hours)
-            const baseTime = 5;
-            const baseTemp = 22;
-            const baseStarter = 20;
+                // Ensure reasonable bounds
+                bulkTime = Math.max(
+                    FERMENTATION_CONSTANTS.MIN_TIME,
+                    Math.min(FERMENTATION_CONSTANTS.MAX_TIME, bulkTime)
+                );
 
-            // Temperature factor: for every degree above/below base, adjust time
-            // Higher temp = faster (divide by factor), lower temp = slower (multiply by factor)
-            const tempFactor = Math.pow(1.15, baseTemp - temp);
+                // Apply cold proofing adjustment
+                const { coldProofEquivalent, bulkAdjustment } = calculateColdProofAdjustment(
+                    inputs.coldProof,
+                    inputs.fridgeTemp,
+                    bulkTime
+                );
 
-            // Starter factor: more starter = faster fermentation
-            // For every 5% increase in starter, reduce time by ~15%
-            const starterFactor = Math.pow(0.85, (starterPercent - baseStarter) / 5);
-
-            // Advanced factors
-            // Flour type factor
-            let flourFactor = 1.0;
-            if (flourType === 'white') {
-                flourFactor = 1.0;
-            } else if (flourType === 'whole') {
-                flourFactor = 0.85; // Faster with whole grain
-            } else if (flourType === 'mixed') {
-                // Calculate weighted factor based on whole grain proportion
-                const wholeGrainAmount = parseFloat(document.getElementById('wholeGrainAmount')?.value) || 0;
-                const wholeGrainPercent = Math.min(wholeGrainAmount / flour, 1.0); // Cap at 100%
-                const whitePercent = 1.0 - wholeGrainPercent;
-
-                // Weighted average: white flour factor (1.0) and whole grain factor (0.85)
-                flourFactor = (whitePercent * 1.0) + (wholeGrainPercent * 0.85);
-
-                // Update percentage display
-                updateWholeGrainPercent();
-            }
-
-            // Advanced factors - only apply if advanced settings are enabled
-            let peakFactor = 1.0;
-            let ratioFactor = 1.0;
-            let autolyseFactor = 1.0;
-
-            if (advancedEnabled) {
-                // Peak status factor
-                if (peakStatus === 'normal') peakFactor = 1.0; // Standard/baseline
-                else if (peakStatus === 'rising') peakFactor = 1.15; // Not at peak yet - slower
-                else if (peakStatus === 'peak') peakFactor = 0.9; // Optimal - faster
-                else if (peakStatus === 'falling') peakFactor = 1.2; // Past optimal - slower
-
-                // Feeding ratio factor
-                if (feedingRatio === '1:1:1') ratioFactor = 1.1; // Less vigorous - 10% slower
-                else if (feedingRatio === '1:2:2') ratioFactor = 1.05; // 5% slower
-                else if (feedingRatio === '1:3:3') ratioFactor = 1.02; // 2% slower
-                else if (feedingRatio === '1:5:5') ratioFactor = 1.0; // Standard baseline
-                else if (feedingRatio === '1:10:10') ratioFactor = 0.9; // Very vigorous - 10% faster
-
-                // Autolys factor
-                if (autolyse !== 'no') autolyseFactor = 0.95; // Slightly faster with autolys
-            }
-
-            // Calculate bulk fermentation time
-            let bulkTime = baseTime * tempFactor * starterFactor * flourFactor * ratioFactor * peakFactor * autolyseFactor;
-
-            // Ensure reasonable bounds
-            bulkTime = Math.max(2, Math.min(24, bulkTime));
-
-            // Calculate effective fermentation during cold proofing
-            let coldProofEquivalent = 0;
-            let bulkAdjustment = 0;
-            if (coldProof > 0) {
-                // Fermentation rate based on fridge temp
-                // 4°C = 10%, increases exponentially
-                const coldFermentRate = 0.10 * Math.pow(1.20, fridgeTemp - 4);
-                coldProofEquivalent = coldProof * coldFermentRate;
-
-                // Only adjust bulk time slightly for warm fridges
-                // Cold proofing CANNOT replace bulk fermentation!
-                if (fridgeTemp > 7 && coldProofEquivalent > 2) {
-                    // Only reduce bulk by max 20% or 2h, whichever is less
-                    bulkAdjustment = Math.min(coldProofEquivalent * 0.3, bulkTime * 0.2, 2);
+                if (bulkAdjustment > 0) {
                     bulkTime = Math.max(3, bulkTime - bulkAdjustment);
                 }
-            }
 
-                // Create range (±15%)
+                // Create time range (±15%)
                 const minTime = bulkTime * 0.85;
                 const maxTime = bulkTime * 1.15;
 
                 // Display results
-                displayResults(bulkTime, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof, fridgeTemp, coldProofEquivalent, bulkAdjustment);
+                displayResults(
+                    bulkTime, minTime, maxTime,
+                    inputs.temp, percentages.starterPercent, percentages.hydration, percentages.saltPercent,
+                    inputs.flour, inputs.water, inputs.starter, inputs.salt,
+                    inputs.coldProof, inputs.fridgeTemp, coldProofEquivalent, bulkAdjustment
+                );
             } catch (error) {
                 // Handle calculation errors gracefully
                 console.error('Fel vid beräkning:', error);
@@ -2245,58 +2341,74 @@
             }
         }
 
-        function displayResults(time, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof, fridgeTemp, coldProofEquivalent, bulkAdjustment) {
-            const resultDiv = document.getElementById('result');
-            const timeDisplay = document.getElementById('timeDisplay');
-            const timeRange = document.getElementById('timeRange');
-            const infoText = document.getElementById('infoText');
+        // ========================================
+        // DISPLAY HELPER FUNCTIONS
+        // ========================================
 
-            // Save current numLoaves value before regenerating HTML
-            const currentNumLoaves = document.getElementById('numLoaves')?.value || 1;
-
-            // Calculate total time including cold proof
-            const totalTimeWithCold = time + coldProof;
-
-            // Save calculated time for timer (bulk + cold proof)
-            SourdoughApp.calculatedTime = totalTimeWithCold;
-
-            // Reset timer if running
-            if (SourdoughApp.timerInterval) {
-                stopTimer();
-            }
-
-            // Format time display
+        /**
+         * Format time as hours and minutes
+         */
+        function formatHoursMinutes(time) {
             const hours = Math.floor(time);
             const minutes = Math.round((time - hours) * 60);
+            return { hours, minutes };
+        }
 
-            let timeText = `Bulkjäsning:<br>${hours}h ${minutes}min`;
-            if (coldProof > 0) {
-                timeText = `Bulkjäsning:<br>${hours}h ${minutes}min + ${coldProof}h kalljäsning`;
-            }
-            timeDisplay.innerHTML = timeText;
-
-            // Format range with recipe info
-            const minHours = Math.floor(minTime);
-            const minMinutes = Math.round((minTime - minHours) * 60);
-            const maxHours = Math.floor(maxTime);
-            const maxMinutes = Math.round((maxTime - maxHours) * 60);
-            const totalWeight = flour + water + starter + salt;
-
-            // Calculate recommended number of folds
-            // Base: 3-4 folds for medium hydration
-            // Add folds for higher hydration (>75%)
+        /**
+         * Calculate folding schedule based on hydration
+         */
+        function calculateFoldingSchedule(hydration) {
             let folds = 3;
             if (hydration > 75) folds = 4;
             if (hydration > 80) folds = 5;
             if (hydration > 85) folds = 6;
 
-            // Use 15-20 minute intervals (more frequent for high hydration)
             const foldInterval = hydration > 80 ? 15 : (hydration > 75 ? 18 : 20);
-            const totalFoldingTime = Math.round((folds * foldInterval) / 60 * 10) / 10; // in hours
+            const totalFoldingTime = Math.round((folds * foldInterval) / 60 * 10) / 10;
 
-            const foldIntervalText = `var ${foldInterval}:e minut under första ${totalFoldingTime}h`;
+            return { folds, foldInterval, totalFoldingTime };
+        }
+
+        /**
+         * Calculate baking time based on weight per loaf
+         */
+        function calculateBakingTime(totalWeight, numLoaves) {
+            const weightPerLoaf = totalWeight / numLoaves;
+            const bakingTimeBase = 40; // Base time for ~1kg loaf
+            const weightFactor = weightPerLoaf / 1000;
+            const bakingTimeTotal = Math.round(bakingTimeBase * Math.sqrt(weightFactor));
+            const bakingTimeCovered = Math.round(bakingTimeTotal * 0.55);
+            const bakingTimeUncovered = bakingTimeTotal - bakingTimeCovered;
+
+            return {
+                weightPerLoaf,
+                bakingTimeTotal,
+                bakingTimeCovered,
+                bakingTimeUncovered
+            };
+        }
+
+        /**
+         * Generate time display text
+         */
+        function generateTimeDisplayText(time, coldProof) {
+            const { hours, minutes } = formatHoursMinutes(time);
+            let timeText = `Bulkjäsning:<br>${hours}h ${minutes}min`;
+            if (coldProof > 0) {
+                timeText += ` + ${coldProof}h kalljäsning`;
+            }
+            return timeText;
+        }
+
+        /**
+         * Generate time range info text
+         */
+        function generateTimeRangeInfo(minTime, maxTime, coldProof, fridgeTemp, coldProofEquivalent, bulkAdjustment) {
+            const { hours: minHours, minutes: minMinutes } = formatHoursMinutes(minTime);
+            const { hours: maxHours, minutes: maxMinutes } = formatHoursMinutes(maxTime);
 
             let timeInfo = `Intervall bulkjäsning: ${minHours}h ${minMinutes}min - ${maxHours}h ${maxMinutes}min`;
+
             if (coldProof > 0) {
                 const totalMin = Math.floor(minTime + coldProof);
                 const totalMax = Math.ceil(maxTime + coldProof);
@@ -2313,20 +2425,18 @@
                 }
             }
 
-            // Get number of loaves (default 1)
-            const numLoaves = parseFloat(document.getElementById('numLoaves')?.value) || 1;
-            const weightPerLoaf = totalWeight / numLoaves;
+            return timeInfo;
+        }
 
-            // Calculate baking time based on weight PER LOAF (not total)
-            const bakingTimeBase = 40; // Base time for ~1kg loaf
-            const weightFactor = weightPerLoaf / 1000;
-            const bakingTimeTotal = Math.round(bakingTimeBase * Math.sqrt(weightFactor));
-            const bakingTimeCovered = Math.round(bakingTimeTotal * 0.55); // ~55% covered
-            const bakingTimeUncovered = bakingTimeTotal - bakingTimeCovered;
+        /**
+         * Generate recipe cards HTML
+         */
+        function generateRecipeCardsHTML(foldingSchedule, bakingTimes, hydration, numLoaves) {
+            const { folds, foldInterval, totalFoldingTime } = foldingSchedule;
+            const { weightPerLoaf, bakingTimeTotal, bakingTimeCovered, bakingTimeUncovered } = bakingTimes;
+            const foldIntervalText = `var ${foldInterval}:e minut under första ${totalFoldingTime}h`;
 
-            timeRange.innerHTML = `
-                <div style="margin-bottom: var(--space-3);">${timeInfo}</div>
-
+            return `
                 <div class="recipe-cards">
                     <div class="recipe-card">
                         <h3><span class="icon">🙌</span> Vikning av degen</h3>
@@ -2353,17 +2463,17 @@
                                     <input
                                         type="number"
                                         id="numLoaves"
-                                        value="${currentNumLoaves}"
+                                        value="${numLoaves}"
                                         min="1"
                                         max="10"
                                         step="1"
                                         style="font-size: var(--text-lg);">
                                     <span class="unit" style="font-size: var(--text-base);">st</span>
                                 </div>
-                                <div id="breadEmojis" style="font-size: 24px; line-height: 1;">${'🍞'.repeat(currentNumLoaves)}</div>
+                                <div id="breadEmojis" style="font-size: 24px; line-height: 1;">${'🍞'.repeat(numLoaves)}</div>
                             </div>
                             <div style="margin-top: var(--space-2); padding: var(--space-2); background: rgba(159, 176, 148, 0.15); border-radius: var(--radius-sm); font-size: var(--text-sm); color: var(--green-dark); font-weight: 600;">
-                                ${currentNumLoaves} bröd à ${Math.round(weightPerLoaf)}g = ${bakingTimeTotal} min gräddning/bröd
+                                ${numLoaves} bröd à ${Math.round(weightPerLoaf)}g = ${bakingTimeTotal} min gräddning/bröd
                             </div>
                         </div>
 
@@ -2394,9 +2504,14 @@
                     </div>
                 </div>
             `;
+        }
 
-            // Generate info text
+        /**
+         * Generate contextual info text based on temperature and starter percentage
+         */
+        function generateInfoText(temp, starterPercent) {
             let info = '';
+
             if (temp < 20) {
                 info = '❄️ Låg temperatur ger långsam jäsning och mer komplex smak. Perfekt för över natten!';
             } else if (temp > 26) {
@@ -2411,8 +2526,55 @@
                 info += ' Lite surdeg ger långsammare jäsning och mildare smak.';
             }
 
+            return info;
+        }
 
-            infoText.textContent = info;
+        /**
+         * Main display function
+         * Orchestrates all display helper functions to show results
+         */
+        function displayResults(time, minTime, maxTime, temp, starterPercent, hydration, saltPercent, flour, water, starter, salt, coldProof, fridgeTemp, coldProofEquivalent, bulkAdjustment) {
+            const resultDiv = document.getElementById('result');
+            const timeDisplay = document.getElementById('timeDisplay');
+            const timeRange = document.getElementById('timeRange');
+            const infoText = document.getElementById('infoText');
+
+            // Save current numLoaves value before regenerating HTML
+            const currentNumLoaves = parseFloat(document.getElementById('numLoaves')?.value) || 1;
+
+            // Calculate total time including cold proof
+            const totalTimeWithCold = time + coldProof;
+
+            // Save calculated time for timer (bulk + cold proof)
+            SourdoughApp.calculatedTime = totalTimeWithCold;
+
+            // Reset timer if running
+            if (SourdoughApp.timerInterval) {
+                stopTimer();
+            }
+
+            // Generate time display
+            timeDisplay.innerHTML = generateTimeDisplayText(time, coldProof);
+
+            // Calculate components
+            const totalWeight = flour + water + starter + salt;
+            const foldingSchedule = calculateFoldingSchedule(hydration);
+            const bakingTimes = calculateBakingTime(totalWeight, currentNumLoaves);
+
+            // Generate time range info
+            const timeInfo = generateTimeRangeInfo(
+                minTime, maxTime, coldProof, fridgeTemp,
+                coldProofEquivalent, bulkAdjustment
+            );
+
+            // Generate recipe cards
+            timeRange.innerHTML = `
+                <div style="margin-bottom: var(--space-3);">${timeInfo}</div>
+                ${generateRecipeCardsHTML(foldingSchedule, bakingTimes, hydration, currentNumLoaves)}
+            `;
+
+            // Generate and display info text
+            infoText.textContent = generateInfoText(temp, starterPercent);
 
             // Show result
             resultDiv.classList.add('show');
@@ -2429,6 +2591,7 @@
             }, 50);
 
             // Announce to screen readers
+            const { hours, minutes } = formatHoursMinutes(time);
             announceToScreenReader(`Beräkning klar. Rekommenderad jästid är ${hours} timmar och ${minutes} minuter.`);
         }
 
