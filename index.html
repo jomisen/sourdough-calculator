@@ -181,7 +181,7 @@
 
             /* Colors */
             --green-dark: #3d4a36;
-            --green-medium: #6b7a5e;
+            --green-medium: #5a6850; /* Darkened for WCAG AA contrast (4.5:1) */
             --green-light: #9fb094;
             --green-lighter: #c5d4b8;
             --cream: #fdfbf7;
@@ -1686,7 +1686,7 @@
                                     stroke-dashoffset="0">
                                 </circle>
                             </svg>
-                            <div class="countdown-time" id="countdownTime">00:00:00</div>
+                            <div class="countdown-time" id="countdownTime" role="timer" aria-live="polite" aria-atomic="true" aria-label="Timer visar 0 timmar, 0 minuter, 0 sekunder">00:00:00</div>
                             <div class="countdown-label">ÅTERSTÅR</div>
                         </div>
                     </div>
@@ -1906,8 +1906,18 @@
 
             if (checkbox.checked) {
                 section.classList.add('show');
+
+                // Move focus to first input in advanced section for keyboard users
+                setTimeout(() => {
+                    const firstInput = section.querySelector('select, input');
+                    if (firstInput) {
+                        firstInput.focus();
+                        announceToScreenReader('Avancerade inställningar öppnade. Du kan nu justera mjöltyp, matningsratio och kalljäsning.');
+                    }
+                }, 100); // Small delay to ensure section is visible
             } else {
                 section.classList.remove('show');
+                announceToScreenReader('Avancerade inställningar stängda.');
             }
 
             // Recalculate when toggling advanced settings on/off
@@ -2461,8 +2471,13 @@
             const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
 
             // Display countdown
-            document.getElementById('countdownTime').textContent =
+            const countdownElement = document.getElementById('countdownTime');
+            countdownElement.textContent =
                 `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+            // Update aria-label for screen readers
+            countdownElement.setAttribute('aria-label',
+                `${hours} ${hours === 1 ? 'timme' : 'timmar'}, ${minutes} ${minutes === 1 ? 'minut' : 'minuter'}, ${seconds} ${seconds === 1 ? 'sekund' : 'sekunder'} återstår`);
 
             // Update circular progress
             const progress = remaining / totalDuration;
@@ -2479,14 +2494,15 @@
         }
 
         // Announce messages to screen readers
-        function announceToScreenReader(message) {
+        function announceToScreenReader(message, duration = 3000) {
             const announcement = document.getElementById('sr-announcements');
             announcement.textContent = message;
 
-            // Clear after a delay to allow for repeated announcements
+            // Clear after a delay to allow screen readers to read the message
+            // Default 3 seconds gives enough time for most screen readers
             setTimeout(() => {
                 announcement.textContent = '';
-            }, 1000);
+            }, duration);
         }
 
     </script>
