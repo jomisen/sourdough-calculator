@@ -2235,7 +2235,7 @@
             const totalTimeWithCold = time + coldProof;
 
             // Save calculated time for timer (bulk + cold proof)
-            calculatedTime = totalTimeWithCold;
+            SourdoughApp.calculatedTime = totalTimeWithCold;
 
             // Reset timer if running
             if (SourdoughApp.timerInterval) {
@@ -2454,8 +2454,8 @@
 
         function updateTimer() {
             const now = new Date();
-            const remaining = endTime - now;
-            const totalDuration = calculatedTime * 60 * 60 * 1000; // Total time in ms
+            const remaining = SourdoughApp.endTime - now;
+            const totalDuration = SourdoughApp.calculatedTime * 60 * 60 * 1000; // Total time in ms
 
             if (remaining <= 0) {
                 // Timer finished
