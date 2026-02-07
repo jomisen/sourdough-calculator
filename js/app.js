@@ -22,7 +22,7 @@ import {
     updateRecipeSummary
 } from './display.js';
 import { startTimer, stopTimer, resumeTimer, restartTimer } from './timer.js';
-import { validateInputs } from './validation.js';
+import { validateInputs, validateRecipeWarnings, displayWarnings } from './validation.js';
 import { trackCalculatorUsed, trackTimerStarted } from './analytics.js';
 
 /**
@@ -121,6 +121,17 @@ function calculateTimeInternal() {
         if (inputs.flour === 0) {
             throw new Error('Mjölmängden kan inte vara 0.');
         }
+
+        // Check for recipe warnings (extreme values)
+        const warnings = validateRecipeWarnings(
+            inputs.flour,
+            inputs.water,
+            inputs.starter,
+            inputs.salt
+        );
+
+        // Display warnings if any (doesn't block calculation)
+        displayWarnings(warnings);
 
         // Calculate baker's percentages
         const percentages = calculateBakersPercentages(inputs);
