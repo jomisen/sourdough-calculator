@@ -23,6 +23,25 @@ Sidan är fullt tillgänglig enligt WCAG 2.2 Level AA:
 - ARIA-attribut
 - 24x24px touch targets
 
+## Testning
+
+Projektet har regressionstester för att säkerställa att alla funktioner fungerar korrekt:
+
+### Köra tester
+
+Öppna `tests.html` i din webbläsare och klicka på "Kör alla tester".
+
+### Vad testas?
+
+- **Hydrering Beräkningar** - Säkerställer korrekt beräkning av vattenprocent
+- **Temperatur Påverkan** - Verifierar att temperatur påverkar jästtiden korrekt
+- **Surdegsandel Påverkan** - Testar att olika mängder surdeg ger rätt tider
+- **Input Validering** - Kontrollerar att alla gränsvärden respekteras
+- **Kantfall & Gränsvärden** - Testar extrema värden och kombinationer
+- **Verkliga Scenarier** - Validerar vanliga användningsfall
+
+Totalt: **30+ tester** som täcker alla kritiska funktioner.
+
 ## Licens
 
 MIT License
