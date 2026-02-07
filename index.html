@@ -1869,6 +1869,20 @@
             calculatedTime: 0
         };
 
+        // Debounce function to limit how often a function can fire
+        function debounce(func, delay) {
+            let timeoutId;
+            return function(...args) {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => func.apply(this, args), delay);
+            };
+        }
+
+        // Helper function to calculate hydration percentage
+        function calculateHydration(water, flour) {
+            return flour > 0 ? (water / flour) * 100 : 0;
+        }
+
         // Input validation function
         function validateInputs() {
             const inputs = [
@@ -2002,16 +2016,18 @@
             });
         }
 
-        // Auto-calculate when any input changes
+        // Auto-calculate when any input changes (debounced for performance)
         function setupAutoCalculate() {
+            const debouncedCalculate = debounce(() => {
+                updateRecipeSummary();
+                calculateTime();
+            }, 300); // Wait 300ms after user stops typing
+
             const inputs = ['temperature', 'flour', 'water', 'starter', 'salt', 'coldProof', 'fridgeTemp', 'wholeGrainAmount'];
             inputs.forEach(inputId => {
                 const element = document.getElementById(inputId);
                 if (element) {
-                    element.addEventListener('input', () => {
-                        updateRecipeSummary();
-                        calculateTime();
-                    });
+                    element.addEventListener('input', debouncedCalculate);
                 }
             });
 
@@ -2063,7 +2079,7 @@
 
             if (flour > 0) {
                 const starterPercent = (starter / flour) * 100;
-                const hydration = (water / flour) * 100;
+                const hydration = calculateHydration(water, flour);
                 const saltPercent = (salt / flour) * 100;
                 const totalDoughWeight = flour + water + starter + salt;
 
@@ -2115,7 +2131,7 @@
 
             // Calculate percentages (baker's percentage)
             const starterPercent = (starter / flour) * 100;
-            const hydration = (water / flour) * 100;
+            const hydration = calculateHydration(water, flour);
             const saltPercent = (salt / flour) * 100;
 
             // Base time at 22°C with 20% starter (in hours)
@@ -2522,8 +2538,10 @@
             if (window.goatcounter) {
                 const temp = document.getElementById('temperature').value;
                 const starter = document.getElementById('starter').value;
-                const hydration = document.getElementById('advancedToggle').checked ?
-                    document.getElementById('hydration').value : '75';
+                // Calculate hydration from water/flour ratio
+                const flour = parseFloat(document.getElementById('flour').value) || 0;
+                const water = parseFloat(document.getElementById('water').value) || 0;
+                const hydration = calculateHydration(water, flour).toFixed(0);
 
                 window.goatcounter.count({
                     path: '/event/calculator-used',
@@ -2548,6 +2566,14 @@
                 });
             }
         };
+
+        // Prevent memory leak: stop timer when user navigates away
+        window.addEventListener('beforeunload', () => {
+            if (SourdoughApp.timerInterval) {
+                clearInterval(SourdoughApp.timerInterval);
+                SourdoughApp.timerInterval = null;
+            }
+        });
     </script>
 </body>
 </html>
