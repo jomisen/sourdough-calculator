@@ -200,7 +200,9 @@ export function updateRecipeSummary() {
     const starterPercent = flour > 0 ? ((starter / flour) * 100).toFixed(0) : 0;
     const saltPercent = flour > 0 ? ((salt / flour) * 100).toFixed(1) : 0;
 
-    document.getElementById('hydrationPercent').textContent = `${hydrationPercent}%`;
+    // Update percentage displays
+    document.getElementById('flourPercent').textContent = '100%';
+    document.getElementById('waterPercent').textContent = `${hydrationPercent}% hydrering`;
     document.getElementById('starterPercent').textContent = `${starterPercent}%`;
     document.getElementById('saltPercent').textContent = `${saltPercent}%`;
     document.getElementById('totalWeight').textContent = `${totalWeight}g`;
