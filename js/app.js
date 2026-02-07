@@ -214,6 +214,17 @@ function displayResults(time, minTime, maxTime, temp, starterPercent, hydration,
     const timeRange = document.getElementById('timeRange');
     const infoText = document.getElementById('infoText');
 
+    // Validate that all required elements exist
+    if (!resultDiv || !timeDisplay || !timeRange || !infoText) {
+        console.error('Missing required DOM elements:', {
+            resultDiv: !!resultDiv,
+            timeDisplay: !!timeDisplay,
+            timeRange: !!timeRange,
+            infoText: !!infoText
+        });
+        throw new Error('Kunde inte hitta alla nödvändiga element på sidan. Försök ladda om sidan.');
+    }
+
     // Save current numLoaves value before regenerating HTML
     const currentNumLoaves = parseFloat(document.getElementById('numLoaves')?.value) || 1;
 

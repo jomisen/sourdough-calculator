@@ -102,13 +102,20 @@ export function displayWarnings(warnings) {
     warningBox.setAttribute('role', 'alert');
     warningBox.setAttribute('aria-live', 'polite');
 
-    // Build warnings HTML
-    const warningsHTML = warnings.map(w => `
-        <li class="warning-item warning-item--${w.severity}">
-            <span class="warning-icon" aria-hidden="true">${w.icon}</span>
-            <span class="warning-text">${w.message}</span>
-        </li>
-    `).join('');
+    // Build warnings HTML (with safety checks)
+    const warningsHTML = warnings
+        .filter(w => w && w.icon && w.message && w.severity) // Filter out invalid warnings
+        .map(w => `
+            <li class="warning-item warning-item--${w.severity}">
+                <span class="warning-icon" aria-hidden="true">${w.icon}</span>
+                <span class="warning-text">${w.message}</span>
+            </li>
+        `).join('');
+
+    // If no valid warnings after filtering, exit
+    if (!warningsHTML) {
+        return;
+    }
 
     warningBox.innerHTML = `
         <div class="warning-header">
@@ -125,12 +132,22 @@ export function displayWarnings(warnings) {
     // Insert before result section
     const resultSection = document.getElementById('result');
     if (resultSection && resultSection.parentNode) {
-        resultSection.parentNode.insertBefore(warningBox, resultSection);
+        try {
+            resultSection.parentNode.insertBefore(warningBox, resultSection);
 
-        // Smooth scroll into view
-        setTimeout(() => {
-            warningBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }, 100);
+            // Smooth scroll into view
+            setTimeout(() => {
+                if (warningBox && warningBox.scrollIntoView) {
+                    warningBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            }, 100);
+        } catch (error) {
+            console.error('Failed to insert warning box:', error);
+            // Fallback: append to result section instead
+            resultSection.appendChild(warningBox);
+        }
+    } else {
+        console.warn('Could not find result section to insert warnings');
     }
 
     // Announce to screen reader
