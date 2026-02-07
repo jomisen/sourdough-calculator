@@ -432,15 +432,15 @@ function showTroubleshootingForm(problemType) {
         'flat': {
             title: '📏 Platt bröd / ingen oven spring',
             causes: [
+                '⚠️ För svag surdegsstart (VANLIGASTE ORSAKEN!)',
                 'Överjäst deg - jäste för länge',
-                'För svag surdegsstart',
                 'För låg ugnstemperatur',
                 'Glömde skåra brödet',
                 'Degen formades för löst'
             ],
             solutions: [
+                '💪 <strong>FIX SURDEGEN FÖRST!</strong> - Kolla "Surdegsstart stark?" rutan ovan. Mata 1:5:5 i 3-5 dagar och använd vid peak',
                 '⏱️ <strong>Korta ner bulkjäsningen</strong> - använd kalkylatorn och fingertestet',
-                '💪 <strong>Starkare surdeg</strong> - mata 1:5:5 och använd vid peak',
                 '🔥 <strong>Högre temperatur</strong> - 250°C och förvärm i 60 min',
                 '🔪 <strong>Skåra djupare</strong> - använd riktigt vass kniv/lame',
                 '🤲 <strong>Forma tightare</strong> - bygg mer ytspänning vid formning'
@@ -465,18 +465,18 @@ function showTroubleshootingForm(problemType) {
         'dense': {
             title: '🕳️ För tätt / inga hål / kompakt',
             causes: [
-                'Underjäst - jäste för kort',
-                'För lite surdegsstart',
+                '⚠️ Svag eller inaktiv surdegsstart (VANLIGASTE ORSAKEN!)',
+                'Underjäst - jäste för kort tid',
+                'För lite surdegsstart (under 15%)',
                 'För låg temperatur',
-                'För mycket knådning/vikningar',
-                'Dålig surdegsstart'
+                'För mycket knådning/vikningar'
             ],
             solutions: [
-                '⏱️ <strong>Längre bulkjäsning</strong> - degen ska växa 50-75%',
+                '💪 <strong>STARKARE SURDEG!</strong> - Detta är nästan alltid lösningen. Kolla rutan ovan om surdegsstart. Mata 1:5:5 dagligen tills den dubblats på 4-6h',
+                '⏱️ <strong>Längre bulkjäsning</strong> - degen ska växa 50-75% (men funkar inte om surdegen är svag!)',
                 '📊 <strong>Mer surdeg</strong> - prova 20-25% surdegsandel',
                 '🌡️ <strong>Varmare miljö</strong> - sikta på 24-26°C',
-                '🙌 <strong>Färre vikningar</strong> - max 3-4 för vitt mjöl',
-                '💪 <strong>Bättre surdeg</strong> - mata regelbundet och använd vid peak'
+                '🙌 <strong>Färre vikningar</strong> - max 3-4 för vitt mjöl'
             ]
         },
         'too-open': {
