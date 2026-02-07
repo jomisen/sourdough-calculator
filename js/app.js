@@ -37,10 +37,74 @@ function debounce(func, delay) {
 }
 
 /**
- * Main calculation function
+ * Show loading indicator
+ */
+function showLoadingIndicator() {
+    const resultDiv = document.getElementById('result');
+    if (!resultDiv) return;
+
+    // Create loading indicator if it doesn't exist
+    let loadingDiv = document.getElementById('loading-indicator');
+    if (!loadingDiv) {
+        loadingDiv = document.createElement('div');
+        loadingDiv.id = 'loading-indicator';
+        loadingDiv.className = 'loading-indicator';
+        loadingDiv.setAttribute('role', 'status');
+        loadingDiv.setAttribute('aria-live', 'polite');
+        loadingDiv.innerHTML = `
+            <div class="loading-content">
+                <span class="loading-spinner" aria-hidden="true"></span>
+                <span class="loading-text">Beräknar...</span>
+            </div>
+        `;
+    }
+
+    // Insert before result section if not already inserted
+    if (!loadingDiv.parentElement) {
+        resultDiv.parentNode.insertBefore(loadingDiv, resultDiv);
+    }
+
+    // Fade out result section
+    resultDiv.style.opacity = '0.5';
+    resultDiv.style.pointerEvents = 'none';
+}
+
+/**
+ * Hide loading indicator
+ */
+function hideLoadingIndicator() {
+    const loadingDiv = document.getElementById('loading-indicator');
+    const resultDiv = document.getElementById('result');
+
+    if (loadingDiv) {
+        loadingDiv.remove();
+    }
+
+    if (resultDiv) {
+        resultDiv.style.opacity = '1';
+        resultDiv.style.pointerEvents = 'auto';
+    }
+}
+
+/**
+ * Main calculation function with loading state
  * Orchestrates all helper functions to calculate fermentation time
  */
 function calculateTime() {
+    // Show loading indicator
+    showLoadingIndicator();
+
+    // Use setTimeout to ensure loading indicator renders before heavy calculation
+    setTimeout(() => {
+        calculateTimeInternal();
+    }, 50);
+}
+
+/**
+ * Internal calculation function
+ * Performs the actual calculation logic
+ */
+function calculateTimeInternal() {
     try {
         // Validate inputs (shows visual feedback but doesn't block calculation)
         validateInputs();
@@ -123,6 +187,9 @@ function calculateTime() {
 
         // Announce error to screen readers
         announceToScreenReader(`Fel: ${error.message}`);
+    } finally {
+        // Always hide loading indicator when done
+        hideLoadingIndicator();
     }
 }
 

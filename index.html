@@ -1546,6 +1546,50 @@
             }
         }
 
+        /* Loading Indicator */
+        .loading-indicator {
+            text-align: center;
+            padding: var(--space-4);
+            animation: fadeIn 0.2s ease;
+        }
+
+        .loading-content {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-2) var(--space-4);
+            background: rgba(159, 176, 148, 0.1);
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            color: var(--green-medium);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--green-lighter);
+            border-top-color: var(--green-dark);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Respect reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            .loading-spinner {
+                animation: none;
+                border-top-color: var(--green-lighter);
+            }
+
+            .loading-indicator {
+                animation: none;
+            }
+        }
+
     </style>
 </head>
 <body>
