@@ -95,6 +95,19 @@ export function startTimer() {
 }
 
 /**
+ * Format duration in milliseconds to readable string
+ */
+function formatDuration(milliseconds) {
+    const hours = Math.floor(milliseconds / (1000 * 60 * 60));
+    const minutes = Math.floor((milliseconds % (1000 * 60 * 60)) / (1000 * 60));
+
+    if (hours > 0) {
+        return `${hours}h ${minutes}min`;
+    }
+    return `${minutes}min`;
+}
+
+/**
  * Pause timer (keeps display visible)
  */
 export function stopTimer() {
@@ -121,13 +134,34 @@ export function stopTimer() {
     const restartBtn = document.getElementById('restartBtn');
 
     if (pauseBtn) pauseBtn.style.display = 'none';
-    if (resumeBtn) resumeBtn.style.display = 'inline-block';
-    if (restartBtn) restartBtn.style.display = 'inline-block';
+
+    // Update Resume button with remaining time
+    if (resumeBtn) {
+        resumeBtn.style.display = 'inline-block';
+        const remainingTime = formatDuration(SourdoughApp.remainingTime);
+        resumeBtn.innerHTML = `
+            ⏯️ Fortsätt<br>
+            <small style="font-size: var(--text-sm); opacity: 0.85; font-weight: 400; line-height: 1.3;">${remainingTime} kvar</small>
+        `;
+        resumeBtn.setAttribute('aria-label', `Fortsätt timer, ${remainingTime} kvar`);
+    }
+
+    // Update Restart button with total time
+    if (restartBtn) {
+        restartBtn.style.display = 'inline-block';
+        const totalTime = formatDuration(SourdoughApp.calculatedTime * 60 * 60 * 1000);
+        restartBtn.innerHTML = `
+            🔄 Börja om<br>
+            <small style="font-size: var(--text-sm); opacity: 0.85; font-weight: 400; line-height: 1.3;">från ${totalTime}</small>
+        `;
+        restartBtn.setAttribute('aria-label', `Starta om timer från ${totalTime}`);
+    }
 
     console.log('Buttons updated'); // Debug log
 
     // Announce to screen readers
-    announceToScreenReader('Timer pausad.');
+    const remainingTime = formatDuration(SourdoughApp.remainingTime);
+    announceToScreenReader(`Timer pausad. ${remainingTime} återstår.`);
 }
 
 /**
@@ -143,10 +177,18 @@ export function resumeTimer() {
         updateTimer();
         SourdoughApp.timerInterval = setInterval(updateTimer, 1000);
 
-        // Update button visibility
-        document.getElementById('pauseBtn').style.display = 'inline-block';
-        document.getElementById('resumeBtn').style.display = 'none';
-        document.getElementById('restartBtn').style.display = 'none';
+        // Update button visibility and restore pause button text
+        const pauseBtn = document.getElementById('pauseBtn');
+        if (pauseBtn) {
+            pauseBtn.style.display = 'inline-block';
+            pauseBtn.innerHTML = '⏸️ Pausa timer';
+            pauseBtn.setAttribute('aria-label', 'Pausa timer');
+        }
+
+        const resumeBtn = document.getElementById('resumeBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        if (resumeBtn) resumeBtn.style.display = 'none';
+        if (restartBtn) restartBtn.style.display = 'none';
 
         // Update finish time display
         document.getElementById('finishTime').textContent = formatTime(SourdoughApp.endTime);
