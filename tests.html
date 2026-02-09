@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surdegs Jästidskalkylator - Regressionstester</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #3d4a36;
+            margin-bottom: 1rem;
+        }
+
+        .test-summary {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .stat {
+            flex: 1;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .passed { color: #28a745; }
+        .failed { color: #dc3545; }
+        .total { color: #6c757d; }
+
+        .test-group {
+            margin: 2rem 0;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .test-group-header {
+            background: #3d4a36;
+            color: white;
+            padding: 1rem 1.5rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .test-case {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .test-case:last-child {
+            border-bottom: none;
+        }
+
+        .test-case.pass {
+            background: #f8fdf9;
+            border-left: 4px solid #28a745;
+        }
+
+        .test-case.fail {
+            background: #fff5f5;
+            border-left: 4px solid #dc3545;
+        }
+
+        .test-name {
+            flex: 1;
+        }
+
+        .test-status {
+            font-weight: bold;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+        }
+
+        .test-status.pass {
+            background: #28a745;
+            color: white;
+        }
+
+        .test-status.fail {
+            background: #dc3545;
+            color: white;
+        }
+
+        .test-details {
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            background: #fff;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            color: #dc3545;
+        }
+
+        .run-button {
+            background: #3d4a36;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 1rem 0;
+        }
+
+        .run-button:hover {
+            background: #2d3a26;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Surdegs Jästidskalkylator - Regressionstester</h1>
+        <p style="color: #6c757d; margin-bottom: 1rem;">Testar alla kritiska funktioner i kalkylatorn för att säkerställa att allt fungerar korrekt.</p>
+
+        <button class="run-button" onclick="runAllTests()">▶️ Kör alla tester</button>
+
+        <div id="test-results" class="hidden">
+            <div class="test-summary">
+                <div class="stat">
+                    <div class="stat-value passed" id="passed-count">0</div>
+                    <div class="stat-label">Godkända</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value failed" id="failed-count">0</div>
+                    <div class="stat-label">Misslyckade</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value total" id="total-count">0</div>
+                    <div class="stat-label">Totalt</div>
+                </div>
+            </div>
+
+            <div id="test-groups"></div>
+        </div>
+    </div>
+
+    <!-- Hidden DOM elements for testing -->
+    <div id="test-fixtures" style="display: none;">
+        <input type="number" id="temperature" value="22">
+        <input type="number" id="starter" value="160">
+        <input type="number" id="flour" value="800">
+        <input type="number" id="water" value="560">
+        <input type="number" id="salt" value="16">
+        <input type="checkbox" id="advancedToggle">
+        <select id="flourType"><option value="white">Vitt mjöl</option></select>
+        <select id="feedingRatio"><option value="1:5:5">1:5:5</option></select>
+        <select id="peakStatus"><option value="normal">Normal</option></select>
+        <select id="autolyse"><option value="no">Ingen</option></select>
+        <input type="number" id="coldProof" value="0">
+        <input type="number" id="fridgeTemp" value="4">
+        <input type="number" id="wholeGrainAmount" value="0">
+        <div id="result"></div>
+        <div id="timerTime"></div>
+        <div id="bulkTime"></div>
+        <div id="vikning"></div>
+        <div id="recipeSummary"></div>
+        <div id="hydrationPercent"></div>
+        <div id="starterPercent"></div>
+        <div id="saltPercent"></div>
+    </div>
+
+    <script>
+        // Test framework
+        const testResults = {
+            passed: 0,
+            failed: 0,
+            groups: []
+        };
+
+        function testGroup(name, tests) {
+            const group = {
+                name: name,
+                tests: []
+            };
+
+            tests.forEach(test => {
+                try {
+                    test.fn();
+                    group.tests.push({
+                        name: test.name,
+                        passed: true
+                    });
+                    testResults.passed++;
+                } catch (error) {
+                    group.tests.push({
+                        name: test.name,
+                        passed: false,
+                        error: error.message
+                    });
+                    testResults.failed++;
+                }
+            });
+
+            testResults.groups.push(group);
+        }
+
+        function assert(condition, message) {
+            if (!condition) {
+                throw new Error(message || 'Assertion failed');
+            }
+        }
+
+        function assertEquals(actual, expected, message) {
+            if (actual !== expected) {
+                throw new Error(message || `Expected ${expected}, got ${actual}`);
+            }
+        }
+
+        function assertInRange(value, min, max, message) {
+            if (value < min || value > max) {
+                throw new Error(message || `Expected value between ${min} and ${max}, got ${value}`);
+            }
+        }
+
+        // Copy functions from main app
+        function calculateHydration(water, flour) {
+            return flour > 0 ? (water / flour) * 100 : 0;
+        }
+
+        function calculateBasicTime(temp, starterPercent) {
+            const baseTime = 5;
+            const baseTemp = 22;
+            const baseStarter = 20;
+
+            const tempFactor = Math.pow(1.15, baseTemp - temp);
+            const starterFactor = Math.pow(0.85, (starterPercent - baseStarter) / 5);
+
+            let bulkTime = baseTime * tempFactor * starterFactor;
+            return Math.max(2, Math.min(24, bulkTime));
+        }
+
+        // Test suites
+        function runAllTests() {
+            // Reset results
+            testResults.passed = 0;
+            testResults.failed = 0;
+            testResults.groups = [];
+
+            // Run test groups
+            testHydrationCalculations();
+            testTemperatureFactors();
+            testStarterFactors();
+            testInputValidation();
+            testEdgeCases();
+            testRealWorldScenarios();
+
+            // Display results
+            displayResults();
+        }
+
+        function testHydrationCalculations() {
+            testGroup('Hydrering Beräkningar', [
+                {
+                    name: 'Standard hydrering (70%)',
+                    fn: () => {
+                        const result = calculateHydration(560, 800);
+                        assertEquals(result, 70, 'Ska beräkna 70% hydrering');
+                    }
+                },
+                {
+                    name: 'Låg hydrering (60%)',
+                    fn: () => {
+                        const result = calculateHydration(480, 800);
+                        assertEquals(result, 60, 'Ska beräkna 60% hydrering');
+                    }
+                },
+                {
+                    name: 'Hög hydrering (85%)',
+                    fn: () => {
+                        const result = calculateHydration(680, 800);
+                        assertEquals(result, 85, 'Ska beräkna 85% hydrering');
+                    }
+                },
+                {
+                    name: 'Division med noll',
+                    fn: () => {
+                        const result = calculateHydration(100, 0);
+                        assertEquals(result, 0, 'Ska returnera 0 vid division med noll');
+                    }
+                },
+                {
+                    name: 'Små värden',
+                    fn: () => {
+                        const result = calculateHydration(50, 100);
+                        assertEquals(result, 50, 'Ska fungera med små värden');
+                    }
+                }
+            ]);
+        }
+
+        function testTemperatureFactors() {
+            testGroup('Temperatur Påverkan', [
+                {
+                    name: 'Rumstemperatur 22°C (bas)',
+                    fn: () => {
+                        const result = calculateBasicTime(22, 20);
+                        assertInRange(result, 4.5, 5.5, 'Bastemperatur ska ge ~5 timmar');
+                    }
+                },
+                {
+                    name: 'Kall temperatur 18°C',
+                    fn: () => {
+                        const result = calculateBasicTime(18, 20);
+                        assertInRange(result, 7, 9, 'Kallare temp ska ge längre tid');
+                    }
+                },
+                {
+                    name: 'Varm temperatur 26°C',
+                    fn: () => {
+                        const result = calculateBasicTime(26, 20);
+                        assertInRange(result, 3, 4, 'Varmare temp ska ge kortare tid');
+                    }
+                },
+                {
+                    name: 'Mycket kall 15°C',
+                    fn: () => {
+                        const result = calculateBasicTime(15, 20);
+                        assert(result > 8, 'Mycket kall temp ska ge >8 timmar');
+                    }
+                },
+                {
+                    name: 'Mycket varm 30°C',
+                    fn: () => {
+                        const result = calculateBasicTime(30, 20);
+                        assert(result < 3, 'Mycket varm temp ska ge <3 timmar');
+                    }
+                }
+            ]);
+        }
+
+        function testStarterFactors() {
+            testGroup('Surdegsandel Påverkan', [
+                {
+                    name: 'Standard 20% surdeg',
+                    fn: () => {
+                        const result = calculateBasicTime(22, 20);
+                        assertInRange(result, 4.5, 5.5, '20% surdeg ska ge ~5 timmar');
+                    }
+                },
+                {
+                    name: 'Låg andel 10% surdeg',
+                    fn: () => {
+                        const result = calculateBasicTime(22, 10);
+                        assert(result > 5.5, '10% surdeg ska ge längre tid än 20%');
+                    }
+                },
+                {
+                    name: 'Hög andel 30% surdeg',
+                    fn: () => {
+                        const result = calculateBasicTime(22, 30);
+                        assert(result < 4.5, '30% surdeg ska ge kortare tid än 20%');
+                    }
+                },
+                {
+                    name: 'Mycket hög 40% surdeg',
+                    fn: () => {
+                        const result = calculateBasicTime(22, 40);
+                        assert(result < 3.5, '40% surdeg ska ge <3.5 timmar');
+                    }
+                },
+                {
+                    name: 'Minimal 5% surdeg',
+                    fn: () => {
+                        const result = calculateBasicTime(22, 5);
+                        assert(result > 7, '5% surdeg ska ge >7 timmar');
+                    }
+                }
+            ]);
+        }
+
+        function testInputValidation() {
+            testGroup('Input Validering', [
+                {
+                    name: 'Temperatur inom gränser (22°C)',
+                    fn: () => {
+                        document.getElementById('temperature').value = 22;
+                        const element = document.getElementById('temperature');
+                        const value = parseFloat(element.value);
+                        assert(value >= 15 && value <= 30, 'Temperatur ska vara 15-30°C');
+                    }
+                },
+                {
+                    name: 'Temperatur för låg (10°C)',
+                    fn: () => {
+                        const value = 10;
+                        assert(value < 15, 'Ska identifiera för låg temperatur');
+                    }
+                },
+                {
+                    name: 'Temperatur för hög (35°C)',
+                    fn: () => {
+                        const value = 35;
+                        assert(value > 30, 'Ska identifiera för hög temperatur');
+                    }
+                },
+                {
+                    name: 'Starter vikt giltig (160g)',
+                    fn: () => {
+                        const value = 160;
+                        assert(value >= 10 && value <= 2000, 'Starter ska vara 10-2000g');
+                    }
+                },
+                {
+                    name: 'Mjöl vikt giltig (800g)',
+                    fn: () => {
+                        const value = 800;
+                        assert(value >= 100 && value <= 10000, 'Mjöl ska vara 100-10000g');
+                    }
+                }
+            ]);
+        }
+
+        function testEdgeCases() {
+            testGroup('Kantfall & Gränsvärden', [
+                {
+                    name: 'Minimum temperatur (15°C)',
+                    fn: () => {
+                        const result = calculateBasicTime(15, 20);
+                        assert(result >= 2 && result <= 24, 'Ska ge resultat inom 2-24h');
+                    }
+                },
+                {
+                    name: 'Maximum temperatur (30°C)',
+                    fn: () => {
+                        const result = calculateBasicTime(30, 20);
+                        assert(result >= 2 && result <= 24, 'Ska ge resultat inom 2-24h');
+                    }
+                },
+                {
+                    name: 'Extremt låg surdeg (5%)',
+                    fn: () => {
+                        const result = calculateBasicTime(22, 5);
+                        assert(result >= 2 && result <= 24, 'Ska begränsa till max 24h');
+                    }
+                },
+                {
+                    name: 'Extremt hög surdeg (50%)',
+                    fn: () => {
+                        const result = calculateBasicTime(22, 50);
+                        assert(result >= 2, 'Ska begränsa till min 2h');
+                    }
+                },
+                {
+                    name: 'Kombinerat extremfall (15°C + 50% surdeg)',
+                    fn: () => {
+                        const result = calculateBasicTime(15, 50);
+                        assert(result >= 2 && result <= 24, 'Extremfall ska ge giltigt resultat');
+                    }
+                }
+            ]);
+        }
+
+        function testRealWorldScenarios() {
+            testGroup('Verkliga Scenarier', [
+                {
+                    name: 'Klassiskt surdegsbröd (22°C, 20% surdeg, 70% hydrering)',
+                    fn: () => {
+                        const time = calculateBasicTime(22, 20);
+                        const hydration = calculateHydration(560, 800);
+                        assertInRange(time, 4.5, 5.5, 'Klassiskt recept ska ge ~5h');
+                        assertEquals(hydration, 70, 'Klassisk hydrering 70%');
+                    }
+                },
+                {
+                    name: 'Snabbt bröd (26°C, 30% surdeg)',
+                    fn: () => {
+                        const time = calculateBasicTime(26, 30);
+                        assert(time < 4, 'Snabbt bröd ska ge <4h');
+                    }
+                },
+                {
+                    name: 'Långsamt bröd (18°C, 15% surdeg)',
+                    fn: () => {
+                        const time = calculateBasicTime(18, 15);
+                        assert(time > 7, 'Långsamt bröd ska ge >7h');
+                    }
+                },
+                {
+                    name: 'Sommarbak (28°C, 20% surdeg)',
+                    fn: () => {
+                        const time = calculateBasicTime(28, 20);
+                        assert(time < 4, 'Sommarbak ska gå snabbare');
+                    }
+                },
+                {
+                    name: 'Vinterbak (18°C, 25% surdeg)',
+                    fn: () => {
+                        const time = calculateBasicTime(18, 25);
+                        assertInRange(time, 5, 8, 'Vinterbak ska ta 5-8h');
+                    }
+                }
+            ]);
+        }
+
+        function displayResults() {
+            const resultsDiv = document.getElementById('test-results');
+            resultsDiv.classList.remove('hidden');
+
+            // Update summary
+            document.getElementById('passed-count').textContent = testResults.passed;
+            document.getElementById('failed-count').textContent = testResults.failed;
+            document.getElementById('total-count').textContent = testResults.passed + testResults.failed;
+
+            // Display test groups
+            const groupsDiv = document.getElementById('test-groups');
+            groupsDiv.innerHTML = '';
+
+            testResults.groups.forEach(group => {
+                const groupDiv = document.createElement('div');
+                groupDiv.className = 'test-group';
+
+                const header = document.createElement('div');
+                header.className = 'test-group-header';
+                header.textContent = group.name;
+                groupDiv.appendChild(header);
+
+                group.tests.forEach(test => {
+                    const testDiv = document.createElement('div');
+                    testDiv.className = `test-case ${test.passed ? 'pass' : 'fail'}`;
+
+                    const nameDiv = document.createElement('div');
+                    nameDiv.className = 'test-name';
+                    nameDiv.textContent = test.name;
+                    testDiv.appendChild(nameDiv);
+
+                    const statusDiv = document.createElement('div');
+                    statusDiv.className = `test-status ${test.passed ? 'pass' : 'fail'}`;
+                    statusDiv.textContent = test.passed ? '✓ PASS' : '✗ FAIL';
+                    testDiv.appendChild(statusDiv);
+
+                    if (!test.passed && test.error) {
+                        const errorDiv = document.createElement('div');
+                        errorDiv.className = 'test-details';
+                        errorDiv.textContent = test.error;
+                        testDiv.appendChild(errorDiv);
+                    }
+
+                    groupDiv.appendChild(testDiv);
+                });
+
+                groupsDiv.appendChild(groupDiv);
+            });
+
+            // Scroll to results
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "name": "sourdough-calculator",
+  "version": "1.0.0",
+  "description": "Sourdough fermentation calculator with timer and schedule generation",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "dev": "tsc --watch & python3 -m http.server 8000",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "sourdough",
+    "baking",
+    "calculator",
+    "fermentation",
+    "typescript"
+  ],
+  "author": "Emelie Jomer",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
