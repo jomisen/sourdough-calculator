@@ -287,7 +287,6 @@ MIT License - feel free to fork and adapt for your own baking needs!
 ## 🙏 Acknowledgments
 
 - Built with feedback from the Swedish sourdough community
-- Inspired by [The Perfect Loaf](https://www.theperfectloaf.com/) and [Foodgeek](https://foodgeek.dk/)
 - Team review conducted by cross-functional AI agents (Product, UX, Design, Frontend, Backend, QA)
 
 ---
