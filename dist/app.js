@@ -12,6 +12,32 @@ function debounce(func, delay) {
         timeoutId = window.setTimeout(() => func.apply(this, args), delay);
     };
 }
+function switchTab(tabName) {
+    document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+    });
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.classList.remove('active');
+        button.setAttribute('aria-selected', 'false');
+    });
+    const tabContent = document.getElementById(`${tabName}-tab`);
+    const tabButton = document.getElementById(`${tabName}-tab-button`);
+    if (tabContent)
+        tabContent.classList.add('active');
+    if (tabButton) {
+        tabButton.classList.add('active');
+        tabButton.setAttribute('aria-selected', 'true');
+    }
+    const tabNames = {
+        'calculator': 'Jästningsberäknare',
+        'schedule': 'Skapa bakschema',
+        'troubleshoot': 'Felsök ditt bröd',
+        'tips': 'Tips och råd'
+    };
+    if (tabNames[tabName]) {
+        announceToScreenReader(`${tabNames[tabName]} vald`);
+    }
+}
 function showLoadingIndicator() {
     const resultDiv = document.getElementById('result');
     if (!resultDiv)
@@ -479,6 +505,7 @@ else {
     init();
 }
 window.calculateTime = calculateTime;
+window.switchTab = switchTab;
 window.updateWholeGrainPercent = updateWholeGrainPercent;
 window.startTimer = startTimer;
 window.stopTimer = stopTimer;

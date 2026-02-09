@@ -42,6 +42,44 @@ function debounce(func: Function, delay: number): (...args: any[]) => void {
 }
 
 /**
+ * Switch between tabs (calculator, schedule, troubleshoot, tips)
+ */
+function switchTab(tabName: string): void {
+    // Hide all tab content
+    document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+    });
+
+    // Remove active class from all tab buttons
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.classList.remove('active');
+        button.setAttribute('aria-selected', 'false');
+    });
+
+    // Show selected tab content
+    const tabContent = document.getElementById(`${tabName}-tab`);
+    const tabButton = document.getElementById(`${tabName}-tab-button`);
+
+    if (tabContent) tabContent.classList.add('active');
+    if (tabButton) {
+        tabButton.classList.add('active');
+        tabButton.setAttribute('aria-selected', 'true');
+    }
+
+    // Announce to screen readers
+    const tabNames: { [key: string]: string } = {
+        'calculator': 'Jästningsberäknare',
+        'schedule': 'Skapa bakschema',
+        'troubleshoot': 'Felsök ditt bröd',
+        'tips': 'Tips och råd'
+    };
+
+    if (tabNames[tabName]) {
+        announceToScreenReader(`${tabNames[tabName]} vald`);
+    }
+}
+
+/**
  * Show loading indicator
  */
 function showLoadingIndicator(): void {
@@ -747,6 +785,7 @@ if (document.readyState === 'loading') {
 
 // Export for external use (e.g., inline scripts)
 (window as any).calculateTime = calculateTime;
+(window as any).switchTab = switchTab;
 (window as any).updateWholeGrainPercent = updateWholeGrainPercent;
 (window as any).startTimer = startTimer;
 (window as any).stopTimer = stopTimer;
