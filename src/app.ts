@@ -490,9 +490,6 @@ function setupEditableHydration(): void {
     let isHydrationLocked = false;
     let isUpdating = false;
 
-    // Check if user has seen the help tooltip
-    const hasSeenHelp = localStorage.getItem('hydrationHelpSeen') === 'true';
-
     // Update visual state based on lock status
     function updateLockVisuals(): void {
         const lockButtonText = document.getElementById('lockButtonText');
@@ -529,12 +526,8 @@ function setupEditableHydration(): void {
     // Initialize visuals
     updateLockVisuals();
 
-    // Show help tooltip on first visit
-    if (!hasSeenHelp && helpTooltip) {
-        setTimeout(() => {
-            helpTooltip.style.display = 'block';
-        }, 1000);
-    }
+    // Note: Help tooltip is available via the help icon (?)
+    // Removed auto-show to avoid clutter on page load
 
     // Toggle lock when clicking toggle switch
     lockToggle.addEventListener('click', function(e) {

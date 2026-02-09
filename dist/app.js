@@ -295,7 +295,6 @@ function setupEditableHydration() {
     console.log('✅ Hydration lock 2.0 initialized successfully!');
     let isHydrationLocked = false;
     let isUpdating = false;
-    const hasSeenHelp = localStorage.getItem('hydrationHelpSeen') === 'true';
     function updateLockVisuals() {
         const lockButtonText = document.getElementById('lockButtonText');
         if (!lockToggle)
@@ -323,11 +322,6 @@ function setupEditableHydration() {
         }
     }
     updateLockVisuals();
-    if (!hasSeenHelp && helpTooltip) {
-        setTimeout(() => {
-            helpTooltip.style.display = 'block';
-        }, 1000);
-    }
     lockToggle.addEventListener('click', function (e) {
         e.preventDefault();
         console.log('🖱️ Toggle clicked! Current state:', isHydrationLocked);
