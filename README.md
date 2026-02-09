@@ -165,28 +165,41 @@ open http://localhost:8000
 
 **Current status:**
 - ✅ **TypeScript compile-time checks** - Type safety catches errors before runtime
+- ✅ **Unit tests** - 32 tests covering core calculation logic (Vitest)
 - ✅ **Manual testing** - All features tested in multiple browsers
-- ⏳ **Automated tests** - Planned (see roadmap)
+- ⏳ **E2E tests** - Planned (see roadmap)
 
-**Type Safety:**
+**Run tests:**
+```bash
+npm test              # Run all tests
+npm run test:watch    # Watch mode
+npm run test:coverage # Generate coverage report
+```
+
+**Test coverage:**
 ```typescript
-// TypeScript catches errors at compile time
-npm run build  // Type-checks all 3,800+ lines of code
-npm run type-check  // Type-check without emitting files
+✅ calculateHydration() - 3 tests
+✅ calculateBakersPercentages() - 1 test
+✅ calculateTemperatureFactor() - 4 tests
+✅ calculateStarterFactor() - 3 tests
+✅ calculateFlourFactor() - 3 tests
+✅ calculateAdvancedFactors() - 3 tests
+✅ calculateColdProofAdjustment() - 4 tests
+✅ calculateFoldingSchedule() - 6 tests
+✅ calculateBakingTime() - 5 tests
+
+Total: 32 passing tests
 ```
 
 **Roadmap:**
 ```javascript
-// Planned test coverage
 - [x] TypeScript strict mode - compile-time type safety
-- [ ] Unit tests (Vitest) - calculator.ts, validation.ts
+- [x] Unit tests (Vitest) - calculator.ts core logic
+- [ ] Unit tests - validation.ts, display.ts
 - [ ] E2E tests (Playwright) - critical user flows
 - [ ] Visual regression (Percy) - UI consistency
 - [ ] CI/CD (GitHub Actions) - automated testing + type checking
 ```
-
-**Why TypeScript before automated tests?**
-Type safety provides immediate value by catching an entire class of bugs (type errors, null references, typos) at compile time. Automated tests are next priority now that type safety is in place.
 
 ---
 
@@ -215,9 +228,10 @@ Type safety provides immediate value by catching an entire class of bugs (type e
 - [x] Responsive design
 - [x] Accessibility (WCAG 2.2 AA)
 - [x] **TypeScript migration** - Full type safety (~3,800 lines)
+- [x] **Unit tests** - 32 tests for core calculation logic (Vitest)
 
 ### Q2 2026 🚧 (In Progress)
-- [ ] **Testing infrastructure** - Vitest + Playwright
+- [ ] **Expanded test coverage** - validation.ts, display.ts, E2E tests
 - [ ] **PWA support** - Service worker, offline-first, installable
 - [ ] **Analytics** - GoatCounter integration (already in place)
 - [ ] **Performance monitoring** - Web Vitals tracking
