@@ -80,9 +80,6 @@ export function startTimer() {
     if (SourdoughApp.endTime) {
         announceToScreenReader(`Timer startad. Degen är klar klockan ${formatTime(SourdoughApp.endTime)}.`);
     }
-    if ("Notification" in window && Notification.permission === "default") {
-        Notification.requestPermission();
-    }
 }
 function formatDuration(milliseconds) {
     const hours = Math.floor(milliseconds / (1000 * 60 * 60));

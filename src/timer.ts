@@ -118,10 +118,8 @@ export function startTimer(): void {
         announceToScreenReader(`Timer startad. Degen är klar klockan ${formatTime(SourdoughApp.endTime)}.`);
     }
 
-    // Request notification permission
-    if ("Notification" in window && Notification.permission === "default") {
-        Notification.requestPermission();
-    }
+    // Note: Notification permission will be requested only when timer completes
+    // to avoid annoying popup on every timer start
 }
 
 /**
