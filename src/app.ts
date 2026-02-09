@@ -80,6 +80,137 @@ function switchTab(tabName: string): void {
 }
 
 /**
+ * Show action toast notification
+ */
+function showActionToast(message: { emoji: string; text: string } | string, duration: number = 3500): void {
+    const existingToast = document.querySelector('.action-toast');
+    if (existingToast) {
+        existingToast.remove();
+    }
+
+    const toast = document.createElement('div');
+    toast.className = 'action-toast';
+    toast.style.cssText = `
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: var(--green-dark);
+        color: white;
+        padding: var(--space-3) var(--space-4);
+        border-radius: var(--radius-md);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        font-size: var(--text-base);
+        font-weight: 600;
+        z-index: 1000;
+        animation: slideInUp 0.3s ease, fadeOut 0.3s ease ${duration - 300}ms;
+    `;
+
+    const emojiText = typeof message === 'object' ? message : { emoji: '✓', text: message };
+    toast.innerHTML = `<span style="font-size: 24px;">${emojiText.emoji || '✓'}</span> <span>${emojiText.text || message}</span>`;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, duration);
+}
+
+/**
+ * Track user journey usage
+ */
+function trackJourneyUsage(journeyType: string): void {
+    try {
+        const history = JSON.parse(localStorage.getItem('userJourneyHistory') || '{}');
+        history[journeyType] = (history[journeyType] || 0) + 1;
+        localStorage.setItem('userJourneyHistory', JSON.stringify(history));
+
+        localStorage.setItem('userJourney', journeyType);
+        localStorage.setItem('userJourneyTimestamp', Date.now().toString());
+    } catch (e) {
+        console.error('Error tracking journey usage:', e);
+    }
+}
+
+/**
+ * User chose "Timer Only" journey
+ */
+function chooseTimerOnly(): void {
+    startTimer();
+
+    setTimeout(() => {
+        const timeCard = document.querySelector('.time-card');
+        if (timeCard) {
+            timeCard.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    }, 100);
+
+    showActionToast({
+        emoji: '⏰',
+        text: 'Timer startad! Tips: Du kan skapa schema i nästa flik.'
+    });
+
+    trackJourneyUsage('timer-only');
+
+    announceToScreenReader('Timer startad. Du kan skapa ett detaljerat schema i Skapa bakschema-fliken om du vill.');
+}
+
+/**
+ * User chose "Full Schedule" journey
+ */
+function chooseFullSchedule(): void {
+    switchTab('schedule');
+
+    // Scroll to top immediately after tab switch
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+
+    setTimeout(() => {
+        // Initialize time input if empty
+        const timeInput = document.getElementById('scheduleTime') as HTMLInputElement | null;
+        if (timeInput && !timeInput.value) {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            timeInput.value = `${hours}:${minutes}`;
+        }
+
+        // Auto-calculate if not done yet
+        if (!SourdoughApp.calculatedTime) {
+            const flour = parseFloat((document.getElementById('flour') as HTMLInputElement | null)?.value || '');
+            const water = parseFloat((document.getElementById('water') as HTMLInputElement | null)?.value || '');
+            if (flour && water) {
+                calculateTime();
+            }
+        }
+
+        const calculatedRadio = document.querySelector('input[name="scheduleDataSource"][value="calculated"]') as HTMLInputElement | null;
+        if (calculatedRadio) {
+            calculatedRadio.checked = true;
+        }
+
+        if (typeof (window as any).generateBakingSchedule === 'function') {
+            (window as any).generateBakingSchedule(true);
+        }
+
+        showActionToast({
+            emoji: '📅',
+            text: 'Schema genererat! Bocka av stegen när du är klar.'
+        }, 4000);
+
+        trackJourneyUsage('full-schedule');
+
+        announceToScreenReader('Bakschema skapat. Du kan bocka av varje steg när du har genomfört det.');
+    }, 300);
+}
+
+/**
  * Show loading indicator
  */
 function showLoadingIndicator(): void {
@@ -786,6 +917,8 @@ if (document.readyState === 'loading') {
 // Export for external use (e.g., inline scripts)
 (window as any).calculateTime = calculateTime;
 (window as any).switchTab = switchTab;
+(window as any).chooseTimerOnly = chooseTimerOnly;
+(window as any).chooseFullSchedule = chooseFullSchedule;
 (window as any).updateWholeGrainPercent = updateWholeGrainPercent;
 (window as any).startTimer = startTimer;
 (window as any).stopTimer = stopTimer;
