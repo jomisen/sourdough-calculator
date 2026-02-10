@@ -32,19 +32,19 @@ export function showCelebrationModal(onRestart: () => void, onSchedule: () => vo
 
                 <div class="celebration-badge">
                     <span class="badge-icon">🏆</span>
-                    <span class="badge-text">Surdegs-mästare</span>
+                    <span class="badge-text">Surdegsmästare</span>
                 </div>
 
                 <div class="celebration-stats">
                     <p>Du har genomfört alla <strong>8 steg</strong> i surdegsprocessen:</p>
                     <ul>
-                        <li>✅ Förberett ingredienser</li>
-                        <li>✅ Blandat och autolyserat</li>
-                        <li>✅ Bulkjäst med vikningar</li>
+                        <li>✅ Förberett surdegsstart</li>
+                        <li>✅ Gjort autolys</li>
+                        <li>✅ Bulkjäst degen</li>
                         <li>✅ Testat degen</li>
                         <li>✅ Format brödet</li>
                         <li>✅ Kalljäst i kylskåp</li>
-                        <li>✅ Grädddat till perfektion</li>
+                        <li>✅ Gräddat brödet</li>
                         <li>✅ Låtit svalna och njutit!</li>
                     </ul>
                 </div>
