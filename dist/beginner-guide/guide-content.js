@@ -357,17 +357,23 @@ export const GUIDE_STEPS = [
                     <li><strong>Vik höger:</strong> Vik över högra sidan försiktigt så att den täcker två tredjedelar av degen</li>
                     <li><strong>Vik vänster:</strong> Vik över vänstra sidan så att nu hela degen är vikt</li>
                     <li><strong>Rulla:</strong> Rulla försiktigt degen uppifrån och ner så att det blir en avlång boll</li>
+                    <li><strong>Mjöla jäskorgen:</strong> Mjöla jäskorgen rikligt (ris-/vetemjölblandning funkar bäst)</li>
                     <li><strong>I jäskorg:</strong> Lägg ner i jäskorgen med <strong>skarven upp</strong></li>
                     <li><strong>Plastpåse:</strong> Lägg hela jäskorgen i en plastpåse</li>
                 </ol>
 
                 <p style="margin-top: var(--space-3);"><em>Upprepa med nästa bröd!</em></p>
+
+                <div class="technique-box">
+                    <h5>🎥 Visuell hjälp</h5>
+                    <p>Formning är lättare att lära sig genom att se! Sök på YouTube efter "sourdough shaping tutorial" för bra video-guider.</p>
+                </div>
             </div>
 
             <div class="step-section why-section">
                 <details>
                     <summary>💡 Varför två formningar?</summary>
-                    <p><strong>Preshape</strong> samlar degen och skapar grundspänning. Under de 30 minuterna relaxar glutenet så att slutformningen blir lättare.</p>
+                    <p><strong>Preshape</strong> samlar degen och skapar grundspänning. Under de 30 minuterna slappnar glutenet av så att slutformningen blir lättare.</p>
                     <p><strong>Slutformning</strong> skapar stark ytspänning – det är det som gör att brödet reser sig uppåt i ugnen istället för att sprida ut sig.</p>
                     <p><strong>Skarv upp</strong> i korgen gör att slätsidan blir botten när du stjälper ur brödet, vilket ger en fin yta att skära i.</p>
                 </details>
