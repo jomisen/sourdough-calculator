@@ -54,7 +54,7 @@ export const GUIDE_STEPS: GuideStep[] = [
             </div>
 
             <div class="step-section">
-                <img src="mata-surdeg2.png" alt="Så här matar du din surdegsstart" style="width: 100%; max-width: 600px; height: auto; border-radius: var(--radius-md); margin: var(--space-4) auto; display: block; box-shadow: var(--shadow-md);">
+                <img src="mata-surdeg2.png" alt="Så här matar du din surdegsstart" style="width: 100%; max-width: 600px; height: auto; border-radius: var(--radius-md); margin: var(--space-4) auto; display: block;">
             </div>
 
             <div class="step-section">
