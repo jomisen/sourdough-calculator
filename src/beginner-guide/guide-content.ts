@@ -21,7 +21,7 @@ export const GUIDE_STEPS: GuideStep[] = [
     // Steg 1: Förbered din surdegsstart
     {
         id: 0,
-        title: "Förbered din surdegsstart",
+        title: "Förbered surdegsstart",
         icon: "🌱",
         phase: "1-2 dagar innan bakning",
         description: "Mata och testa din surdeg så att den är stark och aktiv när du ska baka.",
@@ -36,20 +36,7 @@ export const GUIDE_STEPS: GuideStep[] = [
 
             <div class="step-section">
                 <h4>📋 Vad du behöver</h4>
-                <ul class="ingredient-list">
-                    <li>En tom glasburk</li>
-                    <li>En våg</li>
-                    <li>En sked</li>
-                    <li>Din surdegsstart</li>
-                    <li>Vetemjöl</li>
-                    <li>Rågmjöl</li>
-                    <li>Vatten (rumstemperatur)</li>
-                    <li>Ett gummiband</li>
-                </ul>
-            </div>
-
-            <div class="step-section">
-                <img src="mata-surdeg.png" alt="Så här matar du din surdegsstart" style="width: 100%; max-width: 600px; height: auto; border-radius: var(--radius-md); margin: var(--space-4) auto; display: block; box-shadow: var(--shadow-md);">
+                <p style="margin: var(--space-2) 0;"><strong>Glasburk • Våg • Sked • Surdegsstart • Vetemjöl • Rågmjöl • Vatten (rumstemperatur) • Gummiband</strong></p>
             </div>
 
             <div class="step-section">
@@ -64,6 +51,10 @@ export const GUIDE_STEPS: GuideStep[] = [
                         <li>Sätt ett gummiband runt burken vid surdegens nivå för att se när den växer</li>
                     </ol>
                 </div>
+            </div>
+
+            <div class="step-section">
+                <img src="mata-surdeg2.png" alt="Så här matar du din surdegsstart" style="width: 100%; max-width: 600px; height: auto; border-radius: var(--radius-md); margin: var(--space-4) auto; display: block; box-shadow: var(--shadow-md);">
             </div>
 
             <div class="step-section">
