@@ -3103,6 +3103,69 @@
             margin-bottom: var(--space-2);
         }
 
+        /* Recipe Calculator */
+        .recipe-calculator {
+            background: linear-gradient(135deg, rgba(159, 176, 148, 0.08), rgba(200, 167, 214, 0.06));
+            padding: var(--space-4);
+            border-radius: var(--radius-md);
+            border: 2px solid var(--green-lighter);
+            margin: var(--space-3) 0;
+        }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-3);
+            gap: var(--space-3);
+        }
+
+        .input-row label {
+            font-weight: 600;
+            color: var(--green-dark);
+            flex: 1;
+        }
+
+        .guide-input,
+        .guide-select {
+            flex: 1;
+            max-width: 200px;
+            padding: var(--space-2);
+            border: 2px solid var(--green-light);
+            border-radius: var(--radius-sm);
+            font-size: var(--text-base);
+            font-family: inherit;
+            background: white;
+            transition: border-color 0.2s ease;
+        }
+
+        .guide-input:focus,
+        .guide-select:focus {
+            outline: none;
+            border-color: var(--green-medium);
+            box-shadow: 0 0 0 3px rgba(122, 140, 111, 0.1);
+        }
+
+        .calculated-result {
+            margin-top: var(--space-4);
+            padding: var(--space-3);
+            background: white;
+            border-radius: var(--radius-sm);
+            border: 2px solid var(--warm-accent);
+            text-align: center;
+            font-size: var(--text-lg);
+        }
+
+        .calculated-result strong {
+            color: var(--green-dark);
+        }
+
+        .calculated-result span {
+            color: var(--warm-accent);
+            font-weight: 700;
+            font-size: var(--text-xl);
+        }
+
         /* Timer Box */
         .timer-box {
             background: linear-gradient(135deg, rgba(122, 140, 111, 0.12), rgba(159, 176, 148, 0.08));

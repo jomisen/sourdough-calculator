@@ -53,6 +53,9 @@ export class BeginnerGuide {
         this.updateProgress();
         this.setupEventListeners();
 
+        // Initialize Step 2 calculations
+        setTimeout(() => this.updateStep2Calculations(), 100);
+
         // Check for timer completion on init
         if (this.state.activeTimer && isTimerComplete(this.state)) {
             this.onTimerComplete();
@@ -215,6 +218,22 @@ export class BeginnerGuide {
             }
         });
 
+        // Step 2 calculator inputs
+        this.stepsContainer.addEventListener('input', (e) => {
+            const target = e.target as HTMLElement;
+            if (target.id === 'wheat-flour-input' ||
+                target.id === 'spelt-flour-input') {
+                this.updateStep2Calculations();
+            }
+        });
+
+        this.stepsContainer.addEventListener('change', (e) => {
+            const target = e.target as HTMLElement;
+            if (target.id === 'hydration-select') {
+                this.updateStep2Calculations();
+            }
+        });
+
         // Keyboard navigation
         this.stepsContainer.addEventListener('keydown', (e) => {
             this.handleKeyboardNav(e as KeyboardEvent);
@@ -284,6 +303,35 @@ export class BeginnerGuide {
         if (this.state.completedSteps.length === 8) {
             setTimeout(() => this.showCelebration(), 500);
         }
+    }
+
+    /**
+     * Update Step 2 autolys calculations
+     */
+    private updateStep2Calculations(): void {
+        const wheatInput = document.getElementById('wheat-flour-input') as HTMLInputElement;
+        const speltInput = document.getElementById('spelt-flour-input') as HTMLInputElement;
+        const hydrationSelect = document.getElementById('hydration-select') as HTMLSelectElement;
+
+        if (!wheatInput || !speltInput || !hydrationSelect) return;
+
+        const wheatFlour = parseFloat(wheatInput.value) || 0;
+        const speltFlour = parseFloat(speltInput.value) || 0;
+        const hydration = parseFloat(hydrationSelect.value) || 70;
+
+        const totalFlour = wheatFlour + speltFlour;
+        const water = Math.round(totalFlour * (hydration / 100));
+
+        // Update water amount displays
+        const waterAmountSpan = document.getElementById('water-amount');
+        const waterInstruction = document.getElementById('water-amount-instruction');
+        const wheatInstruction = document.getElementById('wheat-amount-instruction');
+        const speltInstruction = document.getElementById('spelt-amount-instruction');
+
+        if (waterAmountSpan) waterAmountSpan.textContent = water.toString();
+        if (waterInstruction) waterInstruction.textContent = `${water}g vatten`;
+        if (wheatInstruction) wheatInstruction.textContent = `${wheatFlour}g vetemjöl`;
+        if (speltInstruction) speltInstruction.textContent = `${speltFlour}g fullkornsdinkel`;
     }
 
     /**

@@ -17,6 +17,7 @@ export class BeginnerGuide {
         this.renderSteps();
         this.updateProgress();
         this.setupEventListeners();
+        setTimeout(() => this.updateStep2Calculations(), 100);
         if (this.state.activeTimer && isTimerComplete(this.state)) {
             this.onTimerComplete();
         }
@@ -148,6 +149,19 @@ export class BeginnerGuide {
                 this.startStepTimer(stepId, duration);
             }
         });
+        this.stepsContainer.addEventListener('input', (e) => {
+            const target = e.target;
+            if (target.id === 'wheat-flour-input' ||
+                target.id === 'spelt-flour-input') {
+                this.updateStep2Calculations();
+            }
+        });
+        this.stepsContainer.addEventListener('change', (e) => {
+            const target = e.target;
+            if (target.id === 'hydration-select') {
+                this.updateStep2Calculations();
+            }
+        });
         this.stepsContainer.addEventListener('keydown', (e) => {
             this.handleKeyboardNav(e);
         });
@@ -191,6 +205,30 @@ export class BeginnerGuide {
         if (this.state.completedSteps.length === 8) {
             setTimeout(() => this.showCelebration(), 500);
         }
+    }
+    updateStep2Calculations() {
+        const wheatInput = document.getElementById('wheat-flour-input');
+        const speltInput = document.getElementById('spelt-flour-input');
+        const hydrationSelect = document.getElementById('hydration-select');
+        if (!wheatInput || !speltInput || !hydrationSelect)
+            return;
+        const wheatFlour = parseFloat(wheatInput.value) || 0;
+        const speltFlour = parseFloat(speltInput.value) || 0;
+        const hydration = parseFloat(hydrationSelect.value) || 70;
+        const totalFlour = wheatFlour + speltFlour;
+        const water = Math.round(totalFlour * (hydration / 100));
+        const waterAmountSpan = document.getElementById('water-amount');
+        const waterInstruction = document.getElementById('water-amount-instruction');
+        const wheatInstruction = document.getElementById('wheat-amount-instruction');
+        const speltInstruction = document.getElementById('spelt-amount-instruction');
+        if (waterAmountSpan)
+            waterAmountSpan.textContent = water.toString();
+        if (waterInstruction)
+            waterInstruction.textContent = `${water}g vatten`;
+        if (wheatInstruction)
+            wheatInstruction.textContent = `${wheatFlour}g vetemjöl`;
+        if (speltInstruction)
+            speltInstruction.textContent = `${speltFlour}g fullkornsdinkel`;
     }
     startStepTimer(stepId, durationHours) {
         if (typeof window.SourdoughApp !== 'undefined') {

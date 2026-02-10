@@ -60,48 +60,60 @@ export const GUIDE_STEPS = [
     },
     {
         id: 1,
-        title: "Blanda degen – Autolyse",
+        title: "Autolys",
         icon: "💧",
         phase: "Dag 1 - Förmiddag",
-        description: "Blanda mjöl och vatten först, låt vila (autolyse), tillsätt sedan surdeg och salt.",
-        duration: "30-60 minuter (valfritt)",
+        description: "Blanda mjöl och vatten och låt vila i en timme.",
+        duration: "1 timme",
         hasTimer: false,
         content: `
             <div class="step-section">
-                <h4>🔍 Vad du ska göra</h4>
-                <p>Nu blandar vi ingredienserna i rätt ordning. Autolyse är ett fancy ord för "låt mjöl och vatten vila tillsammans" – det gör degen mjukare och lättare att arbeta med.</p>
+                <h4>🔍 Vad är autolys?</h4>
+                <p>Autolys är en teknik där man blandar mjöl och vatten och låter det vila <strong>innan</strong> man tillsätter surdeg och salt. Under denna vila börjar glutensträngarna att utvecklas av sig själva – det gör degen mer elastisk och lättare att arbeta med.</p>
+                <p><strong>Varför gör vi det?</strong> Genom att ge mjölet tid att absorbera vattnet blir degen smidigare att knåda och brödet får en bättre struktur.</p>
             </div>
 
             <div class="step-section">
-                <h4>📋 Hur du gör</h4>
-                <ol class="numbered-steps">
-                    <li>Häll <strong>vatten</strong> (375g) i en stor skål</li>
-                    <li>Tillsätt <strong>mjöl</strong> (500g)</li>
-                    <li>Rör ihop med en slickepott tills allt mjöl är vått (behöver inte vara jämnt!)</li>
-                    <li><strong>Vila 30-60 min</strong> med lock/handduk över (detta är autolyse)</li>
-                    <li>Efter vilan: tillsätt <strong>surdeg</strong> (100g) och <strong>salt</strong> (10g)</li>
-                    <li>Blanda med handen tills allt är väl blandat (använd "stretch and fold"-tekniken)</li>
-                </ol>
-
-                <div class="technique-box">
-                    <h5>🙌 Stretch and Fold-teknik</h5>
-                    <p>Greppa ena sidan av degen, dra upp och vik över mitten. Rotera skålen 90° och upprepa. Gör detta 4-5 gånger tills degen känns sammanhängande.</p>
+                <h4>📊 Ange dina mjölmängder</h4>
+                <div class="recipe-calculator">
+                    <div class="input-row">
+                        <label for="wheat-flour-input">Vetemjöl (g):</label>
+                        <input type="number" id="wheat-flour-input" class="guide-input" value="720" min="100" max="2000" step="10">
+                    </div>
+                    <div class="input-row">
+                        <label for="spelt-flour-input">Fullkornsdinkel (g):</label>
+                        <input type="number" id="spelt-flour-input" class="guide-input" value="80" min="0" max="500" step="10">
+                    </div>
+                    <div class="input-row">
+                        <label for="hydration-select">Hydreringsgrad:</label>
+                        <select id="hydration-select" class="guide-select">
+                            <option value="65">65%</option>
+                            <option value="70" selected>70% (rekommenderat)</option>
+                            <option value="75">75%</option>
+                            <option value="80">80%</option>
+                        </select>
+                    </div>
+                    <div class="calculated-result">
+                        <strong>Vatten som behövs:</strong> <span id="water-amount">560</span> g
+                    </div>
                 </div>
             </div>
 
-            <div class="step-section why-section">
-                <details>
-                    <summary>💡 Varför autolyse?</summary>
-                    <p>När mjöl och vatten vilar tillsammans börjar glutensträngarna att utvecklas av sig själva – utan arbete! Detta gör degen mer elastisk och lättare att knåda senare.</p>
-                    <p>Genom att <strong>inte</strong> tillsätta salt direkt får jäsningen en bättre start. Salt hämmar jästcellerna lite, så de får en bättre boost om de kommer in senare.</p>
-                </details>
+            <div class="step-section">
+                <h4>📋 Så här gör du</h4>
+                <ol class="numbered-steps">
+                    <li>Häll <strong id="water-amount-instruction">560g vatten</strong> i en stor skål</li>
+                    <li>Tillsätt <strong id="wheat-amount-instruction">720g vetemjöl</strong> och <strong id="spelt-amount-instruction">80g fullkornsdinkel</strong></li>
+                    <li>Rör ihop med en slickepott eller dina händer tills allt mjöl är vått (det behöver inte bli helt jämnt)</li>
+                    <li>Täck över skålen med en handduk eller plastfolie</li>
+                    <li><strong>Låt vila i 1 timme i rumstemperatur</strong></li>
+                </ol>
             </div>
         `,
         tips: [
-            "Autolyse är valfritt – du kan hoppa över och blanda allt direkt om du har bråttom",
-            "Degen kommer kännas kladdig – det är normalt!",
-            "Använd en skål som är minst dubbelt så stor som degen – den kommer växa!",
-            "Fukt händerna lite för att förhindra att degen fastnar"
+            "Degen kommer se ojämn ut efter blandning – det är helt normalt!",
+            "Använd en stor skål – degen kommer växa under jäsningen senare",
+            "Rumstemperatur = cirka 20-22°C"
         ]
     },
     {
