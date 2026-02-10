@@ -432,6 +432,27 @@
             outline-offset: 2px;
         }
 
+        /* Beta badge */
+        .beta-badge {
+            display: inline-block;
+            margin-left: 4px;
+            padding: 2px 6px;
+            background: linear-gradient(135deg, var(--warm-accent), #e89b65);
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+            vertical-align: middle;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        }
+
+        .tab-button.active .beta-badge {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+
         /* Responsive tabs for mobile */
         @media (max-width: 640px) {
             .tabs {
@@ -3559,7 +3580,7 @@
                 aria-controls="guide-tab"
                 id="guide-tab-button"
                 onclick="switchTab('guide')">
-                Nybörjarguide
+                Nybörjarguide <span class="beta-badge">BETA</span>
             </button>
         </div>
 
