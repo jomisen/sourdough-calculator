@@ -81,9 +81,10 @@ export const GUIDE_STEPS = [
                         <input type="number" id="wheat-flour-input" class="guide-input" value="720" min="100" max="2000" step="10">
                     </div>
                     <div class="input-row">
-                        <label for="spelt-flour-input">Fullkornsdinkel (g):</label>
+                        <label for="spelt-flour-input">Fullkornsmjöl (g):</label>
                         <input type="number" id="spelt-flour-input" class="guide-input" value="80" min="0" max="500" step="10">
                     </div>
+                    <p style="font-size: 14px; color: var(--green-medium); margin: var(--space-2) 0;"><em>💡 Tips: Använd fullkornsdinkel för god smak och fin textur</em></p>
                     <div class="input-row">
                         <label for="hydration-select">Hydreringsgrad:</label>
                         <select id="hydration-select" class="guide-select">
@@ -103,7 +104,7 @@ export const GUIDE_STEPS = [
                 <h4>📋 Så här gör du</h4>
                 <ol class="numbered-steps">
                     <li>Häll <strong id="water-amount-instruction">560g vatten</strong> i en stor skål</li>
-                    <li>Tillsätt <strong id="wheat-amount-instruction">720g vetemjöl</strong> och <strong id="spelt-amount-instruction">80g fullkornsdinkel</strong></li>
+                    <li>Tillsätt <strong id="wheat-amount-instruction">720g vetemjöl</strong> och <strong id="spelt-amount-instruction">80g fullkornsmjöl</strong></li>
                     <li>Rör ihop med en slickepott eller dina händer tills allt mjöl är vått (det behöver inte bli helt jämnt)</li>
                     <li>Täck över skålen med en handduk eller plastfolie</li>
                     <li><strong>Låt vila i 1 timme i rumstemperatur</strong></li>
