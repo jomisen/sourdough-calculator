@@ -9,32 +9,56 @@ export const GUIDE_STEPS = [
         hasTimer: false,
         content: `
             <div class="step-section">
-                <p>För att få ett luftigt bröd behöver din surdeg vara aktiv och toppen av sin kraft. Detta kallas att surdegsstarten är i sin <strong>peak</strong>. Om du förvarar surdegsstarten i kylen, ta ut den kvällen innan och gör en första matning. Mata den sedan igen innan du ska baka.</p>
+                <h4>🔍 Vad du ska göra</h4>
+                <p>För att få ett luftigt bröd behöver din surdegsstart vara aktiv och på toppen av sin kraft. Detta kallas att surdegsstarten är i sin <strong>peak</strong>.</p>
+                <p>Om du förvarar surdegsstarten i kylen: ta ut den kvällen innan och gör en första matning. Mata den sedan igen innan du ska baka.</p>
             </div>
 
             <div class="step-section">
-                <h4>📋 Hur du matar surdegen för att hålla den aktiv</h4>
-                <ol class="numbered-steps">
-                    <li>Ta fram en tom glasburk, en våg, en sked, din surdegsstart, vetemjöl, rågmjöl och vatten.</li>
-                    <li>Ställ den tomma glasburken på vågen och lägg ner <strong>5 gram surdegsstart</strong>.</li>
-                    <li>Addera <strong>25 gram vatten</strong> och blanda så att surdegsstarten löses upp. Det ska se ut som en mjölkig blandning.</li>
-                    <li>Addera <strong>12 gram rågmjöl</strong> och <strong>13 gram vetemjöl</strong>. Blanda väl. Du har nu matat din surdeg i en ratio om 1:5:5.</li>
-                    <li>Skrapa ner degen som hamnat på kanterna av burken.</li>
-                    <li>Sätt ett gummiband runt burken där surdegen är i topp, så att du enklare ser när surdegen växer.</li>
-                </ol>
+                <h4>📋 Vad du behöver</h4>
+                <ul class="ingredient-list">
+                    <li>En tom glasburk</li>
+                    <li>En våg</li>
+                    <li>En sked</li>
+                    <li>Din surdegsstart</li>
+                    <li>Vetemjöl</li>
+                    <li>Rågmjöl</li>
+                    <li>Vatten (rumstemperatur)</li>
+                    <li>Ett gummiband</li>
+                </ul>
+            </div>
+
+            <div class="step-section">
+                <img src="mata-surdeg.png" alt="Så här matar du din surdegsstart" style="width: 100%; max-width: 600px; height: auto; border-radius: var(--radius-md); margin: var(--space-4) auto; display: block; box-shadow: var(--shadow-md);">
+            </div>
+
+            <div class="step-section">
+                <h4>🔄 Hur du matar surdegen för att hålla den aktiv</h4>
+                <div class="technique-box">
+                    <p><strong>Ratio 1:5:5</strong> (5g start + 25g vatten + 25g mjöl)</p>
+                    <ol class="numbered-steps">
+                        <li>Ställ den tomma glasburken på vågen och lägg ner <strong>5g surdegsstart</strong></li>
+                        <li>Addera <strong>25g vatten</strong> och blanda tills starten löses upp – det ska se ut som en mjölkig blandning</li>
+                        <li>Addera <strong>12g rågmjöl</strong> och <strong>13g vetemjöl</strong>. Blanda väl</li>
+                        <li>Skrapa ner degen från kanterna av burken</li>
+                        <li>Sätt ett gummiband runt burken vid surdegens nivå för att se när den växer</li>
+                    </ol>
+                </div>
             </div>
 
             <div class="step-section">
                 <h4>🎯 Hur du matar surdegen inför bakning</h4>
-                <ol class="numbered-steps">
-                    <li>Ta fram en tom glasburk, en våg, en sked, din surdegsstart, vetemjöl, rågmjöl och vatten.</li>
-                    <li>Ställ den tomma glasburken på vågen och lägg ner <strong>20 gram surdegsstart</strong>.</li>
-                    <li>Addera <strong>100 gram vatten</strong> och blanda så att surdegsstarten löses upp. Det ska se ut som en mjölkig blandning.</li>
-                    <li>Addera <strong>50 gram rågmjöl</strong> och <strong>50 gram vetemjöl</strong>. Blanda väl. Du har nu matat din surdeg i en ratio om 1:5:5.</li>
-                    <li>Skrapa ner degen som hamnat på kanterna av burken.</li>
-                    <li>Sätt ett gummiband runt burken där surdegen är i topp, så att du enklare ser när surdegen växer.</li>
-                    <li><strong>När surdegen stigit i dubbel storlek har den nått sin peak och det är dags att baka med den.</strong></li>
-                </ol>
+                <div class="technique-box">
+                    <p><strong>Ratio 1:5:5</strong> (20g start + 100g vatten + 100g mjöl)</p>
+                    <ol class="numbered-steps">
+                        <li>Ställ den tomma glasburken på vågen och lägg ner <strong>20g surdegsstart</strong></li>
+                        <li>Addera <strong>100g vatten</strong> och blanda tills starten löses upp – det ska se ut som en mjölkig blandning</li>
+                        <li>Addera <strong>50g rågmjöl</strong> och <strong>50g vetemjöl</strong>. Blanda väl</li>
+                        <li>Skrapa ner degen från kanterna av burken</li>
+                        <li>Sätt ett gummiband runt burken vid surdegens nivå för att se när den växer</li>
+                        <li><strong>När surdegen stigit till dubbel storlek har den nått sin peak</strong> – då är det dags att baka!</li>
+                    </ol>
+                </div>
             </div>
         `,
         tips: [
