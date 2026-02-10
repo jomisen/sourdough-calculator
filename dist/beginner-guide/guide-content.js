@@ -103,9 +103,9 @@ export const GUIDE_STEPS = [
             <div class="step-section">
                 <h4>📋 Så här gör du</h4>
                 <ol class="numbered-steps">
-                    <li>Häll <strong id="water-amount-instruction">560g vatten</strong> i en stor skål</li>
-                    <li>Tillsätt <strong id="wheat-amount-instruction">720g vetemjöl</strong> och <strong id="spelt-amount-instruction">80g fullkornsmjöl</strong></li>
-                    <li>Rör ihop med en slickepott eller dina händer tills allt mjöl är vått (det behöver inte bli helt jämnt)</li>
+                    <li>Lägg <strong id="wheat-amount-instruction">720g vetemjöl</strong> och <strong id="spelt-amount-instruction">80g fullkornsmjöl</strong> i en stor skål</li>
+                    <li>Häll i <strong id="water-amount-instruction">560g vatten</strong></li>
+                    <li>Blanda med händerna tills allt mjöl är vått (det behöver inte bli helt jämnt)</li>
                     <li>Täck över skålen med en handduk eller plastfolie</li>
                     <li><strong>Låt vila i 1 timme i rumstemperatur</strong></li>
                 </ol>
