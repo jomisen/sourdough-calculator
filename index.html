@@ -508,8 +508,8 @@
         .input-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: var(--space-1);
-            margin-bottom: var(--space-2);
+            gap: var(--space-3);
+            margin-bottom: var(--space-4);
         }
 
         .input-group {
@@ -519,7 +519,7 @@
         @media (max-width: 500px) {
             .input-row {
                 grid-template-columns: 1fr;
-                gap: var(--space-2);
+                gap: var(--space-3);
             }
         }
 
@@ -527,8 +527,8 @@
             display: block;
             color: var(--green-dark);
             font-weight: 700;
-            margin-bottom: var(--space-1);
-            font-size: var(--text-base);
+            margin-bottom: var(--space-2);
+            font-size: var(--text-lg);
             transition: color 0.2s ease;
         }
 
@@ -536,11 +536,11 @@
             display: flex;
             align-items: center;
             background: white;
-            border-radius: var(--radius-sm);
-            padding: var(--space-2) var(--space-3);
+            border-radius: var(--radius-md);
+            padding: var(--space-3) var(--space-4);
             border: 2px solid var(--green-lighter);
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow-md);
         }
 
         .input-wrapper:hover {
@@ -560,11 +560,11 @@
             border: none;
             background: transparent;
             padding: var(--space-1);
-            font-size: var(--text-lg);
+            font-size: var(--text-xl);
             color: var(--green-dark);
             outline: none;
-            font-weight: 600;
-            line-height: 1.4;
+            font-weight: 700;
+            line-height: 1.2;
         }
 
         input[type="number"]:focus {
@@ -614,8 +614,9 @@
 
         .unit {
             color: var(--green-medium);
-            font-size: var(--text-lg);
-            font-weight: 600;
+            font-size: var(--text-xl);
+            font-weight: 700;
+            margin-left: var(--space-1);
         }
 
         input[type="range"] {
@@ -1768,10 +1769,10 @@
         }
 
         .input-percentage {
-            margin-top: var(--space-1);
-            font-size: var(--text-sm);
+            margin-top: var(--space-2);
+            font-size: var(--text-base);
             color: var(--green-medium);
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .editable-percentage {
