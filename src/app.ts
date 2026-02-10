@@ -45,7 +45,7 @@ function debounce(func: Function, delay: number): (...args: any[]) => void {
 /**
  * Switch between tabs (calculator, schedule, troubleshoot, tips)
  */
-function switchTab(tabName: string): void {
+function switchTab(tabName: string, updateHash: boolean = true): void {
     // Hide all tab content
     document.querySelectorAll('.tab-content').forEach(content => {
         content.classList.remove('active');
@@ -65,6 +65,14 @@ function switchTab(tabName: string): void {
     if (tabButton) {
         tabButton.classList.add('active');
         tabButton.setAttribute('aria-selected', 'true');
+    }
+
+    // Update URL hash for shareable links
+    if (updateHash && tabName !== 'calculator') {
+        window.history.replaceState(null, '', `#${tabName}`);
+    } else if (updateHash && tabName === 'calculator') {
+        // Remove hash for default tab
+        window.history.replaceState(null, '', window.location.pathname);
     }
 
     // Announce to screen readers
@@ -928,6 +936,33 @@ function init(): void {
 
     // Setup dynamic hydration display
     setupDynamicHydration();
+
+    // Handle URL hash for deep linking to tabs
+    handleTabHash();
+}
+
+/**
+ * Handle URL hash to open specific tab on page load
+ */
+function handleTabHash(): void {
+    const hash = window.location.hash.substring(1); // Remove '#'
+    const validTabs = ['calculator', 'guide', 'schedule', 'troubleshoot', 'tips'];
+
+    if (hash && validTabs.includes(hash)) {
+        // Switch to the tab specified in URL (without updating hash again)
+        switchTab(hash, false);
+    }
+
+    // Listen for hash changes (browser back/forward)
+    window.addEventListener('hashchange', () => {
+        const newHash = window.location.hash.substring(1);
+        if (newHash && validTabs.includes(newHash)) {
+            switchTab(newHash, false);
+        } else if (!newHash) {
+            // No hash = default to calculator
+            switchTab('calculator', false);
+        }
+    });
 }
 
 /**

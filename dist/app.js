@@ -13,7 +13,7 @@ function debounce(func, delay) {
         timeoutId = window.setTimeout(() => func.apply(this, args), delay);
     };
 }
-function switchTab(tabName) {
+function switchTab(tabName, updateHash = true) {
     document.querySelectorAll('.tab-content').forEach(content => {
         content.classList.remove('active');
     });
@@ -28,6 +28,12 @@ function switchTab(tabName) {
     if (tabButton) {
         tabButton.classList.add('active');
         tabButton.setAttribute('aria-selected', 'true');
+    }
+    if (updateHash && tabName !== 'calculator') {
+        window.history.replaceState(null, '', `#${tabName}`);
+    }
+    else if (updateHash && tabName === 'calculator') {
+        window.history.replaceState(null, '', window.location.pathname);
     }
     const tabNames = {
         'calculator': 'Jästningsberäknare',
@@ -609,6 +615,23 @@ function init() {
     initFAQ();
     initBeginnerGuide();
     setupDynamicHydration();
+    handleTabHash();
+}
+function handleTabHash() {
+    const hash = window.location.hash.substring(1);
+    const validTabs = ['calculator', 'guide', 'schedule', 'troubleshoot', 'tips'];
+    if (hash && validTabs.includes(hash)) {
+        switchTab(hash, false);
+    }
+    window.addEventListener('hashchange', () => {
+        const newHash = window.location.hash.substring(1);
+        if (newHash && validTabs.includes(newHash)) {
+            switchTab(newHash, false);
+        }
+        else if (!newHash) {
+            switchTab('calculator', false);
+        }
+    });
 }
 function setupDynamicHydration() {
     const flourInput = document.getElementById('flour');
