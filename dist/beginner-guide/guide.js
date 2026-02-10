@@ -318,15 +318,13 @@ export class BeginnerGuide {
         showCelebrationModal(() => this.resetGuide(), () => this.linkToSchedule());
     }
     resetGuide() {
-        if (confirm('Är du säker på att du vill börja om från början? All progress raderas.')) {
-            this.state = resetGuideState();
-            this.renderSteps();
-            this.updateProgress();
-            this.showToast({
-                emoji: '🔄',
-                text: 'Guiden har återställts'
-            });
-        }
+        this.state = resetGuideState();
+        this.renderSteps();
+        this.updateProgress();
+        this.showToast({
+            emoji: '🔄',
+            text: 'Guiden har återställts'
+        });
     }
     linkToSchedule() {
         if (typeof window.SourdoughApp !== 'undefined') {
