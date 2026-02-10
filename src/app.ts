@@ -29,6 +29,7 @@ import { startTimer, stopTimer, resumeTimer, restartTimer } from './timer.js';
 import { validateInputs, validateRecipeWarnings, displayWarnings } from './validation.js';
 import { trackCalculatorUsed, trackTimerStarted } from './analytics.js';
 import { initFAQ } from './faq.js';
+import { initBeginnerGuide } from './beginner-guide/guide.js';
 
 /**
  * Debounce function for performance optimization
@@ -69,6 +70,7 @@ function switchTab(tabName: string): void {
     // Announce to screen readers
     const tabNames: { [key: string]: string } = {
         'calculator': 'Jästningsberäknare',
+        'guide': 'Nybörjarguide',
         'schedule': 'Skapa bakschema',
         'troubleshoot': 'Felsök ditt bröd',
         'tips': 'Tips och råd'
@@ -905,6 +907,9 @@ function init(): void {
 
     // Initialize FAQ accordion
     initFAQ();
+
+    // Initialize Beginner Guide
+    initBeginnerGuide();
 }
 
 // Initialize when DOM is loaded
@@ -924,3 +929,5 @@ if (document.readyState === 'loading') {
 (window as any).stopTimer = stopTimer;
 (window as any).resumeTimer = resumeTimer;
 (window as any).restartTimer = restartTimer;
+(window as any).showActionToast = showActionToast;
+(window as any).announceToScreenReader = announceToScreenReader;

@@ -5,6 +5,7 @@ import { startTimer, stopTimer, resumeTimer, restartTimer } from './timer.js';
 import { validateInputs, validateRecipeWarnings, displayWarnings } from './validation.js';
 import { trackCalculatorUsed, trackTimerStarted } from './analytics.js';
 import { initFAQ } from './faq.js';
+import { initBeginnerGuide } from './beginner-guide/guide.js';
 function debounce(func, delay) {
     let timeoutId;
     return function (...args) {
@@ -30,6 +31,7 @@ function switchTab(tabName) {
     }
     const tabNames = {
         'calculator': 'Jästningsberäknare',
+        'guide': 'Nybörjarguide',
         'schedule': 'Skapa bakschema',
         'troubleshoot': 'Felsök ditt bröd',
         'tips': 'Tips och råd'
@@ -594,6 +596,7 @@ function init() {
         trackCalculatorUsed();
     };
     initFAQ();
+    initBeginnerGuide();
 }
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
@@ -610,4 +613,6 @@ window.startTimer = startTimer;
 window.stopTimer = stopTimer;
 window.resumeTimer = resumeTimer;
 window.restartTimer = restartTimer;
+window.showActionToast = showActionToast;
+window.announceToScreenReader = announceToScreenReader;
 //# sourceMappingURL=app.js.map
