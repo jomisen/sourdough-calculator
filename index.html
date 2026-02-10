@@ -2577,14 +2577,28 @@
                 margin-right: var(--space-2) !important;
             }
 
-            /* Time input parent: Ensure it doesn't overflow */
+            /* Time input: Ensure it doesn't overflow */
             #scheduleTime {
                 width: 100% !important;
                 min-width: 0 !important;
+                max-width: 100% !important;
             }
 
-            /* Flex container for time inputs */
-            div[style*="display: flex"][style*="flex-wrap: wrap"] {
+            /* Time input parent div: Override flex min-width */
+            #scheduleTime + label,
+            label[for="scheduleTime"] + input {
+                min-width: 0 !important;
+            }
+
+            /* Parent container of time input: Remove min-width */
+            div[style*="min-width: 200px"] {
+                min-width: 0 !important;
+                width: 100% !important;
+            }
+
+            /* Flex container: Stack vertically and reduce gap */
+            div[style*="display: flex"][style*="flex-wrap: wrap"][style*="margin-bottom"] {
+                flex-direction: column !important;
                 gap: var(--space-2) !important;
             }
 
