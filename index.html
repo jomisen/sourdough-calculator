@@ -2562,12 +2562,10 @@
             }
 
             /* Time input: Proper sizing and centering */
-            input[type="time"] {
-                text-align: center;
+            #scheduleTime {
+                text-align: center !important;
                 font-size: var(--text-xl) !important;
                 padding: var(--space-2) !important;
-                box-sizing: border-box !important;
-                max-width: 100% !important;
             }
 
             /* Schedule box: Reduce padding significantly on mobile */
@@ -2577,29 +2575,18 @@
                 margin-right: var(--space-2) !important;
             }
 
-            /* Time input: Ensure it doesn't overflow */
-            #scheduleTime {
-                width: 100% !important;
-                min-width: 0 !important;
-                max-width: 100% !important;
-            }
-
-            /* Time input parent div: Override flex min-width */
-            #scheduleTime + label,
-            label[for="scheduleTime"] + input {
-                min-width: 0 !important;
-            }
-
-            /* Parent container of time input: Remove min-width */
-            div[style*="min-width: 200px"] {
-                min-width: 0 !important;
-                width: 100% !important;
-            }
-
-            /* Flex container: Stack vertically and reduce gap */
-            div[style*="display: flex"][style*="flex-wrap: wrap"][style*="margin-bottom"] {
+            /* Time container: Stack vertically on mobile */
+            #scheduleTimeContainer {
                 flex-direction: column !important;
-                gap: var(--space-2) !important;
+                gap: var(--space-3) !important;
+            }
+
+            /* Time input and direction wrappers: Full width on mobile */
+            #timeInputWrapper,
+            #timeDirWrapper {
+                min-width: 0 !important;
+                width: 100% !important;
+                flex: none !important;
             }
 
             /* Bread counter: Make emojis smaller on mobile */
@@ -3169,9 +3156,9 @@
             <!-- Simple Time Control (Always Visible) -->
             <div style="max-width: 700px; margin: 0 auto var(--space-5) auto; background: white; padding: var(--space-5); border-radius: var(--radius-lg); border: 2px solid var(--green-light); box-shadow: var(--shadow-md);">
 
-                <div style="display: flex; gap: var(--space-4); align-items: flex-end; flex-wrap: wrap; margin-bottom: var(--space-4);">
+                <div id="scheduleTimeContainer" style="display: flex; gap: var(--space-4); align-items: flex-end; flex-wrap: wrap; margin-bottom: var(--space-4);">
                     <!-- Time Input (Prominent) -->
-                    <div style="flex: 1; min-width: 0;">
+                    <div id="timeInputWrapper" style="flex: 1; min-width: 200px;">
                         <label id="scheduleTimeLabel" for="scheduleTime" style="display: block; font-size: var(--text-lg); font-weight: 700; color: var(--green-dark); margin-bottom: var(--space-2); white-space: nowrap;">
                             🕐 När vill du baka?
                         </label>
@@ -3183,7 +3170,7 @@
                     </div>
 
                     <!-- Time Direction (Simplified) -->
-                    <div style="flex: 1; min-width: 0;">
+                    <div id="timeDirWrapper" style="flex: 1; min-width: 200px;">
                         <label style="display: block; font-size: var(--text-base); font-weight: 600; color: var(--green-dark); margin-bottom: var(--space-2);">
                             Planera från:
                         </label>
