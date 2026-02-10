@@ -141,11 +141,50 @@ export const GUIDE_STEPS = [
             </div>
 
             <div class="step-section">
+                <h4>🌡️ Rumstemperatur</h4>
+                <div class="temperature-section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                        <label for="bulk-temperature" style="margin: 0; font-size: var(--text-base); font-weight: 700; color: var(--green-dark);">Ange din rumstemperatur</label>
+                        <div style="display: flex; align-items: center; gap: var(--space-1);">
+                            <input
+                                type="number"
+                                id="bulk-temperature"
+                                value="22"
+                                min="15"
+                                max="30"
+                                step="0.5"
+                                inputmode="decimal"
+                                style="width: 75px; padding: 4px 8px; font-size: var(--text-base); font-weight: 600; color: var(--green-dark); border: 2px solid var(--green-lighter); border-radius: 6px; text-align: center;">
+                            <span style="font-size: var(--text-base); font-weight: 600; color: var(--green-medium);">°C</span>
+                        </div>
+                    </div>
+                    <input
+                        type="range"
+                        id="bulk-temperature-slider"
+                        class="thermometer-slider"
+                        min="15"
+                        max="30"
+                        step="0.5"
+                        value="22"
+                        aria-label="Justera rumstemperatur med slider">
+                    <div class="thermometer-labels">
+                        <span>❄️ 15°<br><small style="font-size: 10px; opacity: 0.7;">Kallt</small></span>
+                        <span>🌡️ 22-24°<br><small style="font-size: 10px; opacity: 0.7;">Perfekt</small></span>
+                        <span>🔥 30°<br><small style="font-size: 10px; opacity: 0.7;">Varmt</small></span>
+                    </div>
+                    <div class="calculated-result" style="margin-top: var(--space-3); padding: var(--space-3); background: linear-gradient(135deg, rgba(159, 176, 148, 0.1), rgba(212, 165, 116, 0.1)); border-radius: var(--radius-md); border-left: 4px solid var(--warm-accent);">
+                        <strong>Rekommenderad bulkjästid (totalt):</strong> <span id="bulk-time-recommendation">5-6 timmar</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-section">
                 <h4>📋 Steg 1: Tillsätt surdeg</h4>
                 <ol class="numbered-steps">
                     <li>Ta fram din autolysdeg från förra steget</li>
                     <li>Tillsätt <strong id="starter-amount-instruction">160g surdegsstart</strong></li>
                     <li>Blanda med händerna genom att klämma och vika degen tills surdegen är väl inblandad (2-3 minuter)</li>
+                    <li><strong>Nu börjar bulkjäsningen!</strong> 🎉 (Detta är det längsta steget i surdegsbakningen)</li>
                     <li>Täck skålen och <strong>låt vila i 30 minuter</strong></li>
                 </ol>
             </div>
@@ -195,8 +234,8 @@ export const GUIDE_STEPS = [
             </div>
 
             <div class="step-section">
-                <h4>⏰ Steg 4: Vila (bulkjäsning)</h4>
-                <p>Efter sista vikningen ska degen få vila ostört. Detta är själva bulkjäsningen där degen växer och utvecklar smak.</p>
+                <h4>⏰ Steg 4: Vila</h4>
+                <p>Efter sista vikningen ska degen få vila ostört. Under denna vila fortsätter degen att jäsa, växa och utveckla smak.</p>
 
                 <div class="temperature-guide">
                     <h5>🌡️ Tid baserat på temperatur</h5>

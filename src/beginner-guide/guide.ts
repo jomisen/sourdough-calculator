@@ -57,6 +57,9 @@ export class BeginnerGuide {
         // Initialize Step 2 calculations
         setTimeout(() => this.updateStep2Calculations(), 100);
 
+        // Initialize Step 3 bulk time calculation
+        setTimeout(() => this.updateStep3BulkTime(), 100);
+
         // Check for timer completion on init
         if (this.state.activeTimer && isTimerComplete(this.state)) {
             this.onTimerComplete();
@@ -235,6 +238,23 @@ export class BeginnerGuide {
             }
         });
 
+        // Step 3 temperature slider
+        this.stepsContainer.addEventListener('input', (e) => {
+            const target = e.target as HTMLInputElement;
+            if (target.id === 'bulk-temperature' || target.id === 'bulk-temperature-slider') {
+                this.updateStep3BulkTime();
+
+                // Sync slider and input
+                const tempInput = document.getElementById('bulk-temperature') as HTMLInputElement;
+                const tempSlider = document.getElementById('bulk-temperature-slider') as HTMLInputElement;
+                if (tempInput && tempSlider) {
+                    const value = target.value;
+                    tempInput.value = value;
+                    tempSlider.value = value;
+                }
+            }
+        });
+
         // Keyboard navigation
         this.stepsContainer.addEventListener('keydown', (e) => {
             this.handleKeyboardNav(e as KeyboardEvent);
@@ -390,6 +410,41 @@ export class BeginnerGuide {
         if (loafCountSpan) loafCountSpan.textContent = loafCount.toString();
         if (loafCountInstruction) loafCountInstruction.textContent = loafCount.toString();
         if (totalFlourWeight) totalFlourWeight.textContent = totalFlour.toString();
+    }
+
+    /**
+     * Update Step 3 bulk fermentation time based on temperature
+     */
+    private updateStep3BulkTime(): void {
+        const tempInput = document.getElementById('bulk-temperature') as HTMLInputElement;
+        if (!tempInput) return;
+
+        const temp = parseFloat(tempInput.value) || 22;
+
+        // Calculate bulk time based on temperature
+        let timeText: string;
+
+        if (temp <= 17) {
+            timeText = "8-10 timmar";
+        } else if (temp <= 19) {
+            timeText = "7-8 timmar";
+        } else if (temp <= 21) {
+            timeText = "6-7 timmar";
+        } else if (temp <= 23) {
+            timeText = "5-6 timmar";
+        } else if (temp <= 25) {
+            timeText = "4-5 timmar";
+        } else if (temp <= 27) {
+            timeText = "3.5-4 timmar";
+        } else {
+            timeText = "3-3.5 timmar";
+        }
+
+        // Update display
+        const bulkTimeSpan = document.getElementById('bulk-time-recommendation');
+        if (bulkTimeSpan) {
+            bulkTimeSpan.textContent = timeText;
+        }
     }
 
     /**
