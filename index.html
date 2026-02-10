@@ -405,6 +405,7 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: center;
             white-space: nowrap;
+            position: relative;
         }
 
         .tab-button:hover {
@@ -434,22 +435,23 @@
 
         /* Beta badge */
         .beta-badge {
-            display: inline-block;
-            margin-left: 4px;
-            padding: 2px 6px;
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            padding: 2px 5px;
             background: linear-gradient(135deg, var(--warm-accent), #e89b65);
             color: white;
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 700;
             text-transform: uppercase;
-            border-radius: 4px;
-            letter-spacing: 0.5px;
-            vertical-align: middle;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+            border-radius: 3px;
+            letter-spacing: 0.3px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            line-height: 1;
         }
 
         .tab-button.active .beta-badge {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.3);
             color: white;
         }
 
