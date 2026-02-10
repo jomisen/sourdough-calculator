@@ -1,83 +1,71 @@
 export const GUIDE_STEPS = [
     {
         id: 0,
-        title: "Förbered din surdegsstartare",
+        title: "Förbered din surdegsstart",
         icon: "🌱",
         phase: "1-2 dagar innan bakning",
-        description: "Mata och testa din surdeg så att den är stark och aktiv när du ska baka.",
-        duration: "1-2 dagar (några minuter arbete)",
+        description: "Mata din surdegsstart så att den är stark och aktiv när du ska baka.",
+        duration: "1-2 dagar (5 min arbete per matning)",
         hasTimer: false,
         content: `
             <div class="step-section">
                 <h4>🔍 Vad du ska göra</h4>
-                <p><strong>En stark och aktiv surdeg är nyckeln till ett lyckat bröd!</strong> Detta steg kan ta 1-2 dagar om din surdeg varit i kylen, så planera i förväg. Du behöver mata din surdeg och se till att den når "peak" innan du börjar baka.</p>
+                <p>En stark surdegsstart är avgörande för ett lyckat bröd. Om din start stått i kylen behöver du mata den 2-3 gånger innan du bakar.</p>
             </div>
 
             <div class="step-section">
-                <h4>📅 Om din surdeg stått i kylen</h4>
-                <p>För att få ett luftigt bröd behöver din surdeg vara <strong>aktiv och på toppen av sin kraft</strong> (peak). Här är hur du förbereder den:</p>
+                <h4>📋 Hur du matar surdegsstart</h4>
 
                 <div class="technique-box">
-                    <h5>Hur du matar surdegen:</h5>
+                    <h5>Rekommenderad matning (1:3:3 ratio):</h5>
+                    <p><strong>Exempel:</strong> 50g surdegsstart + 150g mjöl + 150g vatten</p>
+
                     <ol class="numbered-steps">
-                        <li><strong>Ta ut surdegen</strong> från kylen kvällen eller morgonen innan</li>
-                        <li><strong>Mata den 2-3 gånger</strong> med 12 timmars mellanrum för att bygga upp styrkan
-                            <ul>
-                                <li>Exempel matning: 50g surdeg + 50g mjöl + 50g vatten (1:1:1 ratio)</li>
-                                <li>Varje matning gör surdegen starkare och mer aktiv</li>
-                            </ul>
-                        </li>
-                        <li><strong>Använd den efter sista matningen</strong> när den når peak (se nedan)</li>
+                        <li>Ta ut <strong>50g</strong> från din surdegsstart i kylen</li>
+                        <li>Tillsätt <strong>150g vetemjöl</strong> och <strong>150g vatten</strong> (rumstemperatur)</li>
+                        <li>Rör om väl tills allt mjöl är uppblandat</li>
+                        <li>Täck med lock eller plastfolie och låt stå i rumstemperatur</li>
+                        <li>Vänta <strong>4-8 timmar</strong> tills den når "peak"</li>
                     </ol>
-                    <p><strong>💡 Varför flera matningar?</strong> Om surdegen varit inaktiv i kylen är jäst- och bakteriekulturen trög. Genom att mata den flera gånger "väcker" du den och bygger upp en stark, aktiv kultur som ger bäst resultat!</p>
+
+                    <p><strong>💡 Varit i kylen länge?</strong> Mata 2-3 gånger med 12h mellanrum för bästa resultat.</p>
                 </div>
 
                 <div class="test-box">
-                    <h5>🎯 Hur vet du att surdegen är på "peak"?</h5>
-                    <p><strong>Peak</strong> = toppen av surdegens aktivitet, precis innan den börjar falla tillbaka. Detta är det perfekta tillfället att baka!</p>
+                    <h5>🎯 Vad är "peak"?</h5>
+                    <p><strong>Peak</strong> = när surdegsstart är som starkast, precis innan den faller tillbaka.</p>
 
                     <p><strong>Tecken på peak:</strong></p>
                     <ul>
-                        <li>✅ <strong>Dubblad storlek</strong> – surdegen har minst fördubblats sedan matningen</li>
-                        <li>✅ <strong>Kupolformad topp</strong> – toppen är rund och bombad (inte platt eller infallen)</li>
-                        <li>✅ <strong>Många bubblor</strong> – ytan är täckt av bubblor, både stora och små</li>
-                        <li>✅ <strong>Doftar syrligt men friskt</strong> – inte för surt eller alkoholaktigt</li>
-                        <li>✅ <strong>Flyter i vatten</strong> (float test) – en liten klick flyter när du släpper den i vatten</li>
+                        <li>✅ Minst <strong>dubblad i storlek</strong></li>
+                        <li>✅ <strong>Kupolformad topp</strong> (inte platt)</li>
+                        <li>✅ Många <strong>bubblor</strong> på ytan</li>
+                        <li>✅ <strong>Flyter i vatten</strong> (float test)</li>
                     </ul>
 
-                    <p><strong>🧪 Float test (valbart men användbart):</strong></p>
-                    <ol style="font-size: 14px; margin-top: 8px;">
-                        <li>Fyll ett glas med rumstempererat vatten</li>
-                        <li>Ta en liten klick surdeg (ca 1 tesked) och släpp försiktigt i vattnet</li>
-                        <li><strong>Flyter den?</strong> → Perfekt! Din surdeg är aktiv och full av luft</li>
-                        <li><strong>Sjunker den?</strong> → Vänta 30-60 min till och testa igen</li>
-                    </ol>
+                    <p><strong>🧪 Float test:</strong> Släpp en liten klick i vatten. Flyter den = redo!</p>
                 </div>
 
-                <p style="margin-top: 16px;"><strong>⏰ Timing:</strong> De flesta surdegar når peak <strong>4-8 timmar efter matning</strong> vid rumstemperatur (20-24°C). Markera tiden när du matade så du vet när du ska kolla!</p>
+                <p style="margin-top: 16px;"><strong>⏰ Timing:</strong> Peak nås vanligtvis <strong>4-8 timmar</strong> efter matning vid 20-24°C.</p>
             </div>
 
             <div class="step-section why-section">
                 <details>
-                    <summary>💡 Varför är detta så viktigt?</summary>
-                    <p><strong>En stark surdeg = luftigt bröd.</strong> Om surdegen är svag eller inte på peak kommer degen inte jäsa ordentligt, och brödet blir tätt och platt.</p>
-                    <p><strong>Flera matningar</strong> "tränar" surdegen och bygger upp en stark koloni av jäst och bakterier. Efter 2-3 matningar är kulturen i full fart och redo att arbeta!</p>
-                    <p><strong>Peak-timing</strong> är när surdegen har mest kraft. Använd den för tidigt (inte dubblad) eller för sent (fallen tillbaka) så får du sämre resultat.</p>
+                    <summary>💡 Varför 1:3:3 ratio?</summary>
+                    <p><strong>1:3:3 bygger styrka.</strong> Den högre andelen mjöl och vatten ger surdegsstart mer näring, vilket skapar en stark och aktiv kultur perfekt för bagning.</p>
+                    <p><strong>Peak-timing är avgörande.</strong> Använd starten för tidigt eller sent och brödet blir tätt.</p>
                 </details>
             </div>
         `,
         tips: [
-            "Planera i förväg! Börja mata surdegen 1-2 dagar innan du ska baka",
-            "Float test är det säkraste sättet att veta att surdegen är redo",
-            "Mata vid samma tid varje dag (t.ex. kl 08:00) för att lära känna surdegens rytm",
-            "Markera tiden när du matade så du vet när du ska kolla efter peak (4-8h)",
-            "Om surdegen matar sig för snabbt (når peak på 3h), minska mängden surdeg i matningen",
-            "Ta alltid ut surdegen från kylen kvällen innan för bästa resultat"
+            "Börja mata 1-2 dagar innan du ska baka",
+            "Float test är det säkraste sättet att testa om starten är redo",
+            "Markera tiden när du matade – peak kommer efter 4-8h",
+            "Behåll resten av starten i kylen för framtida bak"
         ],
         warnings: [
-            "Använd ALDRIG surdeg som luktar starkt alkoholiskt, har mögelliknande fläckar eller rosa färg",
-            "Om surdegen inte fördubblats efter 8 timmar är den för svag – mata igen och vänta",
-            "Varm miljö (>27°C) kan göra surdegen överaktiv och sur – håll vid 20-24°C"
+            "Använd ALDRIG start som luktar alkohol eller har mögel",
+            "Inte dubblad efter 8h? Mata igen och vänta"
         ]
     },
     {
