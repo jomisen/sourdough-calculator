@@ -119,61 +119,138 @@ export const GUIDE_STEPS = [
     },
     {
         id: 2,
-        title: "Bulkjäsning med vikningar",
+        title: "Bulkjäsning",
         icon: "🙌",
-        phase: "Dag 1 - Eftermiddag",
-        description: "Låt degen jäsa och vik den var 30:e minut för att bygga struktur.",
-        duration: "4-6 timmar",
+        phase: "Dag 1 - Eftermiddag/Kväll",
+        description: "Tillsätt surdeg och salt, gör stretch & folds, låt sedan degen jäsa.",
+        duration: "5-7 timmar",
         hasTimer: true,
-        timerDurationHours: 5,
+        timerDurationHours: 6,
         content: `
             <div class="step-section">
-                <h4>🔍 Vad du ska göra</h4>
-                <p>Nu ska degen jäsa i skålen i flera timmar. Under tiden gör vi "vikningar" var 30:e minut för att ge brödet struktur och styrka. Detta är hjärtat i surdegsbagning!</p>
+                <h4>🧮 Beräknade mängder</h4>
+                <div class="recipe-calculator">
+                    <div class="calculated-amounts">
+                        <div class="amount-item">
+                            <strong>Surdegsstart (20%):</strong> <span id="starter-amount">160</span> g
+                        </div>
+                        <div class="amount-item">
+                            <strong>Salt (2%):</strong> <span id="salt-amount">16</span> g
+                        </div>
+                    </div>
+                    <p style="font-size: 14px; color: var(--green-medium); margin-top: var(--space-2);"><em>Baserat på dina mjölmängder från föregående steg</em></p>
+                </div>
             </div>
 
             <div class="step-section">
-                <h4>📋 Hur du gör</h4>
+                <h4>📋 Steg 1: Tillsätt surdeg</h4>
                 <ol class="numbered-steps">
-                    <li>Täck skålen med lock eller fuktig handduk</li>
-                    <li>Ställ på en varm plats (20-24°C är perfekt)</li>
-                    <li><strong>Var 30:e minut:</strong> Gör en serie vikningar (4-6 gånger totalt)
-                        <ul>
-                            <li>Fukta händerna</li>
-                            <li>Greppa ena sidan av degen, dra upp och vik över mitten</li>
-                            <li>Rotera skålen 90° och upprepa</li>
-                            <li>Gör detta 4 gånger (alla fyra sidor)</li>
-                        </ul>
-                    </li>
-                    <li>Efter 4-6 timmar: testa om degen är klar (se nästa steg)</li>
+                    <li>Ta fram din autolysdeg från förra steget</li>
+                    <li>Tillsätt <strong id="starter-amount-instruction">160g surdegsstart</strong></li>
+                    <li>Blanda med händerna genom att klämma och vika degen tills surdegen är väl inblandad (2-3 minuter)</li>
+                    <li>Täck skålen och <strong>låt vila i 30 minuter</strong></li>
                 </ol>
+            </div>
 
-                <div class="timer-box">
-                    <p>⏱️ <strong>Sätt en timer!</strong> Bulkjäsningen tar 4-6 timmar beroende på temperatur.</p>
-                    <button class="timer-button" onclick="beginnerGuide.startStepTimer(2, 5)">
-                        Starta timer (5 timmar)
-                    </button>
+            <div class="step-section">
+                <h4>🧂 Steg 2: Tillsätt salt</h4>
+                <ol class="numbered-steps">
+                    <li>Efter 30 minuter: Tillsätt <strong id="salt-amount-instruction">16g salt</strong></li>
+                    <li>Blanda in saltet ordentligt med händerna</li>
+                    <li>Nu är det dags för stretch & folds!</li>
+                </ol>
+            </div>
+
+            <div class="step-section">
+                <h4>🙌 Steg 3: Stretch & Fold (Vikningar)</h4>
+
+                <div class="technique-box">
+                    <h5>Vad är stretch & fold?</h5>
+                    <p><strong>Stretch & fold</strong> (på svenska: <strong>vik</strong>) är en teknik där man drar ut degen och viker den över sig själv. Det bygger upp glutenstrukturen som gör brödet luftigt och ger det styrka att hålla formen.</p>
+                    <p><strong>Så här gör du en vik:</strong></p>
+                    <ol style="font-size: 14px; padding-left: var(--space-4);">
+                        <li>Fukta händerna lätt</li>
+                        <li>Greppa ena sidan av degen</li>
+                        <li>Dra upp den så degen sträcks ut</li>
+                        <li>Vik över degen mot mitten</li>
+                        <li>Rotera skålen 90° och upprepa</li>
+                        <li>Gör detta 4 gånger (en gång från varje sida)</li>
+                    </ol>
                 </div>
+
+                <p style="margin-top: var(--space-3);"><strong>Gör 4 omgångar stretch & fold:</strong></p>
+                <ul class="numbered-steps">
+                    <li>Vik 1 → Vila 20 minuter</li>
+                    <li>Vik 2 → Vila 20 minuter</li>
+                    <li>Vik 3 → Vila 20 minuter</li>
+                    <li>Vik 4 → Klar med vikningarna!</li>
+                </ul>
             </div>
 
             <div class="step-section why-section">
                 <details>
-                    <summary>💡 Varför vikningar?</summary>
-                    <p><strong>Vikningar bygger glutennätverk</strong> – det är det som gör att brödet får sin struktur och kan hålla uppe alla små luftbubblor som jästen skapar.</p>
-                    <p>Utan vikningar blir brödet tätt och platt. Med vikningar blir det luftigt med vackra hålrum!</p>
-                    <p><strong>Temperatur är avgörande:</strong> Vid 20°C tar det 6 timmar, vid 24°C kanske bara 4 timmar. Håll koll på degen, inte klockan.</p>
+                    <summary>💡 Varför gör vi stretch & folds?</summary>
+                    <p><strong>Bygger glutennätverk:</strong> Varje vikning stärker glutensträngarna som håller ihop degen och fångar upp luftbubblorna från jäsningen.</p>
+                    <p><strong>Jämnare jäsning:</strong> Vikningarna sprider ut surdegen och jästen jämnt i hela degen.</p>
+                    <p><strong>Bättre struktur:</strong> Utan vikningar blir brödet tätt och platt. Med vikningar får du luftigt bröd med vackra hålrum!</p>
                 </details>
+            </div>
+
+            <div class="step-section">
+                <h4>⏰ Steg 4: Vila (bulkjäsning)</h4>
+                <p>Efter sista vikningen ska degen få vila ostört. Detta är själva bulkjäsningen där degen växer och utvecklar smak.</p>
+
+                <div class="temperature-guide">
+                    <h5>🌡️ Tid baserat på temperatur</h5>
+                    <table style="width: 100%; border-collapse: collapse; margin: var(--space-3) 0;">
+                        <tr style="background: rgba(159, 176, 148, 0.1);">
+                            <th style="padding: var(--space-2); text-align: left; border: 1px solid var(--green-lighter);">Temperatur</th>
+                            <th style="padding: var(--space-2); text-align: left; border: 1px solid var(--green-lighter);">Vila-tid efter vikningarna</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: var(--space-2); border: 1px solid var(--green-lighter);">18-19°C</td>
+                            <td style="padding: var(--space-2); border: 1px solid var(--green-lighter);">4-5 timmar</td>
+                        </tr>
+                        <tr style="background: rgba(200, 167, 214, 0.05);">
+                            <td style="padding: var(--space-2); border: 1px solid var(--green-lighter);"><strong>20-22°C (rekommenderat)</strong></td>
+                            <td style="padding: var(--space-2); border: 1px solid var(--green-lighter);"><strong>3-4 timmar</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: var(--space-2); border: 1px solid var(--green-lighter);">23-25°C</td>
+                            <td style="padding: var(--space-2); border: 1px solid var(--green-lighter);">2-3 timmar</td>
+                        </tr>
+                    </table>
+                    <p style="font-size: 14px; color: var(--green-medium);"><em>💡 Tips: Använd en rumstermometer för bästa resultat</em></p>
+                </div>
+
+                <div class="timer-box">
+                    <p>⏱️ <strong>Sätt en timer för total tid (vikningar + vila)</strong></p>
+                    <button class="btn-timer" data-step-id="2" data-duration="6">
+                        Starta timer (6 timmar)
+                    </button>
+                </div>
+            </div>
+
+            <div class="step-section">
+                <h4>✅ Hur vet jag att degen är klar?</h4>
+                <p>Efter vilan ska degen ha:</p>
+                <ul>
+                    <li>Vuxit med cirka 50% i volym</li>
+                    <li>Många små luftbubblor synliga på ytan och i sidorna</li>
+                    <li>Känns luftig och vabblig när du skakar skålen</li>
+                </ul>
+                <p><em>Gå vidare till nästa steg för mer detaljerade test!</em></p>
             </div>
         `,
         tips: [
-            "Ställ degen på ett varmt ställe – ovanpå kylskåp, nära element (inte FÖR varmt!)",
-            "Efter första 2-3 vikningarna kommer degen kännas mycket jämnare och elastiskare",
-            "Glöm inte att täcka skålen mellan vikningarna så degen inte torkar",
-            "Om du måste gå – en missad vikning är ingen katastrof!"
+            "Täck skålen mellan vikningarna så degen inte torkar",
+            "Efter varje vikning kommer degen kännas starkare och mer elastisk",
+            "Ställ degen på ett jämnt varmt ställe – undvik drag och direkta värmekällor",
+            "En missad vikning är ingen katastrof – gör bara nästa när du kommer ihåg!"
         ],
         warnings: [
-            "Undvik temperaturer över 27°C – kan ge surt bröd",
-            "Under 18°C går jäsningen mycket långsamt (kan ta 8-12 timmar)"
+            "Undvik temperaturer över 27°C – kan ge surt bröd och för snabb jäsning",
+            "Under 18°C går jäsningen mycket långsamt (kan ta 8-12 timmar totalt)"
         ]
     },
     {

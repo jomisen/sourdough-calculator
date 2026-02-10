@@ -331,7 +331,32 @@ export class BeginnerGuide {
         if (waterAmountSpan) waterAmountSpan.textContent = water.toString();
         if (waterInstruction) waterInstruction.textContent = `${water}g vatten`;
         if (wheatInstruction) wheatInstruction.textContent = `${wheatFlour}g vetemjöl`;
-        if (speltInstruction) speltInstruction.textContent = `${speltFlour}g fullkornsdinkel`;
+        if (speltInstruction) speltInstruction.textContent = `${speltFlour}g fullkornsmjöl`;
+
+        // Also update Step 3 calculations
+        this.updateStep3Calculations(totalFlour);
+    }
+
+    /**
+     * Update Step 3 starter and salt calculations
+     */
+    private updateStep3Calculations(totalFlour: number): void {
+        const starter = Math.round(totalFlour * 0.20); // 20% of flour
+        const salt = Math.round(totalFlour * 0.02);    // 2% of flour
+
+        // Update starter amount displays
+        const starterAmountSpan = document.getElementById('starter-amount');
+        const starterInstruction = document.getElementById('starter-amount-instruction');
+
+        if (starterAmountSpan) starterAmountSpan.textContent = starter.toString();
+        if (starterInstruction) starterInstruction.textContent = `${starter}g surdegsstart`;
+
+        // Update salt amount displays
+        const saltAmountSpan = document.getElementById('salt-amount');
+        const saltInstruction = document.getElementById('salt-amount-instruction');
+
+        if (saltAmountSpan) saltAmountSpan.textContent = salt.toString();
+        if (saltInstruction) saltInstruction.textContent = `${salt}g salt`;
     }
 
     /**

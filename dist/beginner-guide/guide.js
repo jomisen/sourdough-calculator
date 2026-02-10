@@ -228,7 +228,24 @@ export class BeginnerGuide {
         if (wheatInstruction)
             wheatInstruction.textContent = `${wheatFlour}g vetemjöl`;
         if (speltInstruction)
-            speltInstruction.textContent = `${speltFlour}g fullkornsdinkel`;
+            speltInstruction.textContent = `${speltFlour}g fullkornsmjöl`;
+        this.updateStep3Calculations(totalFlour);
+    }
+    updateStep3Calculations(totalFlour) {
+        const starter = Math.round(totalFlour * 0.20);
+        const salt = Math.round(totalFlour * 0.02);
+        const starterAmountSpan = document.getElementById('starter-amount');
+        const starterInstruction = document.getElementById('starter-amount-instruction');
+        if (starterAmountSpan)
+            starterAmountSpan.textContent = starter.toString();
+        if (starterInstruction)
+            starterInstruction.textContent = `${starter}g surdegsstart`;
+        const saltAmountSpan = document.getElementById('salt-amount');
+        const saltInstruction = document.getElementById('salt-amount-instruction');
+        if (saltAmountSpan)
+            saltAmountSpan.textContent = salt.toString();
+        if (saltInstruction)
+            saltInstruction.textContent = `${salt}g salt`;
     }
     startStepTimer(stepId, durationHours) {
         if (typeof window.SourdoughApp !== 'undefined') {

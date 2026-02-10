@@ -3166,6 +3166,49 @@
             font-size: var(--text-xl);
         }
 
+        .calculated-amounts {
+            display: flex;
+            gap: var(--space-3);
+            flex-wrap: wrap;
+        }
+
+        .amount-item {
+            flex: 1;
+            min-width: 200px;
+            padding: var(--space-3);
+            background: white;
+            border-radius: var(--radius-sm);
+            border: 2px solid var(--green-light);
+            text-align: center;
+        }
+
+        .amount-item strong {
+            display: block;
+            color: var(--green-dark);
+            margin-bottom: var(--space-1);
+            font-size: var(--text-sm);
+        }
+
+        .amount-item span {
+            color: var(--warm-accent);
+            font-weight: 700;
+            font-size: var(--text-xl);
+        }
+
+        .temperature-guide {
+            background: rgba(159, 176, 148, 0.06);
+            padding: var(--space-4);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--green-lighter);
+            margin: var(--space-3) 0;
+        }
+
+        .temperature-guide h5 {
+            color: var(--green-dark);
+            margin-top: 0;
+            margin-bottom: var(--space-3);
+        }
+
         /* Timer Box */
         .timer-box {
             background: linear-gradient(135deg, rgba(122, 140, 111, 0.12), rgba(159, 176, 148, 0.08));
