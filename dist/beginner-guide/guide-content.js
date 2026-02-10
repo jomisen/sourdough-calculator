@@ -89,13 +89,13 @@ export const GUIDE_STEPS = [
                         <label for="hydration-select">Hydreringsgrad:</label>
                         <select id="hydration-select" class="guide-select">
                             <option value="65">65%</option>
-                            <option value="70" selected>70% (rekommenderat)</option>
+                            <option value="70" selected>70% (rek.)</option>
                             <option value="75">75%</option>
                             <option value="80">80%</option>
                         </select>
                     </div>
                     <div class="calculated-result">
-                        <strong>Vatten som behövs:</strong> <span id="water-amount">560</span> g
+                        <strong>Vatten som behövs:</strong> <span id="water-amount" style="white-space: nowrap;">560 g</span>
                     </div>
                 </div>
             </div>
@@ -170,7 +170,7 @@ export const GUIDE_STEPS = [
                         <span>🔥 30°<br><small style="font-size: 10px; opacity: 0.7;">Varmt</small></span>
                     </div>
                     <div class="calculated-result" style="margin-top: var(--space-3); padding: var(--space-3); background: linear-gradient(135deg, rgba(159, 176, 148, 0.1), rgba(212, 165, 116, 0.1)); border-radius: var(--radius-md); border-left: 4px solid var(--warm-accent);">
-                        <strong>Rekommenderad bulkjästid (totalt):</strong> <span id="bulk-time-recommendation">5 timmar</span>
+                        <strong>Rekommenderad bulkjästid (totalt):</strong> <span id="bulk-time-recommendation" style="white-space: nowrap;">5 timmar</span>
                     </div>
                 </div>
             </div>
@@ -181,7 +181,7 @@ export const GUIDE_STEPS = [
                     <li>Ta fram din autolysdeg från förra steget</li>
                     <li>Tillsätt <strong id="starter-amount-instruction">160g surdegsstart</strong></li>
                     <li>Blanda med händerna genom att klämma och vika degen tills surdegen är väl inblandad (2-3 minuter)</li>
-                    <li><strong>Nu börjar bulkjäsningen!</strong> 🎉 Sätt en timer på <strong><span id="bulk-time-timer">5 timmar</span></strong> (den rekommenderade tiden ovan)</li>
+                    <li><strong>Nu börjar bulkjäsningen!</strong> 🎉 Sätt en timer på <strong><span id="bulk-time-timer" style="white-space: nowrap;">5 timmar</span></strong> (den rekommenderade tiden ovan)</li>
                     <li>Täck skålen och <strong>låt vila i 30 minuter</strong></li>
                 </ol>
             </div>
@@ -235,7 +235,7 @@ export const GUIDE_STEPS = [
                 <p>Efter sista vikningen ska degen få vila ostört. Under denna vila fortsätter degen att jäsa, växa och utveckla smak.</p>
 
                 <div class="calculated-result" style="margin-top: var(--space-3); padding: var(--space-3); background: linear-gradient(135deg, rgba(159, 176, 148, 0.1), rgba(212, 165, 116, 0.1)); border-radius: var(--radius-md); border-left: 4px solid var(--warm-accent);">
-                    <strong>Återstående viletid:</strong> <span id="remaining-rest-time">3 timmar 10 minuter</span>
+                    <strong>Återstående viletid:</strong> <span id="remaining-rest-time" style="white-space: nowrap;">3 timmar 10 minuter</span>
                     <p style="font-size: 14px; color: var(--green-medium); margin-top: var(--space-1); margin-bottom: 0;"><em>(Total bulkjästid minus 30 min vila + 4 vikningar × 20 min)</em></p>
                 </div>
             </div>

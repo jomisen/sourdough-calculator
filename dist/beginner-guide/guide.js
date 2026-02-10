@@ -213,11 +213,11 @@ export class BeginnerGuide {
                 addActivePulse(stepEl);
             }
             setTimeout(() => {
-                stepEl?.scrollIntoView({
+                header?.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
                 });
-            }, 100);
+            }, 150);
         }
     }
     completeStepHandler(stepId) {

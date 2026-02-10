@@ -309,13 +309,13 @@ export class BeginnerGuide {
                 addActivePulse(stepEl as HTMLElement);
             }
 
-            // Smooth scroll into view
+            // Smooth scroll to header (start of step)
             setTimeout(() => {
-                stepEl?.scrollIntoView({
+                header?.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
                 });
-            }, 100);
+            }, 150);
         }
     }
 
