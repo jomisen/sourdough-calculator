@@ -1747,189 +1747,6 @@
             border-color: var(--green-light);
         }
 
-        /* ========================================
-           ENHANCED CALCULATOR DESIGN
-           ======================================== */
-
-        /* Ingredient Sections with Visual Grouping */
-        .ingredients-section {
-            margin-bottom: var(--space-5);
-        }
-
-        .primary-section {
-            padding-bottom: var(--space-4);
-            border-bottom: 2px solid rgba(159, 176, 148, 0.15);
-        }
-
-        .secondary-section {
-            padding-top: var(--space-2);
-        }
-
-        /* Enhanced Input Wrapper with Badge */
-        .input-wrapper-enhanced {
-            position: relative;
-            display: flex;
-            align-items: center;
-            background: white;
-            border: 1px solid var(--green-lighter);
-            border-radius: var(--radius-md);
-            padding: var(--space-2) var(--space-3);
-            transition: all 0.2s ease;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-        }
-
-        .input-wrapper-enhanced:hover {
-            border-color: var(--green-light);
-            box-shadow: 0 2px 4px rgba(122, 140, 111, 0.08);
-        }
-
-        .input-wrapper-enhanced:focus-within {
-            border-color: var(--green-medium);
-            box-shadow: 0 0 0 3px rgba(122, 140, 111, 0.1),
-                        0 2px 6px rgba(122, 140, 111, 0.15);
-        }
-
-        .input-wrapper-enhanced input[type="number"] {
-            flex: 1;
-            border: none;
-            background: transparent;
-            font-size: var(--text-lg);
-            font-weight: 600;
-            color: var(--green-dark);
-            padding: 0;
-            min-width: 0;
-        }
-
-        .input-wrapper-enhanced input[type="number"]:focus {
-            outline: none;
-        }
-
-        /* Primary vs Secondary Input Styling */
-        .primary-input .input-wrapper-enhanced input {
-            font-size: var(--text-xl);
-        }
-
-        .secondary-input .input-wrapper-enhanced input {
-            font-size: var(--text-lg);
-        }
-
-        .primary-label {
-            font-size: var(--text-base);
-            font-weight: 700;
-            color: var(--green-dark);
-            margin-bottom: var(--space-2);
-            display: block;
-        }
-
-        .secondary-label {
-            font-size: var(--text-sm);
-            font-weight: 600;
-            color: var(--green-medium);
-            margin-bottom: var(--space-2);
-            display: block;
-        }
-
-        /* Subtle Unit Display */
-        .unit-subtle {
-            font-size: var(--text-base);
-            font-weight: 500;
-            color: var(--green-light);
-            margin-left: var(--space-1);
-        }
-
-        /* Percentage Badge - Inside Input */
-        .percentage-badge {
-            position: absolute;
-            right: var(--space-2);
-            bottom: 4px;
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--green-medium);
-            background: rgba(159, 176, 148, 0.12);
-            padding: 2px 6px;
-            border-radius: 4px;
-            letter-spacing: 0.3px;
-        }
-
-        .editable-badge {
-            background: rgba(248, 165, 113, 0.12);
-            padding: 0;
-            display: flex;
-            align-items: center;
-            gap: 0;
-        }
-
-        .percentage-input-inline {
-            width: 32px;
-            border: none;
-            background: transparent;
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--warm-accent);
-            text-align: right;
-            padding: 2px 0 2px 4px;
-        }
-
-        .percentage-input-inline:focus {
-            outline: none;
-            background: rgba(248, 165, 113, 0.2);
-            border-radius: 3px;
-        }
-
-        .editable-badge {
-            color: var(--warm-accent);
-        }
-
-        /* Enhanced Total Weight */
-        .total-weight-enhanced {
-            margin-top: var(--space-5);
-            padding: var(--space-4);
-            background: linear-gradient(135deg,
-                rgba(159, 176, 148, 0.08) 0%,
-                rgba(122, 140, 111, 0.12) 100%);
-            border: 2px solid var(--green-light);
-            border-radius: var(--radius-lg);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 12px rgba(122, 140, 111, 0.12);
-        }
-
-        .total-label {
-            font-size: var(--text-lg);
-            font-weight: 700;
-            color: var(--green-dark);
-        }
-
-        .total-value {
-            font-size: var(--text-2xl);
-            font-weight: 800;
-            color: var(--green-dark);
-            background: linear-gradient(135deg, var(--green-medium), var(--green-dark));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Temperature Slider Enhancement */
-        .thermometer-slider {
-            height: 12px;
-            border-radius: var(--radius-full);
-            cursor: pointer;
-        }
-
-        .thermometer-slider::-webkit-slider-thumb {
-            width: 32px;
-            height: 32px;
-            box-shadow: 0 2px 8px rgba(122, 140, 111, 0.3);
-        }
-
-        .thermometer-slider::-moz-range-thumb {
-            width: 32px;
-            height: 32px;
-            box-shadow: 0 2px 8px rgba(122, 140, 111, 0.3);
-        }
-
         .input-percentage {
             margin-top: var(--space-1);
             font-size: var(--text-sm);
@@ -3973,107 +3790,105 @@
                 <span id="temp-desc" class="visually-hidden">Ange rumstemperatur mellan 15 och 30 grader Celsius. 22-24°C är optimalt för jäsning.</span>
             </div>
 
-            <!-- Primary Ingredients Section -->
-            <div class="ingredients-section primary-section">
-                <div class="input-row">
-                    <div class="input-group primary-input">
-                        <label for="flour" class="primary-label">Mjöl</label>
-                        <div class="input-wrapper-enhanced">
-                            <input
-                                type="number"
-                                id="flour"
-                                value="800"
-                                min="100"
-                                max="5000"
-                                step="10"
-                                inputmode="numeric"
-                                aria-describedby="flour-desc"
-                                required>
-                            <span class="unit-subtle" aria-hidden="true">g</span>
-                            <span class="percentage-badge" id="flourPercent">100%</span>
-                        </div>
-                        <span id="flour-desc" class="visually-hidden">Ange total mjölmängd i gram</span>
-                    </div>
+            <div class="input-row">
 
-                    <div class="input-group primary-input">
-                        <label for="water" class="primary-label">Vatten</label>
-                        <div class="input-wrapper-enhanced">
-                            <input
-                                type="number"
-                                id="water"
-                                value="600"
-                                min="50"
-                                max="5000"
-                                step="10"
-                                inputmode="numeric"
-                                aria-describedby="water-desc"
-                                required>
-                            <span class="unit-subtle" aria-hidden="true">g</span>
-                            <span class="percentage-badge editable-badge">
-                                <input
-                                    type="number"
-                                    id="hydrationInput"
-                                    value="75"
-                                    min="50"
-                                    max="120"
-                                    step="1"
-                                    inputmode="numeric"
-                                    aria-label="Hydrering i procent"
-                                    class="percentage-input-inline">%
-                            </span>
-                        </div>
-                        <span id="water-desc" class="visually-hidden">Ange vattenmängd i gram och hydrering i procent</span>
+            </div>
+
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="flour">Mjöl</label>
+                    <div class="input-wrapper">
+                        <input
+                            type="number"
+                            id="flour"
+                            value="800"
+                            min="100"
+                            max="5000"
+                            step="10"
+                            inputmode="numeric"
+                            aria-describedby="flour-desc"
+                            required>
+                        <span class="unit" aria-hidden="true">g</span>
                     </div>
+                    <div class="input-percentage" id="flourPercent">100%</div>
+                    <span id="flour-desc" class="visually-hidden">Ange total mjölmängd i gram</span>
+                </div>
+
+                <div class="input-group">
+                    <label for="water">Vatten</label>
+                    <div class="input-wrapper">
+                        <input
+                            type="number"
+                            id="water"
+                            value="600"
+                            min="50"
+                            max="5000"
+                            step="10"
+                            inputmode="numeric"
+                            aria-describedby="water-desc"
+                            required>
+                        <span class="unit" aria-hidden="true">g</span>
+                    </div>
+                    <div class="input-percentage editable-percentage">
+                        <input
+                            type="number"
+                            id="hydrationInput"
+                            value="75"
+                            min="50"
+                            max="120"
+                            step="1"
+                            inputmode="numeric"
+                            aria-label="Hydrering i procent"
+                            class="percentage-input">
+                        <span class="percentage-symbol">%</span>
+                    </div>
+                    <span id="water-desc" class="visually-hidden">Ange vattenmängd i gram och hydrering i procent</span>
                 </div>
             </div>
 
-            <!-- Secondary Ingredients Section -->
-            <div class="ingredients-section secondary-section">
-                <div class="input-row">
-                    <div class="input-group secondary-input">
-                        <label for="starter" class="secondary-label">Surdegsstart</label>
-                        <div class="input-wrapper-enhanced">
-                            <input
-                                type="number"
-                                id="starter"
-                                value="160"
-                                min="10"
-                                max="1000"
-                                step="10"
-                                inputmode="numeric"
-                                aria-describedby="starter-desc"
-                                required>
-                            <span class="unit-subtle" aria-hidden="true">g</span>
-                            <span class="percentage-badge" id="starterPercent">20%</span>
-                        </div>
-                        <span id="starter-desc" class="visually-hidden">Ange mängd surdegsstart i gram</span>
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="starter">Surdegsstart</label>
+                    <div class="input-wrapper">
+                        <input
+                            type="number"
+                            id="starter"
+                            value="160"
+                            min="10"
+                            max="1000"
+                            step="10"
+                            inputmode="numeric"
+                            aria-describedby="starter-desc"
+                            required>
+                        <span class="unit" aria-hidden="true">g</span>
                     </div>
+                    <div class="input-percentage" id="starterPercent">20%</div>
+                    <span id="starter-desc" class="visually-hidden">Ange mängd surdegsstart i gram</span>
+                </div>
 
-                    <div class="input-group secondary-input">
-                        <label for="salt" class="secondary-label">Salt</label>
-                        <div class="input-wrapper-enhanced">
-                            <input
-                                type="number"
-                                id="salt"
-                                value="16"
-                                min="0"
-                                max="100"
-                                step="1"
-                                inputmode="numeric"
-                                aria-describedby="salt-desc"
-                                required>
-                            <span class="unit-subtle" aria-hidden="true">g</span>
-                            <span class="percentage-badge" id="saltPercent">2.0%</span>
-                        </div>
-                        <span id="salt-desc" class="visually-hidden">Ange saltmängd i gram</span>
+                <div class="input-group">
+                    <label for="salt">Salt</label>
+                    <div class="input-wrapper">
+                        <input
+                            type="number"
+                            id="salt"
+                            value="16"
+                            min="0"
+                            max="100"
+                            step="1"
+                            inputmode="numeric"
+                            aria-describedby="salt-desc"
+                            required>
+                        <span class="unit" aria-hidden="true">g</span>
                     </div>
+                    <div class="input-percentage" id="saltPercent">1.3%</div>
+                    <span id="salt-desc" class="visually-hidden">Ange saltmängd i gram</span>
                 </div>
             </div>
 
-            <!-- Total Weight - Enhanced -->
-            <div class="total-weight-enhanced">
-                <span class="total-label">Total degvikt</span>
-                <span class="total-value" id="totalWeight">1576g</span>
+            <!-- Total Weight -->
+            <div class="total-weight">
+                Total degvikt: <span id="totalWeight">1570g</span>
             </div>
 
             <!-- Advanced Settings Toggle -->
