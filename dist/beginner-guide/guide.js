@@ -288,32 +288,41 @@ export class BeginnerGuide {
         if (!tempInput)
             return;
         const temp = parseFloat(tempInput.value) || 22;
-        let timeText;
-        if (temp <= 17) {
-            timeText = "8-10 timmar";
+        const BASE_TIME = 5;
+        const BASE_TEMP = 22;
+        const TEMP_FACTOR = 1.15;
+        const bulkTimeHours = BASE_TIME * Math.pow(TEMP_FACTOR, BASE_TEMP - temp);
+        const roundedHours = Math.round(bulkTimeHours * 2) / 2;
+        const hours = Math.floor(roundedHours);
+        const minutes = (roundedHours - hours) * 60;
+        let timeText = `${hours} timmar`;
+        if (minutes > 0) {
+            timeText = `${hours} timmar ${Math.round(minutes)} minuter`;
         }
-        else if (temp <= 19) {
-            timeText = "7-8 timmar";
+        const totalMinutes = roundedHours * 60;
+        const usedMinutes = 30 + (4 * 20);
+        const remainingMinutes = Math.max(0, totalMinutes - usedMinutes);
+        const remainingHours = Math.floor(remainingMinutes / 60);
+        const remainingMins = Math.round(remainingMinutes % 60);
+        let remainingText = '';
+        if (remainingHours > 0 && remainingMins > 0) {
+            remainingText = `${remainingHours} timmar ${remainingMins} minuter`;
         }
-        else if (temp <= 21) {
-            timeText = "6-7 timmar";
-        }
-        else if (temp <= 23) {
-            timeText = "5-6 timmar";
-        }
-        else if (temp <= 25) {
-            timeText = "4-5 timmar";
-        }
-        else if (temp <= 27) {
-            timeText = "3.5-4 timmar";
+        else if (remainingHours > 0) {
+            remainingText = `${remainingHours} timmar`;
         }
         else {
-            timeText = "3-3.5 timmar";
+            remainingText = `${remainingMins} minuter`;
         }
         const bulkTimeSpan = document.getElementById('bulk-time-recommendation');
-        if (bulkTimeSpan) {
+        const bulkTimeTimer = document.getElementById('bulk-time-timer');
+        const remainingRestTime = document.getElementById('remaining-rest-time');
+        if (bulkTimeSpan)
             bulkTimeSpan.textContent = timeText;
-        }
+        if (bulkTimeTimer)
+            bulkTimeTimer.textContent = timeText;
+        if (remainingRestTime)
+            remainingRestTime.textContent = remainingText;
     }
     startStepTimer(stepId, durationHours) {
         if (typeof window.SourdoughApp !== 'undefined') {

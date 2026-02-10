@@ -137,14 +137,11 @@ export const GUIDE_STEPS = [
                         </div>
                     </div>
                     <p style="font-size: 14px; color: var(--green-medium); margin-top: var(--space-2);"><em>Baserat på dina mjölmängder från föregående steg</em></p>
-                </div>
-            </div>
 
-            <div class="step-section">
-                <h4>🌡️ Rumstemperatur</h4>
-                <div class="temperature-section">
+                    <hr style="border: none; border-top: 1px solid var(--green-lighter); margin: var(--space-3) 0;">
+
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
-                        <label for="bulk-temperature" style="margin: 0; font-size: var(--text-base); font-weight: 700; color: var(--green-dark);">Ange din rumstemperatur</label>
+                        <label for="bulk-temperature" style="margin: 0; font-size: var(--text-base); font-weight: 700; color: var(--green-dark);">🌡️ Rumstemperatur</label>
                         <div style="display: flex; align-items: center; gap: var(--space-1);">
                             <input
                                 type="number"
@@ -173,7 +170,7 @@ export const GUIDE_STEPS = [
                         <span>🔥 30°<br><small style="font-size: 10px; opacity: 0.7;">Varmt</small></span>
                     </div>
                     <div class="calculated-result" style="margin-top: var(--space-3); padding: var(--space-3); background: linear-gradient(135deg, rgba(159, 176, 148, 0.1), rgba(212, 165, 116, 0.1)); border-radius: var(--radius-md); border-left: 4px solid var(--warm-accent);">
-                        <strong>Rekommenderad bulkjästid (totalt):</strong> <span id="bulk-time-recommendation">5-6 timmar</span>
+                        <strong>Rekommenderad bulkjästid (totalt):</strong> <span id="bulk-time-recommendation">5 timmar</span>
                     </div>
                 </div>
             </div>
@@ -184,7 +181,7 @@ export const GUIDE_STEPS = [
                     <li>Ta fram din autolysdeg från förra steget</li>
                     <li>Tillsätt <strong id="starter-amount-instruction">160g surdegsstart</strong></li>
                     <li>Blanda med händerna genom att klämma och vika degen tills surdegen är väl inblandad (2-3 minuter)</li>
-                    <li><strong>Nu börjar bulkjäsningen!</strong> 🎉 (Detta är det längsta steget i surdegsbakningen)</li>
+                    <li><strong>Nu börjar bulkjäsningen!</strong> 🎉 Sätt en timer på <strong><span id="bulk-time-timer">5 timmar</span></strong> (den rekommenderade tiden ovan)</li>
                     <li>Täck skålen och <strong>låt vila i 30 minuter</strong></li>
                 </ol>
             </div>
@@ -201,7 +198,15 @@ export const GUIDE_STEPS = [
             <div class="step-section">
                 <h4>🙌 Steg 3: Stretch & Fold (Vikningar)</h4>
 
-                <div class="technique-box">
+                <p><strong>Gör 4 omgångar stretch & fold:</strong></p>
+                <ul class="numbered-steps">
+                    <li>Vik 1 → Vila 20 minuter</li>
+                    <li>Vik 2 → Vila 20 minuter</li>
+                    <li>Vik 3 → Vila 20 minuter</li>
+                    <li>Vik 4 → Klar med vikningarna!</li>
+                </ul>
+
+                <div class="technique-box" style="margin-top: var(--space-3);">
                     <h5>Vad är stretch & fold?</h5>
                     <p><strong>Stretch & fold</strong> (på svenska: <strong>vik</strong>) är en teknik där man drar ut degen och viker den över sig själv. Det bygger upp glutenstrukturen som gör brödet luftigt och ger det styrka att hålla formen.</p>
                     <p><strong>Så här gör du en vik:</strong></p>
@@ -214,14 +219,6 @@ export const GUIDE_STEPS = [
                         <li>Gör detta 4 gånger (en gång från varje sida)</li>
                     </ol>
                 </div>
-
-                <p style="margin-top: var(--space-3);"><strong>Gör 4 omgångar stretch & fold:</strong></p>
-                <ul class="numbered-steps">
-                    <li>Vik 1 → Vila 20 minuter</li>
-                    <li>Vik 2 → Vila 20 minuter</li>
-                    <li>Vik 3 → Vila 20 minuter</li>
-                    <li>Vik 4 → Klar med vikningarna!</li>
-                </ul>
             </div>
 
             <div class="step-section why-section">
@@ -237,27 +234,9 @@ export const GUIDE_STEPS = [
                 <h4>⏰ Steg 4: Vila</h4>
                 <p>Efter sista vikningen ska degen få vila ostört. Under denna vila fortsätter degen att jäsa, växa och utveckla smak.</p>
 
-                <div class="temperature-guide">
-                    <h5>🌡️ Tid baserat på temperatur</h5>
-                    <table style="width: 100%; border-collapse: collapse; margin: var(--space-3) 0;">
-                        <tr style="background: rgba(159, 176, 148, 0.1);">
-                            <th style="padding: var(--space-2); text-align: left; border: 1px solid var(--green-lighter);">Temperatur</th>
-                            <th style="padding: var(--space-2); text-align: left; border: 1px solid var(--green-lighter);">Vila-tid efter vikningarna</th>
-                        </tr>
-                        <tr>
-                            <td style="padding: var(--space-2); border: 1px solid var(--green-lighter);">18-19°C</td>
-                            <td style="padding: var(--space-2); border: 1px solid var(--green-lighter);">4-5 timmar</td>
-                        </tr>
-                        <tr style="background: rgba(200, 167, 214, 0.05);">
-                            <td style="padding: var(--space-2); border: 1px solid var(--green-lighter);"><strong>20-22°C (rekommenderat)</strong></td>
-                            <td style="padding: var(--space-2); border: 1px solid var(--green-lighter);"><strong>3-4 timmar</strong></td>
-                        </tr>
-                        <tr>
-                            <td style="padding: var(--space-2); border: 1px solid var(--green-lighter);">23-25°C</td>
-                            <td style="padding: var(--space-2); border: 1px solid var(--green-lighter);">2-3 timmar</td>
-                        </tr>
-                    </table>
-                    <p style="font-size: 14px; color: var(--green-medium);"><em>💡 Tips: Använd en rumstermometer för bästa resultat</em></p>
+                <div class="calculated-result" style="margin-top: var(--space-3); padding: var(--space-3); background: linear-gradient(135deg, rgba(159, 176, 148, 0.1), rgba(212, 165, 116, 0.1)); border-radius: var(--radius-md); border-left: 4px solid var(--warm-accent);">
+                    <strong>Återstående viletid:</strong> <span id="remaining-rest-time">3 timmar 10 minuter</span>
+                    <p style="font-size: 14px; color: var(--green-medium); margin-top: var(--space-1); margin-bottom: 0;"><em>(Total bulkjästid minus 30 min vila + 4 vikningar × 20 min)</em></p>
                 </div>
             </div>
 

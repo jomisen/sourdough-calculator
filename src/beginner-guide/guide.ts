@@ -421,30 +421,47 @@ export class BeginnerGuide {
 
         const temp = parseFloat(tempInput.value) || 22;
 
-        // Calculate bulk time based on temperature
-        let timeText: string;
+        // Calculate bulk time using same formula as main calculator
+        // Base: 5 hours at 22°C, factor 1.15 per degree
+        const BASE_TIME = 5;
+        const BASE_TEMP = 22;
+        const TEMP_FACTOR = 1.15;
 
-        if (temp <= 17) {
-            timeText = "8-10 timmar";
-        } else if (temp <= 19) {
-            timeText = "7-8 timmar";
-        } else if (temp <= 21) {
-            timeText = "6-7 timmar";
-        } else if (temp <= 23) {
-            timeText = "5-6 timmar";
-        } else if (temp <= 25) {
-            timeText = "4-5 timmar";
-        } else if (temp <= 27) {
-            timeText = "3.5-4 timmar";
+        const bulkTimeHours = BASE_TIME * Math.pow(TEMP_FACTOR, BASE_TEMP - temp);
+        const roundedHours = Math.round(bulkTimeHours * 2) / 2; // Round to nearest 0.5
+
+        // Format time text
+        const hours = Math.floor(roundedHours);
+        const minutes = (roundedHours - hours) * 60;
+        let timeText = `${hours} timmar`;
+        if (minutes > 0) {
+            timeText = `${hours} timmar ${Math.round(minutes)} minuter`;
+        }
+
+        // Calculate remaining rest time (total - 30 min first rest - 80 min folds)
+        const totalMinutes = roundedHours * 60;
+        const usedMinutes = 30 + (4 * 20); // 30 min + 4 folds × 20 min = 110 min
+        const remainingMinutes = Math.max(0, totalMinutes - usedMinutes);
+        const remainingHours = Math.floor(remainingMinutes / 60);
+        const remainingMins = Math.round(remainingMinutes % 60);
+
+        let remainingText = '';
+        if (remainingHours > 0 && remainingMins > 0) {
+            remainingText = `${remainingHours} timmar ${remainingMins} minuter`;
+        } else if (remainingHours > 0) {
+            remainingText = `${remainingHours} timmar`;
         } else {
-            timeText = "3-3.5 timmar";
+            remainingText = `${remainingMins} minuter`;
         }
 
-        // Update display
+        // Update displays
         const bulkTimeSpan = document.getElementById('bulk-time-recommendation');
-        if (bulkTimeSpan) {
-            bulkTimeSpan.textContent = timeText;
-        }
+        const bulkTimeTimer = document.getElementById('bulk-time-timer');
+        const remainingRestTime = document.getElementById('remaining-rest-time');
+
+        if (bulkTimeSpan) bulkTimeSpan.textContent = timeText;
+        if (bulkTimeTimer) bulkTimeTimer.textContent = timeText;
+        if (remainingRestTime) remainingRestTime.textContent = remainingText;
     }
 
     /**
