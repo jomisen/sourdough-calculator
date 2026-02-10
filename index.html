@@ -1754,6 +1754,35 @@
             font-weight: 600;
         }
 
+        .editable-percentage {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .percentage-input {
+            width: 50px;
+            border: none;
+            background: transparent;
+            font-size: var(--text-sm);
+            color: var(--green-medium);
+            font-weight: 600;
+            text-align: right;
+            padding: 0;
+        }
+
+        .percentage-input:focus {
+            outline: 1px solid var(--green-light);
+            border-radius: 4px;
+            padding: 2px 4px;
+        }
+
+        .percentage-symbol {
+            font-size: var(--text-sm);
+            color: var(--green-medium);
+            font-weight: 600;
+        }
+
         /* Hydration Control Group - New Design */
         .hydration-control-group {
             margin-top: var(--space-2);
@@ -3800,26 +3829,20 @@
                             required>
                         <span class="unit" aria-hidden="true">g</span>
                     </div>
-                    <!-- Editable Hydration with Toggle Lock -->
-                    <div class="hydration-control-group">
-                        <div class="hydration-display">
-                            <input
-                                type="number"
-                                id="hydrationInput"
-                                value="75"
-                                min="50"
-                                max="120"
-                                step="1"
-                                inputmode="numeric"
-                                aria-label="Hydrering i procent"
-                                class="hydration-input">
-                            <span class="hydration-label">% hydrering</span>
-                            <span id="hydrationFeedback" class="hydration-feedback" aria-live="polite">⚡</span>
-                        </div>
+                    <div class="input-percentage editable-percentage">
+                        <input
+                            type="number"
+                            id="hydrationInput"
+                            value="75"
+                            min="50"
+                            max="120"
+                            step="1"
+                            inputmode="numeric"
+                            aria-label="Hydrering i procent"
+                            class="percentage-input">
+                        <span class="percentage-symbol">%</span>
                     </div>
-
-                    <div id="waterPercent" class="visually-hidden">75% hydrering</div>
-                    <span id="water-desc" class="visually-hidden">Ange vattenmängd i gram. Du kan också ändra hydrering direkt och låsa den.</span>
+                    <span id="water-desc" class="visually-hidden">Ange vattenmängd i gram och hydrering i procent</span>
                 </div>
             </div>
 
