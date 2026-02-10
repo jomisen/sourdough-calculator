@@ -531,6 +531,17 @@ function setupEditableHydration() {
             this.blur();
         }
     });
+    const updateHydrationDisplay = () => {
+        const flourValue = parseFloat(flourInput.value) || 0;
+        const waterValue = parseFloat(waterInput.value) || 0;
+        const hydrationDisplay = document.getElementById('hydrationDisplay');
+        if (flourValue > 0 && hydrationDisplay) {
+            const hydrationPercent = Math.round((waterValue / flourValue) * 100);
+            hydrationDisplay.textContent = hydrationPercent.toString();
+        }
+    };
+    flourInput.addEventListener('input', updateHydrationDisplay);
+    waterInput.addEventListener('input', updateHydrationDisplay);
 }
 function setupKeyboardNavigation() {
     document.addEventListener('keydown', (e) => {

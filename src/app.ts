@@ -810,6 +810,21 @@ function setupEditableHydration(): void {
             this.blur();
         }
     });
+
+    // Update hydration display when flour or water changes
+    const updateHydrationDisplay = () => {
+        const flourValue = parseFloat(flourInput.value) || 0;
+        const waterValue = parseFloat(waterInput.value) || 0;
+        const hydrationDisplay = document.getElementById('hydrationDisplay');
+
+        if (flourValue > 0 && hydrationDisplay) {
+            const hydrationPercent = Math.round((waterValue / flourValue) * 100);
+            hydrationDisplay.textContent = hydrationPercent.toString();
+        }
+    };
+
+    flourInput.addEventListener('input', updateHydrationDisplay);
+    waterInput.addEventListener('input', updateHydrationDisplay);
 }
 
 /**
