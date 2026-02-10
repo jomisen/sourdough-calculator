@@ -171,7 +171,7 @@ describe('calculateAdvancedFactors', () => {
         expect(factors.peakFactor).toBe(0.9); // Peak is optimal = faster
     });
 
-    it('should apply autolyse factor when enabled', () => {
+    it('should apply autolys factor when enabled', () => {
         const inputs: FermentationInputs = {
             temp: 22,
             flour: 1000,

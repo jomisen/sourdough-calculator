@@ -594,7 +594,7 @@ export const GUIDE_STEPS = [
     }
 ];
 export const GLOSSARY = {
-    "Autolyse": "När mjöl och vatten vilar tillsammans innan salt och surdeg tillsätts. Detta utvecklar gluten och gör degen lättare att arbeta med.",
+    "Autolys": "När mjöl och vatten vilar tillsammans innan salt och surdeg tillsätts. Detta utvecklar gluten och gör degen lättare att arbeta med.",
     "Bulkjäsning": "Första jäsningen när hela degen jäser i skål. Här utvecklas smak och gluten genom vikningar.",
     "Hydrering": "Mängden vatten i relation till mjöl, uttryckt i procent. 75% hydrering = 375g vatten per 500g mjöl.",
     "Kalljäsning": "Jäsning i kylskåp (4-7°C) som ger surdegsbröd sin syrliga smak och förbättrar strukturen.",

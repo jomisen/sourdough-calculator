@@ -102,7 +102,7 @@ export function calculateFlourFactor(flourType: FlourType, flour: number): numbe
 }
 
 /**
- * Calculate advanced factors (peak status, feeding ratio, autolyse)
+ * Calculate advanced factors (peak status, feeding ratio, autolys)
  */
 export function calculateAdvancedFactors(inputs: FermentationInputs): AdvancedFactors {
     if (!inputs.advancedEnabled) {
