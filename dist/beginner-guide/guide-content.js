@@ -9,63 +9,32 @@ export const GUIDE_STEPS = [
         hasTimer: false,
         content: `
             <div class="step-section">
-                <h4>🔍 Vad du ska göra</h4>
-                <p>En stark surdegsstart är avgörande för ett lyckat bröd. Om din start stått i kylen behöver du mata den 2-3 gånger innan du bakar.</p>
+                <h4>📋 Mata din surdegsstart</h4>
+                <p><strong>Ratio 1:3:3:</strong> 50g start + 150g mjöl + 150g vatten</p>
+
+                <ol class="numbered-steps">
+                    <li>Ta ut 50g från din surdegsstart</li>
+                    <li>Blanda med 150g mjöl och 150g vatten</li>
+                    <li>Täck och låt stå i rumstemperatur</li>
+                    <li>Vänta 4-8 timmar tills den når peak</li>
+                </ol>
+
+                <p><strong>Varit i kylen länge?</strong> Mata 2-3 gånger med 12h mellanrum.</p>
             </div>
 
             <div class="step-section">
-                <h4>📋 Hur du matar surdegsstart</h4>
-
-                <div class="technique-box">
-                    <h5>Rekommenderad matning (1:3:3 ratio):</h5>
-                    <p><strong>Exempel:</strong> 50g surdegsstart + 150g mjöl + 150g vatten</p>
-
-                    <ol class="numbered-steps">
-                        <li>Ta ut <strong>50g</strong> från din surdegsstart i kylen</li>
-                        <li>Tillsätt <strong>150g vetemjöl</strong> och <strong>150g vatten</strong> (rumstemperatur)</li>
-                        <li>Rör om väl tills allt mjöl är uppblandat</li>
-                        <li>Täck med lock eller plastfolie och låt stå i rumstemperatur</li>
-                        <li>Vänta <strong>4-8 timmar</strong> tills den når "peak"</li>
-                    </ol>
-
-                    <p><strong>💡 Varit i kylen länge?</strong> Mata 2-3 gånger med 12h mellanrum för bästa resultat.</p>
-                </div>
-
-                <div class="test-box">
-                    <h5>🎯 Vad är "peak"?</h5>
-                    <p><strong>Peak</strong> = när surdegsstart är som starkast, precis innan den faller tillbaka.</p>
-
-                    <p><strong>Tecken på peak:</strong></p>
-                    <ul>
-                        <li>✅ Minst <strong>dubblad i storlek</strong></li>
-                        <li>✅ <strong>Kupolformad topp</strong> (inte platt)</li>
-                        <li>✅ Många <strong>bubblor</strong> på ytan</li>
-                        <li>✅ <strong>Flyter i vatten</strong> (float test)</li>
-                    </ul>
-
-                    <p><strong>🧪 Float test:</strong> Släpp en liten klick i vatten. Flyter den = redo!</p>
-                </div>
-
-                <p style="margin-top: 16px;"><strong>⏰ Timing:</strong> Peak nås vanligtvis <strong>4-8 timmar</strong> efter matning vid 20-24°C.</p>
-            </div>
-
-            <div class="step-section why-section">
-                <details>
-                    <summary>💡 Varför 1:3:3 ratio?</summary>
-                    <p><strong>1:3:3 bygger styrka.</strong> Den högre andelen mjöl och vatten ger surdegsstart mer näring, vilket skapar en stark och aktiv kultur perfekt för bagning.</p>
-                    <p><strong>Peak-timing är avgörande.</strong> Använd starten för tidigt eller sent och brödet blir tätt.</p>
-                </details>
+                <h4>🎯 Hur vet du att den är redo? (peak)</h4>
+                <ul>
+                    <li>✅ Dubblad i storlek</li>
+                    <li>✅ Många bubblor på ytan</li>
+                    <li>✅ Flyter i vatten (float test)</li>
+                </ul>
+                <p><strong>Float test:</strong> Släpp en klick i ett glas vatten. Flyter den = redo att baka!</p>
             </div>
         `,
         tips: [
-            "Börja mata 1-2 dagar innan du ska baka",
-            "Float test är det säkraste sättet att testa om starten är redo",
-            "Markera tiden när du matade – peak kommer efter 4-8h",
-            "Behåll resten av starten i kylen för framtida bak"
-        ],
-        warnings: [
-            "Använd ALDRIG start som luktar alkohol eller har mögel",
-            "Inte dubblad efter 8h? Mata igen och vänta"
+            "Börja mata 1-2 dagar innan du bakar",
+            "Markera tiden – peak kommer efter 4-8h"
         ]
     },
     {
