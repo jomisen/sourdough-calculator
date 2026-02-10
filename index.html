@@ -508,8 +508,8 @@
         .input-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: var(--space-3);
-            margin-bottom: var(--space-4);
+            gap: 10px;
+            margin-bottom: var(--space-3);
         }
 
         .input-group {
@@ -519,7 +519,7 @@
         @media (max-width: 500px) {
             .input-row {
                 grid-template-columns: 1fr;
-                gap: var(--space-3);
+                gap: var(--space-2);
             }
         }
 
@@ -527,7 +527,7 @@
             display: block;
             color: var(--green-dark);
             font-weight: 700;
-            margin-bottom: var(--space-2);
+            margin-bottom: var(--space-1);
             font-size: var(--text-lg);
             transition: color 0.2s ease;
         }
@@ -537,7 +537,7 @@
             align-items: center;
             background: white;
             border-radius: var(--radius-md);
-            padding: var(--space-3) var(--space-4);
+            padding: 10px 24px;
             border: 2px solid var(--green-lighter);
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: var(--shadow-md);
