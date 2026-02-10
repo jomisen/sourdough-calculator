@@ -2552,6 +2552,24 @@
             }
         }
 
+        /* Mobile-specific fixes */
+        @media (max-width: 768px) {
+            /* Hide decorative bread emojis on mobile to prevent layout issues */
+            #breadEmojisSchedule {
+                display: none !important;
+            }
+
+            /* Center time input text on mobile */
+            input[type="time"] {
+                text-align: center;
+            }
+
+            /* Improve bread counter layout on mobile */
+            #totalDoughWeight {
+                flex-shrink: 0;
+            }
+        }
+
     </style>
 </head>
 <body>
