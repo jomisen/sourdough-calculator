@@ -2554,19 +2554,52 @@
 
         /* Mobile-specific fixes */
         @media (max-width: 768px) {
-            /* Hide decorative bread emojis on mobile to prevent layout issues */
-            #breadEmojisSchedule {
-                display: none !important;
+            /* Schedule section: Allow "När vill du baka?" to wrap properly */
+            #scheduleTimeLabel {
+                white-space: normal !important;
+                font-size: var(--text-base) !important;
+                line-height: 1.4 !important;
             }
 
             /* Center time input text on mobile */
             input[type="time"] {
                 text-align: center;
+                font-size: var(--text-xl) !important;
             }
 
-            /* Improve bread counter layout on mobile */
+            /* Bread counter: Make emojis smaller on mobile */
+            #breadEmojisSchedule {
+                font-size: 18px !important;
+                order: 3; /* Move to end */
+                width: 100%;
+                justify-content: center;
+                margin-top: var(--space-1);
+            }
+
+            /* Bread counter container: Responsive layout */
+            #breadCounterContainer {
+                justify-content: space-between;
+            }
+
+            /* Weight display: Better sizing on mobile */
             #totalDoughWeight {
-                flex-shrink: 0;
+                font-size: 13px !important;
+                order: 2;
+            }
+
+            /* Buttons stay first */
+            #breadCounterContainer > div:first-child {
+                order: 1;
+            }
+
+            /* Reduce padding on mobile for schedule box */
+            div[style*="max-width: 700px"] {
+                padding: var(--space-3) !important;
+            }
+
+            /* Fix container padding on mobile */
+            body {
+                padding: var(--space-2) !important;
             }
         }
 
@@ -3158,7 +3191,7 @@
                         🍞 Antal bröd av degen:
                     </label>
 
-                    <div style="display: flex; align-items: center; gap: var(--space-2);">
+                    <div id="breadCounterContainer" style="display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap;">
                         <!-- Bread counter - THREE IDENTICAL BUTTONS approach -->
                         <div style="display: flex; gap: var(--space-1);">
                             <button
