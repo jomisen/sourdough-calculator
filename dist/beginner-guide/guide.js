@@ -17,6 +17,7 @@ export class BeginnerGuide {
         this.renderSteps();
         this.updateProgress();
         this.setupEventListeners();
+        this.setupResetButton();
         setTimeout(() => this.updateStep2Calculations(), 100);
         if (this.state.activeTimer && isTimerComplete(this.state)) {
             this.onTimerComplete();
@@ -164,6 +165,14 @@ export class BeginnerGuide {
         });
         this.stepsContainer.addEventListener('keydown', (e) => {
             this.handleKeyboardNav(e);
+        });
+    }
+    setupResetButton() {
+        const resetBtn = document.getElementById('btn-reset-guide');
+        if (!resetBtn)
+            return;
+        resetBtn.addEventListener('click', () => {
+            this.resetGuide();
         });
     }
     toggleStep(stepId) {

@@ -52,6 +52,7 @@ export class BeginnerGuide {
         this.renderSteps();
         this.updateProgress();
         this.setupEventListeners();
+        this.setupResetButton();
 
         // Initialize Step 2 calculations
         setTimeout(() => this.updateStep2Calculations(), 100);
@@ -237,6 +238,18 @@ export class BeginnerGuide {
         // Keyboard navigation
         this.stepsContainer.addEventListener('keydown', (e) => {
             this.handleKeyboardNav(e as KeyboardEvent);
+        });
+    }
+
+    /**
+     * Setup reset button
+     */
+    private setupResetButton(): void {
+        const resetBtn = document.getElementById('btn-reset-guide');
+        if (!resetBtn) return;
+
+        resetBtn.addEventListener('click', () => {
+            this.resetGuide();
         });
     }
 

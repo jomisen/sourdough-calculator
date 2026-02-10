@@ -2700,6 +2700,28 @@
             color: var(--green-dark);
         }
 
+        .btn-reset-guide {
+            padding: var(--space-2) var(--space-4);
+            background: transparent;
+            border: 2px solid var(--green-lighter);
+            border-radius: var(--radius-md);
+            color: var(--green-medium);
+            font-size: var(--text-sm);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-reset-guide:hover {
+            background: rgba(122, 140, 111, 0.1);
+            border-color: var(--green-medium);
+            color: var(--green-dark);
+        }
+
+        .btn-reset-guide:active {
+            transform: scale(0.98);
+        }
+
         /* Guide Steps Container */
         .guide-steps {
             max-width: 900px;
@@ -4130,6 +4152,13 @@
                         <div class="guide-progress-fill" id="guideProgressFill" style="width: 0%"></div>
                     </div>
                     <div class="guide-progress-text" id="guideProgressText">🌱 0 av 8 steg klara (0%)</div>
+                </div>
+
+                <!-- Reset Button -->
+                <div style="text-align: center; margin-top: var(--space-3);">
+                    <button id="btn-reset-guide" class="btn-reset-guide">
+                        🔄 Återställ guide
+                    </button>
                 </div>
             </div>
 
