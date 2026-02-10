@@ -7,7 +7,7 @@ function getDefaultState() {
         version: 1,
         currentStep: 0,
         completedSteps: [],
-        unlockedSteps: [0],
+        unlockedSteps: [0, 1, 2, 3, 4, 5, 6, 7],
         startedAt: now,
         lastUpdated: now,
         expiresAt: now + (EXPIRY_DAYS * 24 * 60 * 60 * 1000),

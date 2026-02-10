@@ -1,5 +1,5 @@
 import { GUIDE_STEPS } from './guide-content.js';
-import { loadGuideState, resetGuideState, completeStep, unlockStep, setActiveStep, setActiveTimer, clearActiveTimer, isTimerComplete, calculateProgress, getProgressEmoji, isStepLocked, isStepCompleted, isStepActive } from './guide-state.js';
+import { loadGuideState, resetGuideState, completeStep, setActiveStep, setActiveTimer, clearActiveTimer, isTimerComplete, calculateProgress, getProgressEmoji, isStepCompleted, isStepActive } from './guide-state.js';
 import { showCelebrationModal, animateProgressBar, addActivePulse, removeActivePulse } from './guide-animations.js';
 export class BeginnerGuide {
     constructor() {
@@ -28,17 +28,14 @@ export class BeginnerGuide {
         if (!this.stepsContainer)
             return;
         this.stepsContainer.innerHTML = GUIDE_STEPS.map((step) => {
-            const locked = isStepLocked(this.state, step.id);
             const completed = isStepCompleted(this.state, step.id);
             const active = isStepActive(this.state, step.id);
-            const stateClass = locked ? 'step-locked' :
-                completed ? 'step-completed' :
-                    active ? 'step-active' : 'step-available';
-            const stateIcon = locked ? '🔒' :
-                completed ? '✅' :
-                    active ? '🔵' : '⭕';
-            const ariaExpanded = active && !locked ? 'true' : 'false';
-            const ariaDisabled = locked ? 'true' : 'false';
+            const stateClass = completed ? 'step-completed' :
+                active ? 'step-active' : 'step-available';
+            const stateIcon = completed ? '✅' :
+                active ? '🔵' : '⭕';
+            const ariaExpanded = active ? 'true' : 'false';
+            const ariaDisabled = 'false';
             return `
                 <div class="guide-step ${stateClass}" data-step-id="${step.id}">
                     <button
@@ -65,30 +62,19 @@ export class BeginnerGuide {
                     </button>
 
                     <div
-                        class="guide-step-content ${active && !locked ? 'show' : ''}"
+                        class="guide-step-content ${active ? 'show' : ''}"
                         id="step-content-${step.id}"
                         role="region"
                         aria-labelledby="step-header-${step.id}">
-                        ${locked ? this.renderLockedMessage() : this.renderStepContent(step)}
+                        ${this.renderStepContent(step)}
                     </div>
                 </div>
             `;
         }).join('');
         const activeStepEl = this.stepsContainer.querySelector(`[data-step-id="${this.state.currentStep}"]`);
-        if (activeStepEl && !isStepLocked(this.state, this.state.currentStep)) {
+        if (activeStepEl) {
             addActivePulse(activeStepEl);
         }
-    }
-    renderLockedMessage() {
-        return `
-            <div class="step-locked-message">
-                <p>🔒 <strong>Detta steg är låst.</strong></p>
-                <p>Slutför tidigare steg först för att låsa upp denna del av guiden.</p>
-                <button class="btn-unlock-step">
-                    Lås upp ändå (hoppa över tidigare steg)
-                </button>
-            </div>
-        `;
     }
     renderStepContent(step) {
         return `
@@ -162,23 +148,11 @@ export class BeginnerGuide {
                 this.startStepTimer(stepId, duration);
             }
         });
-        this.stepsContainer.addEventListener('click', (e) => {
-            const target = e.target;
-            if (target.classList.contains('btn-unlock-step')) {
-                const stepEl = target.closest('.guide-step');
-                const stepId = parseInt(stepEl.dataset.stepId || '0');
-                this.unlockStepHandler(stepId);
-            }
-        });
         this.stepsContainer.addEventListener('keydown', (e) => {
             this.handleKeyboardNav(e);
         });
     }
     toggleStep(stepId) {
-        if (isStepLocked(this.state, stepId)) {
-            this.showLockedWarning(stepId);
-            return;
-        }
         const stepEl = this.stepsContainer?.querySelector(`[data-step-id="${stepId}"]`);
         const content = stepEl?.querySelector('.guide-step-content');
         const header = stepEl?.querySelector('.guide-step-header');
@@ -209,12 +183,6 @@ export class BeginnerGuide {
             }, 100);
         }
     }
-    showLockedWarning(stepId) {
-        const message = `Steg ${stepId + 1} är låst. Vill du låsa upp det och hoppa över tidigare steg? Detta kan göra det svårare att följa guiden.`;
-        if (confirm(message)) {
-            this.unlockStepHandler(stepId);
-        }
-    }
     completeStepHandler(stepId) {
         this.state = completeStep(this.state, stepId);
         this.renderSteps();
@@ -223,11 +191,6 @@ export class BeginnerGuide {
         if (this.state.completedSteps.length === 8) {
             setTimeout(() => this.showCelebration(), 500);
         }
-    }
-    unlockStepHandler(stepId) {
-        this.state = unlockStep(this.state, stepId);
-        this.renderSteps();
-        this.toggleStep(stepId);
     }
     startStepTimer(stepId, durationHours) {
         if (typeof window.SourdoughApp !== 'undefined') {

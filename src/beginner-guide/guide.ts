@@ -9,14 +9,12 @@ import {
     loadGuideState,
     resetGuideState,
     completeStep,
-    unlockStep,
     setActiveStep,
     setActiveTimer,
     clearActiveTimer,
     isTimerComplete,
     calculateProgress,
     getProgressEmoji,
-    isStepLocked,
     isStepCompleted,
     isStepActive
 } from './guide-state.js';
@@ -73,23 +71,20 @@ export class BeginnerGuide {
         if (!this.stepsContainer) return;
 
         this.stepsContainer.innerHTML = GUIDE_STEPS.map((step) => {
-            const locked = isStepLocked(this.state, step.id);
             const completed = isStepCompleted(this.state, step.id);
             const active = isStepActive(this.state, step.id);
 
             // Step state classes
-            const stateClass = locked ? 'step-locked' :
-                              completed ? 'step-completed' :
+            const stateClass = completed ? 'step-completed' :
                               active ? 'step-active' : 'step-available';
 
             // Step icon with state indicator
-            const stateIcon = locked ? '🔒' :
-                            completed ? '✅' :
+            const stateIcon = completed ? '✅' :
                             active ? '🔵' : '⭕';
 
             // ARIA attributes
-            const ariaExpanded = active && !locked ? 'true' : 'false';
-            const ariaDisabled = locked ? 'true' : 'false';
+            const ariaExpanded = active ? 'true' : 'false';
+            const ariaDisabled = 'false';
 
             return `
                 <div class="guide-step ${stateClass}" data-step-id="${step.id}">
@@ -117,11 +112,11 @@ export class BeginnerGuide {
                     </button>
 
                     <div
-                        class="guide-step-content ${active && !locked ? 'show' : ''}"
+                        class="guide-step-content ${active ? 'show' : ''}"
                         id="step-content-${step.id}"
                         role="region"
                         aria-labelledby="step-header-${step.id}">
-                        ${locked ? this.renderLockedMessage() : this.renderStepContent(step)}
+                        ${this.renderStepContent(step)}
                     </div>
                 </div>
             `;
@@ -129,24 +124,9 @@ export class BeginnerGuide {
 
         // Add active pulse to current step
         const activeStepEl = this.stepsContainer.querySelector(`[data-step-id="${this.state.currentStep}"]`) as HTMLElement;
-        if (activeStepEl && !isStepLocked(this.state, this.state.currentStep)) {
+        if (activeStepEl) {
             addActivePulse(activeStepEl);
         }
-    }
-
-    /**
-     * Render locked step message
-     */
-    private renderLockedMessage(): string {
-        return `
-            <div class="step-locked-message">
-                <p>🔒 <strong>Detta steg är låst.</strong></p>
-                <p>Slutför tidigare steg först för att låsa upp denna del av guiden.</p>
-                <button class="btn-unlock-step">
-                    Lås upp ändå (hoppa över tidigare steg)
-                </button>
-            </div>
-        `;
     }
 
     /**
@@ -235,16 +215,6 @@ export class BeginnerGuide {
             }
         });
 
-        // Unlock step buttons
-        this.stepsContainer.addEventListener('click', (e) => {
-            const target = e.target as HTMLElement;
-            if (target.classList.contains('btn-unlock-step')) {
-                const stepEl = target.closest('.guide-step') as HTMLElement;
-                const stepId = parseInt(stepEl.dataset.stepId || '0');
-                this.unlockStepHandler(stepId);
-            }
-        });
-
         // Keyboard navigation
         this.stepsContainer.addEventListener('keydown', (e) => {
             this.handleKeyboardNav(e as KeyboardEvent);
@@ -255,12 +225,6 @@ export class BeginnerGuide {
      * Toggle step expand/collapse
      */
     private toggleStep(stepId: number): void {
-        if (isStepLocked(this.state, stepId)) {
-            // Show warning for locked step
-            this.showLockedWarning(stepId);
-            return;
-        }
-
         const stepEl = this.stepsContainer?.querySelector(`[data-step-id="${stepId}"]`);
         const content = stepEl?.querySelector('.guide-step-content');
         const header = stepEl?.querySelector('.guide-step-header');
@@ -304,17 +268,6 @@ export class BeginnerGuide {
     }
 
     /**
-     * Show locked step warning
-     */
-    private showLockedWarning(stepId: number): void {
-        const message = `Steg ${stepId + 1} är låst. Vill du låsa upp det och hoppa över tidigare steg? Detta kan göra det svårare att följa guiden.`;
-
-        if (confirm(message)) {
-            this.unlockStepHandler(stepId);
-        }
-    }
-
-    /**
      * Complete step handler
      */
     private completeStepHandler(stepId: number): void {
@@ -331,15 +284,6 @@ export class BeginnerGuide {
         if (this.state.completedSteps.length === 8) {
             setTimeout(() => this.showCelebration(), 500);
         }
-    }
-
-    /**
-     * Unlock step handler
-     */
-    private unlockStepHandler(stepId: number): void {
-        this.state = unlockStep(this.state, stepId);
-        this.renderSteps();
-        this.toggleStep(stepId);
     }
 
     /**
