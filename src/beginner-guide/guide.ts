@@ -280,7 +280,7 @@ export class BeginnerGuide {
             setTimeout(() => {
                 stepEl?.scrollIntoView({
                     behavior: 'smooth',
-                    block: 'nearest'
+                    block: 'start'
                 });
             }, 100);
         }
