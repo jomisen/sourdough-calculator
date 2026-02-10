@@ -357,6 +357,26 @@ export class BeginnerGuide {
 
         if (saltAmountSpan) saltAmountSpan.textContent = salt.toString();
         if (saltInstruction) saltInstruction.textContent = `${salt}g salt`;
+
+        // Also update Step 5 calculations
+        this.updateStep5Calculations(totalFlour);
+    }
+
+    /**
+     * Update Step 5 loaf count calculation
+     */
+    private updateStep5Calculations(totalFlour: number): void {
+        // Calculate number of loaves: ~500g flour per loaf
+        const loafCount = Math.max(1, Math.round(totalFlour / 500));
+
+        // Update loaf count displays
+        const loafCountSpan = document.getElementById('loaf-count');
+        const loafCountInstruction = document.getElementById('loaf-count-instruction');
+        const totalFlourWeight = document.getElementById('total-flour-weight');
+
+        if (loafCountSpan) loafCountSpan.textContent = loafCount.toString();
+        if (loafCountInstruction) loafCountInstruction.textContent = loafCount.toString();
+        if (totalFlourWeight) totalFlourWeight.textContent = totalFlour.toString();
     }
 
     /**

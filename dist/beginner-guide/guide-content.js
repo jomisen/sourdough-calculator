@@ -124,8 +124,6 @@ export const GUIDE_STEPS = [
         phase: "Dag 1 - Eftermiddag/Kväll",
         description: "Tillsätt surdeg och salt, gör stretch & folds, låt sedan degen jäsa.",
         duration: "5-7 timmar",
-        hasTimer: true,
-        timerDurationHours: 6,
         content: `
             <div class="step-section">
                 <h4>🧮 Beräknade mängder</h4>
@@ -157,7 +155,7 @@ export const GUIDE_STEPS = [
                 <ol class="numbered-steps">
                     <li>Efter 30 minuter: Tillsätt <strong id="salt-amount-instruction">16g salt</strong></li>
                     <li>Blanda in saltet ordentligt med händerna</li>
-                    <li>Nu är det dags för stretch & folds!</li>
+                    <li>Täck skålen och <strong>låt vila i 20 minuter</strong></li>
                 </ol>
             </div>
 
@@ -221,13 +219,6 @@ export const GUIDE_STEPS = [
                         </tr>
                     </table>
                     <p style="font-size: 14px; color: var(--green-medium);"><em>💡 Tips: Använd en rumstermometer för bästa resultat</em></p>
-                </div>
-
-                <div class="timer-box">
-                    <p>⏱️ <strong>Sätt en timer för total tid (vikningar + vila)</strong></p>
-                    <button class="btn-timer" data-step-id="2" data-duration="6">
-                        Starta timer (6 timmar)
-                    </button>
                 </div>
             </div>
 
@@ -317,66 +308,76 @@ export const GUIDE_STEPS = [
         title: "Forma brödet",
         icon: "✋",
         phase: "Dag 1 - Kväll",
-        description: "Forma degen till en rund boll och lägg i en jäsningskorg.",
-        duration: "30 minuter",
+        description: "Dela och forma degen till bröd som får vila i jäsningskorg.",
+        duration: "45 minuter",
         hasTimer: false,
         content: `
             <div class="step-section">
-                <h4>🔍 Vad du ska göra</h4>
-                <p>Nu ska vi forma degen till en stram, rund boll som får vila i en jäsningskorg över natten. Detta ger brödet sin slutliga form och kraft att resa sig i ugnen!</p>
+                <h4>🍞 Antal bröd</h4>
+                <div class="recipe-calculator">
+                    <div class="calculated-result">
+                        <strong>Rekommendation:</strong> <span id="loaf-count">2</span> bröd
+                    </div>
+                    <p style="font-size: 14px; color: var(--green-medium); margin-top: var(--space-2);"><em>Baserat på din totala mjölvikt (<span id="total-flour-weight">800</span>g)</em></p>
+                </div>
             </div>
 
             <div class="step-section">
-                <h4>📋 Hur du gör</h4>
+                <h4>🔪 Steg 1: Preshape (förformning)</h4>
+                <p><strong>Viktigt: Använd INGET mjöl!</strong> Blöt händerna om degen är klibbig – då fastnar ingenting.</p>
+
                 <ol class="numbered-steps">
-                    <li><strong>Förbered ytan:</strong> Strö lite mjöl på arbetsbänken (inte för mycket!)</li>
-                    <li><strong>Vänd ut degen:</strong> Häll försiktigt ut degen på bänken med kladdiga sidan upp</li>
-                    <li><strong>Förforma (bench rest):</strong>
-                        <ul>
-                            <li>Vik kanterna mot mitten för att skapa en rund form</li>
-                            <li>Låt vila 20-30 minuter med handduk över</li>
-                        </ul>
-                    </li>
-                    <li><strong>Slutformning:</strong>
-                        <ul>
-                            <li>Vänd degen så att slätsidan är ner</li>
-                            <li>Vik kanterna mot mitten igen (som att stänga ett kuvert)</li>
-                            <li>Vänd degen och forma den till en stram boll genom att dra den mot dig på bänken</li>
-                        </ul>
-                    </li>
-                    <li><strong>I jäsningskorg:</strong>
-                        <ul>
-                            <li>Mjöla jäsningskorgen rikligt (ris-/vetemjölblandning funkar bäst)</li>
-                            <li>Lägg degen med sömmen UPP i korgen</li>
-                            <li>Täck med plastfolie eller handduk</li>
-                        </ul>
-                    </li>
+                    <li>Ta ut degen försiktigt på en ren arbetsbänk (utan mjöl)</li>
+                    <li>Dela degen i <strong id="loaf-count-instruction">2</strong> lika stora delar med en degskrapa</li>
+                    <li>Arbeta med en degbit i taget:</li>
                 </ol>
 
                 <div class="technique-box">
-                    <h5>🎥 Bra video att följa</h5>
-                    <p>Sök på YouTube: "sourdough shaping tutorial" – visuellt är lättare än text!</p>
+                    <h5>Så här gör du en preshape:</h5>
+                    <ol style="font-size: 14px; padding-left: var(--space-4); margin: var(--space-2) 0;">
+                        <li>Använd en degskrapa eller dina händer</li>
+                        <li>Dra degen försiktigt mot dig</li>
+                        <li>Ta hjälp av underlaget för att skapa spänning</li>
+                        <li>Dra degen runt och mot dig i omgångar</li>
+                        <li>Forma till en rund boll</li>
+                        <li>Upprepa med nästa degbit</li>
+                    </ol>
                 </div>
+
+                <p style="margin-top: var(--space-3);"><strong>Bänkvila:</strong> Låt degbollarna vila på bänken i <strong>exakt 30 minuter</strong> med en handduk över.</p>
+            </div>
+
+            <div class="step-section">
+                <h4>✨ Steg 2: Slutformning</h4>
+                <p>Nu ska vi ge brödet sin slutliga form. Arbeta med ett bröd i taget:</p>
+
+                <ol class="numbered-steps">
+                    <li><strong>Mjöla:</strong> Strö lätt mjöl på degen och på underlaget du ska arbeta på</li>
+                    <li><strong>Forma kvadrat:</strong> Lägg ut degen och dra försiktigt i den så att den blir mer kvadratisk</li>
+                    <li><strong>Vik höger:</strong> Vik över högra sidan försiktigt så att den täcker två tredjedelar av degen</li>
+                    <li><strong>Vik vänster:</strong> Vik över vänstra sidan så att nu hela degen är vikt</li>
+                    <li><strong>Rulla:</strong> Rulla försiktigt degen uppifrån och ner så att det blir en avlång boll</li>
+                    <li><strong>I jäskorg:</strong> Lägg ner i jäskorgen med <strong>skarven upp</strong></li>
+                    <li><strong>Plastpåse:</strong> Lägg hela jäskorgen i en plastpåse</li>
+                </ol>
+
+                <p style="margin-top: var(--space-3);"><em>Upprepa med nästa bröd!</em></p>
             </div>
 
             <div class="step-section why-section">
                 <details>
-                    <summary>💡 Varför forma två gånger?</summary>
-                    <p><strong>Förformning</strong> samlar degen och skapar grundformen. Under vilan relaxar glutenet så att slutformningen blir lättare.</p>
-                    <p><strong>Slutformning</strong> skapar ytspänning – det är det som gör att brödet reser sig uppåt i ugnen istället för att sprida ut sig.</p>
-                    <p><strong>Söm upp i korgen</strong> gör att slätsidan blir botten (där du skärar), vilket ger vackrare "öra" och expansion.</p>
+                    <summary>💡 Varför två formningar?</summary>
+                    <p><strong>Preshape</strong> samlar degen och skapar grundspänning. Under de 30 minuterna relaxar glutenet så att slutformningen blir lättare.</p>
+                    <p><strong>Slutformning</strong> skapar stark ytspänning – det är det som gör att brödet reser sig uppåt i ugnen istället för att sprida ut sig.</p>
+                    <p><strong>Skarv upp</strong> i korgen gör att slätsidan blir botten när du stjälper ur brödet, vilket ger en fin yta att skära i.</p>
                 </details>
             </div>
         `,
         tips: [
-            "Har du ingen jäsningskorg? Använd en skål fodrad med en mjölad kökshandduk!",
-            "Använd lite mjöl – för mycket gör brödet torrt",
-            "Degen ska kännas spänd men inte trasig efter formning",
-            "Första gången? En lite klumpig form bakar fortfarande gott!"
-        ],
-        warnings: [
-            "Arbeta snabbt men försiktigt – vi vill inte slå ut all luft ur degen",
-            "För löst formad = platt bröd. För hårt formad = trasig yta. Hitta balansen!"
+            "Våta händer är nyckeln! Då fastnar inget vid preshape",
+            "Arbeta försiktigt men bestämt – vi vill inte slå ut luften",
+            "Mjöla jäskorgen rikligt (ris-/vetemjölblandning funkar bäst) innan du lägger i degen",
+            "Har du ingen jäsningskorg? Använd en skål fodrad med en mjölad kökshandduk!"
         ]
     },
     {

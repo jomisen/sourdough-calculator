@@ -246,6 +246,19 @@ export class BeginnerGuide {
             saltAmountSpan.textContent = salt.toString();
         if (saltInstruction)
             saltInstruction.textContent = `${salt}g salt`;
+        this.updateStep5Calculations(totalFlour);
+    }
+    updateStep5Calculations(totalFlour) {
+        const loafCount = Math.max(1, Math.round(totalFlour / 500));
+        const loafCountSpan = document.getElementById('loaf-count');
+        const loafCountInstruction = document.getElementById('loaf-count-instruction');
+        const totalFlourWeight = document.getElementById('total-flour-weight');
+        if (loafCountSpan)
+            loafCountSpan.textContent = loafCount.toString();
+        if (loafCountInstruction)
+            loafCountInstruction.textContent = loafCount.toString();
+        if (totalFlourWeight)
+            totalFlourWeight.textContent = totalFlour.toString();
     }
     startStepTimer(stepId, durationHours) {
         if (typeof window.SourdoughApp !== 'undefined') {
