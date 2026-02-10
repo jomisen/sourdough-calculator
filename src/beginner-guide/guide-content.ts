@@ -24,37 +24,43 @@ export const GUIDE_STEPS: GuideStep[] = [
         title: "Förbered din surdegsstart",
         icon: "🌱",
         phase: "1-2 dagar innan bakning",
-        description: "Mata din surdegsstart så att den är stark och aktiv när du ska baka.",
+        description: "Mata och testa din surdeg så att den är stark och aktiv när du ska baka.",
         duration: "1-2 dagar (5 min arbete per matning)",
         hasTimer: false,
         content: `
             <div class="step-section">
-                <h4>📋 Mata din surdegsstart</h4>
-                <p><strong>Ratio 1:3:3:</strong> 50g start + 150g mjöl + 150g vatten</p>
-
-                <ol class="numbered-steps">
-                    <li>Ta ut 50g från din surdegsstart</li>
-                    <li>Blanda med 150g mjöl och 150g vatten</li>
-                    <li>Täck och låt stå i rumstemperatur</li>
-                    <li>Vänta 4-8 timmar tills den når peak</li>
-                </ol>
-
-                <p><strong>Varit i kylen länge?</strong> Mata 2-3 gånger med 12h mellanrum.</p>
+                <p>För att få ett luftigt bröd behöver din surdeg vara aktiv och toppen av sin kraft. Detta kallas att surdegsstarten är i sin <strong>peak</strong>. Om du förvarar surdegsstarten i kylen, ta ut den kvällen innan och gör en första matning. Mata den sedan igen innan du ska baka.</p>
             </div>
 
             <div class="step-section">
-                <h4>🎯 Hur vet du att den är redo? (peak)</h4>
-                <ul>
-                    <li>✅ Dubblad i storlek</li>
-                    <li>✅ Många bubblor på ytan</li>
-                    <li>✅ Flyter i vatten (float test)</li>
-                </ul>
-                <p><strong>Float test:</strong> Släpp en klick i ett glas vatten. Flyter den = redo att baka!</p>
+                <h4>📋 Hur du matar surdegen för att hålla den aktiv</h4>
+                <ol class="numbered-steps">
+                    <li>Ta fram en tom glasburk, en våg, en sked, din surdegsstart, vetemjöl, rågmjöl och vatten.</li>
+                    <li>Ställ den tomma glasburken på vågen och lägg ner <strong>5 gram surdegsstart</strong>.</li>
+                    <li>Addera <strong>25 gram vatten</strong> och blanda så att surdegsstarten löses upp. Det ska se ut som en mjölkig blandning.</li>
+                    <li>Addera <strong>12 gram rågmjöl</strong> och <strong>13 gram vetemjöl</strong>. Blanda väl. Du har nu matat din surdeg i en ratio om 1:5:5.</li>
+                    <li>Skrapa ner degen som hamnat på kanterna av burken.</li>
+                    <li>Sätt ett gummiband runt burken där surdegen är i topp, så att du enklare ser när surdegen växer.</li>
+                </ol>
+            </div>
+
+            <div class="step-section">
+                <h4>🎯 Hur du matar surdegen inför bakning</h4>
+                <ol class="numbered-steps">
+                    <li>Ta fram en tom glasburk, en våg, en sked, din surdegsstart, vetemjöl, rågmjöl och vatten.</li>
+                    <li>Ställ den tomma glasburken på vågen och lägg ner <strong>20 gram surdegsstart</strong>.</li>
+                    <li>Addera <strong>100 gram vatten</strong> och blanda så att surdegsstarten löses upp. Det ska se ut som en mjölkig blandning.</li>
+                    <li>Addera <strong>50 gram rågmjöl</strong> och <strong>50 gram vetemjöl</strong>. Blanda väl. Du har nu matat din surdeg i en ratio om 1:5:5.</li>
+                    <li>Skrapa ner degen som hamnat på kanterna av burken.</li>
+                    <li>Sätt ett gummiband runt burken där surdegen är i topp, så att du enklare ser när surdegen växer.</li>
+                    <li><strong>När surdegen stigit i dubbel storlek har den nått sin peak och det är dags att baka med den.</strong></li>
+                </ol>
             </div>
         `,
         tips: [
-            "Börja mata 1-2 dagar innan du bakar",
-            "Markera tiden – peak kommer efter 4-8h"
+            "Ta ut surdegsstarten från kylen kvällen innan du ska baka",
+            "Gummibandet hjälper dig se när den dubblats i storlek",
+            "Peak nås vanligtvis 4-8 timmar efter matning vid rumstemperatur"
         ]
     },
 
