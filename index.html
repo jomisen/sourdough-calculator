@@ -2565,14 +2565,21 @@
             #scheduleTime {
                 text-align: center !important;
                 font-size: var(--text-xl) !important;
-                padding: 8px !important;
+                padding: 8px 6px !important;
+                max-width: calc(100% - 4px) !important;
+                margin: 0 auto !important;
             }
 
-            /* Schedule box: Reduce padding significantly on mobile */
+            /* Schedule box: Minimal padding on mobile */
             div[style*="max-width: 700px"] {
-                padding: 12px !important;
-                margin-left: 8px !important;
-                margin-right: 8px !important;
+                padding: 10px !important;
+                margin-left: 6px !important;
+                margin-right: 6px !important;
+            }
+
+            /* Time input wrapper: Extra breathing room */
+            #timeInputWrapper {
+                padding: 0 4px !important;
             }
 
             /* Time container: Stack vertically on mobile */
