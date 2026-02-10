@@ -2561,16 +2561,37 @@
                 line-height: 1.4 !important;
             }
 
-            /* Center time input text on mobile */
+            /* Time input: Proper sizing and centering */
             input[type="time"] {
                 text-align: center;
                 font-size: var(--text-xl) !important;
+                padding: var(--space-2) !important;
+                box-sizing: border-box !important;
+                max-width: 100% !important;
+            }
+
+            /* Schedule box: Reduce padding significantly on mobile */
+            div[style*="max-width: 700px"] {
+                padding: var(--space-2) !important;
+                margin-left: var(--space-2) !important;
+                margin-right: var(--space-2) !important;
+            }
+
+            /* Time input parent: Ensure it doesn't overflow */
+            #scheduleTime {
+                width: 100% !important;
+                min-width: 0 !important;
+            }
+
+            /* Flex container for time inputs */
+            div[style*="display: flex"][style*="flex-wrap: wrap"] {
+                gap: var(--space-2) !important;
             }
 
             /* Bread counter: Make emojis smaller on mobile */
             #breadEmojisSchedule {
                 font-size: 18px !important;
-                order: 3; /* Move to end */
+                order: 3;
                 width: 100%;
                 justify-content: center;
                 margin-top: var(--space-1);
@@ -2592,14 +2613,9 @@
                 order: 1;
             }
 
-            /* Reduce padding on mobile for schedule box */
-            div[style*="max-width: 700px"] {
-                padding: var(--space-3) !important;
-            }
-
-            /* Fix container padding on mobile */
+            /* Fix body padding on mobile */
             body {
-                padding: var(--space-2) !important;
+                padding: var(--space-1) !important;
             }
         }
 
