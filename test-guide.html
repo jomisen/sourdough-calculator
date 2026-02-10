@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Guide</title>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM loaded');
+
+            // Test if guide elements exist
+            const guideTab = document.getElementById('guide-tab');
+            const guideButton = document.getElementById('guide-tab-button');
+            const guideStepsContainer = document.getElementById('guide-steps-container');
+
+            console.log('guide-tab exists:', !!guideTab);
+            console.log('guide-tab-button exists:', !!guideButton);
+            console.log('guide-steps-container exists:', !!guideStepsContainer);
+
+            // Test if switchTab exists
+            console.log('switchTab function exists:', typeof window.switchTab);
+
+            // Test if beginnerGuide exists
+            setTimeout(() => {
+                console.log('beginnerGuide exists:', typeof window.beginnerGuide);
+            }, 1000);
+        });
+    </script>
+</head>
+<body>
+    <h1>Loading main page to test...</h1>
+    <iframe src="index.html" width="100%" height="800px"></iframe>
+</body>
+</html>

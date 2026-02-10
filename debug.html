@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug</title>
+</head>
+<body>
+    <h1>Debug Test</h1>
+    <button onclick="testSwitch()">Test Switch</button>
+    <div id="output"></div>
+    
+    <script type="module">
+        import { initBeginnerGuide } from './dist/beginner-guide/guide.js';
+        
+        window.testSwitch = function() {
+            const output = document.getElementById('output');
+            output.innerHTML = '';
+            output.innerHTML += '<p>switchTab exists: ' + (typeof window.switchTab) + '</p>';
+            output.innerHTML += '<p>beginnerGuide exists: ' + (typeof window.beginnerGuide) + '</p>';
+            
+            // Try to call switchTab
+            try {
+                if (typeof window.switchTab === 'function') {
+                    window.switchTab('guide');
+                    output.innerHTML += '<p style="color:green">switchTab called successfully!</p>';
+                } else {
+                    output.innerHTML += '<p style="color:red">switchTab is not a function</p>';
+                }
+            } catch(e) {
+                output.innerHTML += '<p style="color:red">Error: ' + e.message + '</p>';
+            }
+        };
+        
+        setTimeout(() => {
+            const output = document.getElementById('output');
+            output.innerHTML += '<hr><p>After 1 second:</p>';
+            output.innerHTML += '<p>switchTab: ' + (typeof window.switchTab) + '</p>';
+            output.innerHTML += '<p>beginnerGuide: ' + (typeof window.beginnerGuide) + '</p>';
+        }, 1000);
+    </script>
+    <script type="module" src="dist/app.js"></script>
+</body>
+</html>

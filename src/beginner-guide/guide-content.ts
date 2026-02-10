@@ -30,17 +30,61 @@ export const GUIDE_STEPS: GuideStep[] = [
         content: `
             <div class="step-section">
                 <h4>🔍 Vad du ska göra</h4>
-                <p>Innan du börjar blanda ska du väga upp alla ingredienser noggrant. Surdegsbagning är som vetenskap – precisa mätningar ger bättre resultat!</p>
+                <p>Innan du börjar blanda ska du <strong>se till att din surdeg är aktiv och stark</strong>, samt väga upp alla ingredienser noggrant. En stark surdeg är nyckeln till ett lyckat bröd!</p>
             </div>
 
             <div class="step-section">
-                <h4>📋 Hur du gör</h4>
+                <h4>🌟 Steg 0: Är din surdeg redo?</h4>
+                <p>För att få ett luftigt bröd behöver din surdeg vara <strong>aktiv och på toppen av sin kraft</strong> (peak). Här är hur du förbereder den:</p>
+
+                <div class="technique-box">
+                    <h5>📅 Om din surdeg stått i kylen ett tag:</h5>
+                    <ol class="numbered-steps">
+                        <li><strong>Ta ut surdegen</strong> från kylen kvällen eller morgonen innan</li>
+                        <li><strong>Mata den 2-3 gånger</strong> med 12 timmars mellanrum för att bygga upp styrkan
+                            <ul>
+                                <li>Exempel matning: 50g surdeg + 50g mjöl + 50g vatten (1:1:1 ratio)</li>
+                                <li>Varje matning gör surdegen starkare och mer aktiv</li>
+                            </ul>
+                        </li>
+                        <li><strong>Använd den efter sista matningen</strong> när den når peak (se nedan)</li>
+                    </ol>
+                    <p><strong>💡 Varför flera matningar?</strong> Om surdegen varit inaktiv i kylen är jäst- och bakteriekulturen trög. Genom att mata den flera gånger "väcker" du den och bygger upp en stark, aktiv kultur som ger bäst resultat!</p>
+                </div>
+
+                <div class="test-box">
+                    <h5>🎯 Hur vet du att surdegen är på "peak"?</h5>
+                    <p><strong>Peak</strong> = toppen av surdegens aktivitet, precis innan den börjar falla tillbaka. Detta är det perfekta tillfället att baka!</p>
+
+                    <p><strong>Tecken på peak:</strong></p>
+                    <ul>
+                        <li>✅ <strong>Dubblad storlek</strong> – surdegen har minst fördubblats sedan matningen</li>
+                        <li>✅ <strong>Kupolformad topp</strong> – toppen är rund och bombad (inte platt eller infallen)</li>
+                        <li>✅ <strong>Många bubblor</strong> – ytan är täckt av bubblor, både stora och små</li>
+                        <li>✅ <strong>Doftar syrligt men friskt</strong> – inte för surt eller alkoholaktigt</li>
+                        <li>✅ <strong>Flyter i vatten</strong> (float test) – en liten klick flyter när du släpper den i vatten</li>
+                    </ul>
+
+                    <p><strong>🧪 Float test (valbart men användbart):</strong></p>
+                    <ol style="font-size: 14px; margin-top: 8px;">
+                        <li>Fyll ett glas med rumstempererat vatten</li>
+                        <li>Ta en liten klick surdeg (ca 1 tesked) och släpp försiktigt i vattnet</li>
+                        <li><strong>Flyter den?</strong> → Perfekt! Din surdeg är aktiv och full av luft</li>
+                        <li><strong>Sjunker den?</strong> → Vänta 30-60 min till och testa igen</li>
+                    </ol>
+                </div>
+
+                <p style="margin-top: 16px;"><strong>⏰ Timing:</strong> De flesta surdegar når peak <strong>4-8 timmar efter matning</strong> vid rumstemperatur (20-24°C). Markera tiden när du matade så du vet när du ska kolla!</p>
+            </div>
+
+            <div class="step-section">
+                <h4>📋 Väg upp ingredienserna</h4>
                 <div class="recommended-values">
                     <h5>Rekommenderade mängder (för 1 bröd):</h5>
                     <ul class="ingredient-list">
                         <li><strong>500g</strong> mjöl (vitt vetemjöl för första försöket)</li>
                         <li><strong>375g</strong> vatten (75% hydrering – perfekt balans)</li>
-                        <li><strong>100g</strong> surdeg (20% – aktiv och bubblig)</li>
+                        <li><strong>100g</strong> aktiv surdeg (20% – vid peak!)</li>
                         <li><strong>10g</strong> salt (2% – perfekt för smak)</li>
                     </ul>
                     <p class="helper-text">💡 Vill du justera? Gå till fliken <strong>"Beräkna jästid"</strong> och experimentera!</p>
@@ -50,7 +94,7 @@ export const GUIDE_STEPS: GuideStep[] = [
                     <li>Ta fram en digital våg (helst med 1g precision)</li>
                     <li>Ta fram alla ingredienser från skåpet/kylskåpet</li>
                     <li>Väg upp varje ingrediens i separata skålar</li>
-                    <li>Kontrollera att din surdeg är <strong>aktiv</strong> (bubblig och har dubblats sedan senaste matningen)</li>
+                    <li><strong>Dubbelkolla att surdegen är på peak</strong> – den ska vara bubblig, ha dubblats och klara float test</li>
                 </ol>
             </div>
 
@@ -64,10 +108,16 @@ export const GUIDE_STEPS: GuideStep[] = [
             </div>
         `,
         tips: [
+            "Planera i förväg! Om surdegen stått i kylen, börja mata den 1-2 dagar innan du ska baka",
+            "Float test är det säkraste sättet att veta att surdegen är redo – testa alltid!",
             "Digital våg är A och O – använd en som visar hela gram",
-            "Surdegen ska vara aktiv (matad 4-8 timmar innan) och bubblig",
             "Vattnet ska vara rumstemperatur eller ljummet (ca 25°C)",
-            "Använd vitt vetemjöl för första försöket – lättare att hantera än fullkorn"
+            "Använd vitt vetemjöl för första försöket – lättare att hantera än fullkorn",
+            "Markera tiden när du matade surdegen så du vet när du ska kolla efter peak (4-8h)"
+        ],
+        warnings: [
+            "Använd ALDRIG surdeg som luktar starkt alkoholiskt eller ser skum ut – mata den först!",
+            "Om surdegen inte fördubblats efter 8 timmar är den för svag – mata igen och vänta"
         ]
     },
 
