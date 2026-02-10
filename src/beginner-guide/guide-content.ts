@@ -23,9 +23,9 @@ export const GUIDE_STEPS: GuideStep[] = [
         id: 0,
         title: "Förbered surdegsstart",
         icon: "🌱",
-        phase: "1-2 dagar innan bakning",
+        phase: "Kvällen innan",
         description: "Mata och testa din surdeg så att den är stark och aktiv när du ska baka.",
-        duration: "1-2 dagar (5 min arbete per matning)",
+        duration: "5 minuter",
         hasTimer: false,
         content: `
             <div class="step-section">
