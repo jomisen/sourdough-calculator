@@ -414,26 +414,28 @@ export const GUIDE_STEPS: GuideStep[] = [
         id: 5,
         title: "Kalljäsning i kylskåp",
         icon: "❄️",
-        phase: "Dag 1 - Natt → Dag 2 - Morgon",
-        description: "Låt brödet jäsa långsamt i kylskåpet över natten för bättre smak och struktur.",
-        duration: "8-24 timmar",
+        phase: "Dag 1 - Natt → Dag 2-3",
+        description: "Låt brödet jäsa långsamt i kylskåpet för bättre smak och struktur.",
+        duration: "8-48 timmar",
         hasTimer: false,
         content: `
             <div class="step-section">
                 <h4>🔍 Vad du ska göra</h4>
-                <p>Nu ställer vi degen i kylskåpet över natten. Detta är den magiska delen som ger surdegsbröd sin karaktäristiska syrliga smak och perfekta struktur!</p>
+                <p>Nu ställer vi degen i kylskåpet över natten (eller längre!). Detta är den magiska delen som ger surdegsbröd sin karaktäristiska syrliga smak och perfekta struktur.</p>
             </div>
 
             <div class="step-section">
                 <h4>📋 Hur du gör</h4>
                 <ol class="numbered-steps">
-                    <li>Täck jäsningskorgen med plastfolie eller lägg i en stor plastpåse</li>
+                    <li><strong>Lägg jäsningskorgen i en plastpåse</strong> (viktigt för att degen inte ska torka ut)</li>
                     <li>Ställ direkt i kylskåpet (4-7°C)</li>
-                    <li>Låt stå i <strong>8-24 timmar</strong>
+                    <li>Låt stå i <strong>8-48 timmar</strong>
                         <ul>
                             <li><strong>8-12 timmar:</strong> Mildare smak, perfekt för nybörjare</li>
-                            <li><strong>12-18 timmar:</strong> Mer syrlig smak, bättre struktur</li>
-                            <li><strong>18-24 timmar:</strong> Stark surdeg-smak, max syrlig</li>
+                            <li><strong>12-18 timmar:</strong> Klassisk surdeg-smak, bra balans</li>
+                            <li><strong>18-24 timmar:</strong> Mer syrlig smak, bättre struktur</li>
+                            <li><strong>24-36 timmar:</strong> Stark surdeg-smak, mycket syrlig</li>
+                            <li><strong>36-48 timmar:</strong> Maximal syrlig smak och komplex aroma</li>
                         </ul>
                     </li>
                     <li>Ta ut degen 30 min innan gräddning (valfritt – vissa gräddar direkt från kylen)</li>
@@ -445,16 +447,16 @@ export const GUIDE_STEPS: GuideStep[] = [
                     <summary>💡 Varför kalljäsning?</summary>
                     <p><strong>Smakutveckling:</strong> I kylan saktar jäsningen ner, men bakterierna (mjölksyrabakterierna) jobbar vidare och skapar de syrliga, komplexa smakerna.</p>
                     <p><strong>Bättre struktur:</strong> Den långsamma jäsningen ger starkare glutennätverk = mer luftigt bröd.</p>
-                    <p><strong>Flexibilitet:</strong> Du kan baka när det passar dig – morgon, lunch eller kväll dag 2!</p>
+                    <p><strong>Flexibilitet:</strong> Du kan baka när det passar dig – morgon, lunch, kväll eller till och med flera dagar senare!</p>
                     <p><strong>Lättare att hantera:</strong> Kall deg är mindre kladdig och lättare att skära mönster i.</p>
                 </details>
             </div>
         `,
         tips: [
-            "Första gången? Sikta på 12 timmar – en säker mellanting",
-            "Du kan kalljäsa upp till 48 timmar om du glömmer bort den (blir bara surare)",
-            "Täck väl så degen inte torkar ut i kylskåpet",
-            "Nästa morgon: kaffedoft + färskt bröd = perfekt start på dagen!"
+            "Första gången? Sikta på 12-18 timmar – en säker mellanting",
+            "Plastpåsen förhindrar att degen torkar ut i kylskåpet",
+            "Längre kalljäsning = surare smak, så anpassa efter din preferens",
+            "Du kan utan problem kalljäsa upp till 48 timmar – perfekt om planerna ändras!"
         ]
     },
 
