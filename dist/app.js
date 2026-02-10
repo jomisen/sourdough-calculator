@@ -608,6 +608,25 @@ function init() {
     };
     initFAQ();
     initBeginnerGuide();
+    setupDynamicHydration();
+}
+function setupDynamicHydration() {
+    const flourInput = document.getElementById('flour');
+    const waterInput = document.getElementById('water');
+    const hydrationDisplay = document.getElementById('hydrationDisplay');
+    if (!flourInput || !waterInput || !hydrationDisplay) {
+        return;
+    }
+    const updateHydrationDisplay = () => {
+        const flourValue = parseFloat(flourInput.value) || 0;
+        const waterValue = parseFloat(waterInput.value) || 0;
+        if (flourValue > 0) {
+            const hydrationPercent = Math.round((waterValue / flourValue) * 100);
+            hydrationDisplay.textContent = hydrationPercent.toString();
+        }
+    };
+    flourInput.addEventListener('input', updateHydrationDisplay);
+    waterInput.addEventListener('input', updateHydrationDisplay);
 }
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);

@@ -925,6 +925,35 @@ function init(): void {
 
     // Initialize Beginner Guide
     initBeginnerGuide();
+
+    // Setup dynamic hydration display
+    setupDynamicHydration();
+}
+
+/**
+ * Setup dynamic hydration percentage display
+ */
+function setupDynamicHydration(): void {
+    const flourInput = document.getElementById('flour') as HTMLInputElement | null;
+    const waterInput = document.getElementById('water') as HTMLInputElement | null;
+    const hydrationDisplay = document.getElementById('hydrationDisplay');
+
+    if (!flourInput || !waterInput || !hydrationDisplay) {
+        return;
+    }
+
+    const updateHydrationDisplay = () => {
+        const flourValue = parseFloat(flourInput.value) || 0;
+        const waterValue = parseFloat(waterInput.value) || 0;
+
+        if (flourValue > 0) {
+            const hydrationPercent = Math.round((waterValue / flourValue) * 100);
+            hydrationDisplay.textContent = hydrationPercent.toString();
+        }
+    };
+
+    flourInput.addEventListener('input', updateHydrationDisplay);
+    waterInput.addEventListener('input', updateHydrationDisplay);
 }
 
 // Initialize when DOM is loaded
