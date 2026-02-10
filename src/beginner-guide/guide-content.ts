@@ -422,6 +422,7 @@ export const GUIDE_STEPS: GuideStep[] = [
             <div class="step-section">
                 <h4>🔍 Vad du ska göra</h4>
                 <p>Nu ställer vi degen i kylskåpet över natten (eller längre!). Detta är den magiska delen som ger surdegsbröd sin karaktäristiska syrliga smak och perfekta struktur.</p>
+                <p><strong>⚠️ Kalljäsning är valfritt!</strong> Du kan hoppa över detta steg och grädda direkt efter formning om du har bråttom. Brödet blir gott ändå, bara mindre syrligt.</p>
             </div>
 
             <div class="step-section">
@@ -438,7 +439,7 @@ export const GUIDE_STEPS: GuideStep[] = [
                             <li><strong>36-48 timmar:</strong> Maximal syrlig smak och komplex aroma</li>
                         </ul>
                     </li>
-                    <li>Ta ut degen 30 min innan gräddning (valfritt – vissa gräddar direkt från kylen)</li>
+                    <li>När du är redo att grädda: Ta ut degen direkt från kylskåpet</li>
                 </ol>
             </div>
 
@@ -501,6 +502,7 @@ export const GUIDE_STEPS: GuideStep[] = [
                         <ul>
                             <li>Ta ut den heta grytan (VAR FÖRSIKTIG!)</li>
                             <li>Lyft degen med bakplåtspappret ner i grytan</li>
+                            <li><strong>Lägg två isbitar vid sidan om degen</strong> (inte på degen!) – ger extra ånga för bättre oven spring</li>
                             <li>Lägg på locket</li>
                             <li><strong>Grädda 20 minuter</strong> med lock</li>
                         </ul>
