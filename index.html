@@ -388,10 +388,13 @@
             display: flex;
             gap: var(--space-3);
             margin-bottom: var(--space-5);
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         .tab-button {
-            flex: 1;
+            flex: 0 1 auto;
+            min-width: 140px;
             padding: var(--space-3) var(--space-4);
             background: #f8f9f8;
             border: 2px solid #e0e4dd;
@@ -401,6 +404,8 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            line-height: 1.4;
         }
 
         .tab-button:hover {
@@ -431,15 +436,21 @@
         /* Responsive tabs for mobile */
         @media (max-width: 640px) {
             .tabs {
-                flex-wrap: wrap;
                 gap: var(--space-2);
             }
 
             .tab-button {
                 flex: 1 1 calc(50% - var(--space-1));
-                min-width: calc(50% - var(--space-1));
+                min-width: 130px;
                 padding: var(--space-2) var(--space-3);
                 font-size: var(--text-sm);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tab-button {
+                flex: 1 1 100%;
+                min-width: 100%;
             }
         }
 
