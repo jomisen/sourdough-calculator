@@ -562,7 +562,7 @@ export const GUIDE_STEPS = [
 
                 <div class="celebration-box">
                     <h5>🎉 GRATTIS! 🎉</h5>
-                    <p>Du har bakat ditt första surdegsbröd från grunden! Detta är en riktig prestation – surdegsbagning tar tid, precision och tålamod.</p>
+                    <p>Du har bakat ditt första surdegsbröd från grunden! Detta är en riktig prestation – surdegsbak tar tid, precision och tålamod.</p>
                 </div>
             </div>
 
