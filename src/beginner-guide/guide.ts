@@ -329,6 +329,16 @@ export class BeginnerGuide {
         this.renderSteps();
         this.updateProgress();
 
+        // Keep completed step open (don't collapse it)
+        const completedStepEl = this.stepsContainer?.querySelector(`[data-step-id="${stepId}"]`);
+        const completedContent = completedStepEl?.querySelector('.guide-step-content');
+        const completedHeader = completedStepEl?.querySelector('.guide-step-header');
+
+        if (completedContent && completedHeader) {
+            completedContent.classList.add('show');
+            completedHeader.setAttribute('aria-expanded', 'true');
+        }
+
         // Announce to screen reader
         this.announceToScreenReader(`Steg ${stepId + 1} markerat som klart`);
 

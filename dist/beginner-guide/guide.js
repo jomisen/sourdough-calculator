@@ -224,6 +224,13 @@ export class BeginnerGuide {
         this.state = completeStep(this.state, stepId);
         this.renderSteps();
         this.updateProgress();
+        const completedStepEl = this.stepsContainer?.querySelector(`[data-step-id="${stepId}"]`);
+        const completedContent = completedStepEl?.querySelector('.guide-step-content');
+        const completedHeader = completedStepEl?.querySelector('.guide-step-header');
+        if (completedContent && completedHeader) {
+            completedContent.classList.add('show');
+            completedHeader.setAttribute('aria-expanded', 'true');
+        }
         this.announceToScreenReader(`Steg ${stepId + 1} markerat som klart`);
         const nextStepId = stepId + 1;
         if (nextStepId <= 7) {
