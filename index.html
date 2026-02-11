@@ -3470,9 +3470,11 @@
         .celebration-modal {
             background: white;
             border-radius: var(--radius-xl);
-            padding: var(--space-6);
+            padding: var(--space-4);
             max-width: 600px;
             width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             animation: modalSlideIn 0.4s ease-out;
         }
@@ -3490,31 +3492,31 @@
 
         .celebration-header {
             text-align: center;
-            margin-bottom: var(--space-5);
-        }
-
-        .celebration-emoji {
-            font-size: 64px;
-            display: block;
             margin-bottom: var(--space-3);
         }
 
+        .celebration-emoji {
+            font-size: 48px;
+            display: block;
+            margin-bottom: var(--space-2);
+        }
+
         .celebration-header h2 {
-            font-size: 32px;
+            font-size: 24px;
             color: var(--green-dark);
             margin: 0;
         }
 
         .celebration-content {
             text-align: center;
-            margin-bottom: var(--space-5);
+            margin-bottom: var(--space-4);
         }
 
         .celebration-message {
-            font-size: var(--text-lg);
-            line-height: 1.6;
+            font-size: var(--text-base);
+            line-height: 1.5;
             color: var(--text-color);
-            margin-bottom: var(--space-4);
+            margin-bottom: var(--space-3);
         }
 
         .celebration-badge {
@@ -3523,29 +3525,30 @@
             gap: var(--space-2);
             background: linear-gradient(135deg, #FFD700, #FFA500);
             color: white;
-            padding: var(--space-3) var(--space-5);
+            padding: var(--space-2) var(--space-4);
             border-radius: var(--radius-full);
-            font-size: var(--text-lg);
+            font-size: var(--text-base);
             font-weight: 700;
-            margin-bottom: var(--space-5);
+            margin-bottom: var(--space-4);
             box-shadow: 0 4px 12px rgba(255, 165, 0, 0.3);
         }
 
         .badge-icon {
-            font-size: 24px;
+            font-size: 20px;
         }
 
         .celebration-stats {
             text-align: left;
             background: rgba(159, 176, 148, 0.08);
-            padding: var(--space-4);
+            padding: var(--space-3);
             border-radius: var(--radius-md);
-            margin-top: var(--space-4);
+            margin-top: var(--space-3);
         }
 
         .celebration-stats p {
             margin-bottom: var(--space-2);
             font-weight: 600;
+            font-size: 14px;
             color: var(--green-dark);
         }
 
@@ -3556,7 +3559,8 @@
         }
 
         .celebration-stats li {
-            padding: var(--space-1) 0;
+            padding: 4px 0;
+            font-size: 14px;
             color: var(--text-color);
         }
 
@@ -3623,6 +3627,68 @@
         .btn-celebration-close:hover {
             background: rgba(122, 140, 111, 0.1);
             color: var(--green-dark);
+        }
+
+        /* Celebration Modal - Mobile Responsive */
+        @media (max-width: 640px) {
+            .celebration-modal {
+                padding: var(--space-3);
+                max-height: 85vh;
+            }
+
+            .celebration-emoji {
+                font-size: 40px;
+                margin-bottom: var(--space-1);
+            }
+
+            .celebration-header h2 {
+                font-size: 20px;
+            }
+
+            .celebration-header {
+                margin-bottom: var(--space-2);
+            }
+
+            .celebration-message {
+                font-size: 14px;
+                line-height: 1.4;
+                margin-bottom: var(--space-2);
+            }
+
+            .celebration-badge {
+                font-size: 14px;
+                padding: var(--space-2) var(--space-3);
+                margin-bottom: var(--space-3);
+            }
+
+            .badge-icon {
+                font-size: 18px;
+            }
+
+            .celebration-stats {
+                padding: var(--space-2);
+                margin-top: var(--space-2);
+            }
+
+            .celebration-stats p {
+                font-size: 13px;
+                margin-bottom: var(--space-1);
+            }
+
+            .celebration-stats li {
+                padding: 3px 0;
+                font-size: 13px;
+            }
+
+            .celebration-content {
+                margin-bottom: var(--space-3);
+            }
+
+            .btn-celebration-primary,
+            .btn-celebration-secondary {
+                padding: var(--space-2) var(--space-4);
+                font-size: 14px;
+            }
         }
 
         /* Test Box */
