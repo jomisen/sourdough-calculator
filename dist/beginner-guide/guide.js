@@ -217,7 +217,7 @@ export class BeginnerGuide {
                     behavior: 'smooth',
                     block: 'start'
                 });
-            }, 150);
+            }, 650);
         }
     }
     completeStepHandler(stepId) {
@@ -225,6 +225,19 @@ export class BeginnerGuide {
         this.renderSteps();
         this.updateProgress();
         this.announceToScreenReader(`Steg ${stepId + 1} markerat som klart`);
+        const nextStepId = stepId + 1;
+        if (nextStepId <= 7) {
+            setTimeout(() => {
+                const nextStepEl = this.stepsContainer?.querySelector(`[data-step-id="${nextStepId}"]`);
+                const nextHeader = nextStepEl?.querySelector('.guide-step-header');
+                if (nextHeader) {
+                    nextHeader.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }, 650);
+        }
         if (this.state.completedSteps.length === 8) {
             setTimeout(() => this.showCelebration(), 500);
         }

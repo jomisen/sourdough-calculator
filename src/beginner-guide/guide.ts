@@ -315,7 +315,7 @@ export class BeginnerGuide {
                     behavior: 'smooth',
                     block: 'start'
                 });
-            }, 150);
+            }, 650); // Wait for expand animation (600ms) to complete
         }
     }
 
@@ -331,6 +331,22 @@ export class BeginnerGuide {
 
         // Announce to screen reader
         this.announceToScreenReader(`Steg ${stepId + 1} markerat som klart`);
+
+        // Scroll to next step (now active/expanded after render)
+        const nextStepId = stepId + 1;
+        if (nextStepId <= 7) {
+            setTimeout(() => {
+                const nextStepEl = this.stepsContainer?.querySelector(`[data-step-id="${nextStepId}"]`);
+                const nextHeader = nextStepEl?.querySelector('.guide-step-header') as HTMLElement;
+
+                if (nextHeader) {
+                    nextHeader.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'  // Scroll to TOP of element
+                    });
+                }
+            }, 650); // Wait for expand animation (600ms) to complete
+        }
 
         // Show celebration if all steps complete
         if (this.state.completedSteps.length === 8) {
