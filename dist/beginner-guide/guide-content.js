@@ -25,7 +25,7 @@ export const GUIDE_STEPS = [
                     <p><strong>Ratio 1:5:5</strong> (5g start + 25g vatten + 25g mjöl)</p>
                     <ol class="numbered-steps">
                         <li>Ställ den tomma glasburken på vågen och lägg ner <strong>5g surdegsstart</strong></li>
-                        <li>Addera <strong>25g vatten</strong> och blanda tills starten löses upp – det ska se ut som en mjölkig blandning</li>
+                        <li>Addera <strong>25g vatten</strong> och blanda tills starten löses upp – det ska bli vitt och grumligt</li>
                         <li>Addera <strong>12g rågmjöl</strong> och <strong>13g vetemjöl</strong>. Blanda väl</li>
                         <li>Skrapa ner degen från kanterna av burken</li>
                         <li>Sätt ett gummiband runt burken vid surdegens nivå för att se när den växer</li>
@@ -43,7 +43,7 @@ export const GUIDE_STEPS = [
                     <p><strong>Ratio 1:5:5</strong> (20g start + 100g vatten + 100g mjöl)</p>
                     <ol class="numbered-steps">
                         <li>Ställ den tomma glasburken på vågen och lägg ner <strong>20g surdegsstart</strong></li>
-                        <li>Addera <strong>100g vatten</strong> och blanda tills starten löses upp – det ska se ut som en mjölkig blandning</li>
+                        <li>Addera <strong>100g vatten</strong> och blanda tills starten löses upp – det ska bli vitt och grumligt</li>
                         <li>Addera <strong>50g rågmjöl</strong> och <strong>50g vetemjöl</strong>. Blanda väl</li>
                         <li>Skrapa ner degen från kanterna av burken</li>
                         <li>Sätt ett gummiband runt burken vid surdegens nivå för att se när den växer</li>
@@ -246,7 +246,7 @@ export const GUIDE_STEPS = [
                 <ul>
                     <li>Vuxit med cirka 50% i volym</li>
                     <li>Många små luftbubblor synliga på ytan och i sidorna</li>
-                    <li>Känns luftig och vabblig när du skakar skålen</li>
+                    <li>Känns luftig och vobblig när du skakar skålen</li>
                 </ul>
                 <p><em>Gå vidare till nästa steg för mer detaljerade test!</em></p>
             </div>
@@ -375,7 +375,7 @@ export const GUIDE_STEPS = [
                     <li><strong>Vik höger:</strong> Vik över högra sidan försiktigt så att den täcker två tredjedelar av degen</li>
                     <li><strong>Vik vänster:</strong> Vik över vänstra sidan så att nu hela degen är vikt</li>
                     <li><strong>Rulla:</strong> Rulla försiktigt degen uppifrån och ner så att det blir en avlång boll</li>
-                    <li><strong>Mjöla jäskorgen:</strong> Mjöla jäskorgen rikligt (ris-/vetemjölblandning funkar bäst)</li>
+                    <li><strong>Mjöla jäskorgen:</strong> Mjöla jäskorgen rikligt (rismjöl och vetemjöl funkar bäst)</li>
                     <li><strong>I jäskorg:</strong> Lägg ner i jäskorgen med <strong>skarven upp</strong></li>
                     <li><strong>Plastpåse:</strong> Lägg hela jäskorgen i en plastpåse</li>
                 </ol>
@@ -400,7 +400,7 @@ export const GUIDE_STEPS = [
         tips: [
             "Våta händer är nyckeln! Då fastnar inget vid preshape",
             "Arbeta försiktigt men bestämt – vi vill inte slå ut luften",
-            "Mjöla jäskorgen rikligt (ris-/vetemjölblandning funkar bäst) innan du lägger i degen",
+            "Mjöla jäskorgen rikligt (rismjöl och vetemjöl funkar bäst) innan du lägger i degen",
             "Har du ingen jäsningskorg? Använd en skål fodrad med en mjölad kökshandduk!"
         ]
     },
@@ -474,7 +474,7 @@ export const GUIDE_STEPS = [
                     <li><strong>Förvärm ugnen:</strong>
                         <ul>
                             <li>Sätt ugnen på <strong>250°C</strong> (över/undervärme)</li>
-                            <li>Ställ in en gjutjärnsgryta med lock (eller Dutch oven)</li>
+                            <li>Ställ in en gjutjärnsgryta med lock (Dutch oven på engelska)</li>
                             <li>Låt värmas i <strong>45-60 minuter</strong> – grytan måste bli riktigt het!</li>
                         </ul>
                     </li>
@@ -494,7 +494,7 @@ export const GUIDE_STEPS = [
                         <ul>
                             <li>Ta ut den heta grytan (VAR FÖRSIKTIG!)</li>
                             <li>Lyft degen med bakplåtspappret ner i grytan</li>
-                            <li><strong>Lägg två isbitar vid sidan om degen</strong> (inte på degen!) – ger extra ånga för bättre oven spring</li>
+                            <li><strong>Lägg två isbitar vid sidan om degen</strong> (inte på degen!) – ger extra ånga för bättre ugnsexpansion</li>
                             <li>Lägg på locket</li>
                             <li><strong>Grädda 20 minuter</strong> med lock</li>
                         </ul>
@@ -518,7 +518,7 @@ export const GUIDE_STEPS = [
             <div class="step-section why-section">
                 <details>
                     <summary>💡 Varför gryta med lock?</summary>
-                    <p><strong>Ångan är nyckeln!</strong> När du gräddar med lock fångas ångan från degen i grytan. Denna fukt håller ytan mjuk så att brödet kan expandera maximalt (kallas "oven spring").</p>
+                    <p><strong>Ångan är nyckeln!</strong> När du gräddar med lock fångas ångan från degen i grytan. Denna fukt håller ytan mjuk så att brödet kan expandera maximalt (kallas ugnsexpansion).</p>
                     <p><strong>Utan lock:</strong> Efter 20 minuter tar vi bort locket så skorpan kan bli gyllene och knaprig.</p>
                     <p><strong>Hög värme:</strong> 250°C ger den explosiva expansionen och gyllene skorpan. Lägre temp = blekt, mindre luftigt bröd.</p>
                     <p><strong>Skärningen:</strong> Skapar en "ventil" som styr var brödet ska expandera – annars spricker det slumpmässigt.</p>
@@ -599,7 +599,7 @@ export const GLOSSARY = {
     "Hydrering": "Mängden vatten i relation till mjöl, uttryckt i procent. 75% hydrering = 375g vatten per 500g mjöl.",
     "Kalljäsning": "Jäsning i kylskåp (4-7°C) som ger surdegsbröd sin syrliga smak och förbättrar strukturen.",
     "Gluten": "Proteinnätverk som bildas när mjöl och vatten blandas. Det ger brödet struktur och gör att det kan hålla luftbubblor.",
-    "Oven spring": "Den dramatiska expansionen som sker när brödet kommer in i den heta ugnen. Ångan håller skorpan mjuk så degen kan växa.",
+    "Ugnsexpansionen": "Den dramatiska expansion som sker när brödet kommer in i den heta ugnen. Ångan håller skorpan mjuk så degen kan växa.",
     "Vikningar (Stretch and fold)": "Teknik där man drar ut och viker degen för att utveckla gluten utan traditionell knådning.",
     "Jäsningskorg (Banneton)": "Korg av rotting eller trä som ger brödet stöd och form under slutjäsningen. Skapar det klassiska mönstret.",
     "Poke test": "Test där man trycker fingret i degen för att se om bulkjäsningen är klar. Hålet ska studsa långsamt tillbaka.",
