@@ -244,7 +244,7 @@ export const GUIDE_STEPS = [
                 <h4>✅ Hur vet jag att degen är klar?</h4>
                 <p>Efter vilan ska degen ha:</p>
                 <ul>
-                    <li>Vuxit med cirka 50% i volym</li>
+                    <li>Vuxit med cirka 30-50% i volym</li>
                     <li>Många små luftbubblor synliga på ytan och i sidorna</li>
                     <li>Känns luftig och vobblig när du skakar skålen</li>
                 </ul>
@@ -295,7 +295,7 @@ export const GUIDE_STEPS = [
                 <div class="test-box">
                     <h5>Test 2: Volymtestet</h5>
                     <ol class="numbered-steps">
-                        <li>Titta på degen i skålen – den ska ha växt med <strong>50-75%</strong></li>
+                        <li>Titta på degen i skålen – den ska ha växt med <strong>30-50%</strong></li>
                         <li>Du ska se luftbubblor på ytan och genom skålens sidor (om genomskinlig)</li>
                         <li>Degen ska kännas mjuk, "puffig" och fylld med luft</li>
                     </ol>
@@ -519,7 +519,7 @@ export const GUIDE_STEPS = [
                         <ul>
                             <li>Ta bort locket (varsamt, het ånga!)</li>
                             <li>Sänk till <strong>230°C</strong></li>
-                            <li><strong>Grädda <span id="baking-time-instruction">30</span> minuter</strong> tills gyllenbrun</li>
+                            <li><strong>Grädda <span id="baking-time-instruction">30</span> minuter</strong> eller tills brödet är gyllenbrunt</li>
                             <li>Inre temperatur ska vara 96-98°C (om du har termometer)</li>
                         </ul>
                     </li>
