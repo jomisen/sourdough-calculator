@@ -1,6 +1,7 @@
 import { GUIDE_STEPS } from './guide-content.js';
 import { loadGuideState, resetGuideState, completeStep, setActiveStep, setActiveTimer, clearActiveTimer, isTimerComplete, calculateProgress, getProgressEmoji, isStepCompleted, isStepActive } from './guide-state.js';
 import { showCelebrationModal, animateProgressBar, addActivePulse, removeActivePulse } from './guide-animations.js';
+import { calculateBakingTime } from '../calculator.js';
 export class BeginnerGuide {
     constructor() {
         this.state = loadGuideState();
@@ -304,6 +305,26 @@ export class BeginnerGuide {
             loafCountInstruction.textContent = loafCount.toString();
         if (totalFlourWeight)
             totalFlourWeight.textContent = totalFlour.toString();
+        this.updateStep7BakingTime(totalFlour, loafCount);
+    }
+    updateStep7BakingTime(totalFlour, numLoaves) {
+        const totalWeight = Math.round(totalFlour * 1.92);
+        const weightPerLoaf = Math.round(totalWeight / numLoaves);
+        const bakingTimes = calculateBakingTime(totalWeight, numLoaves);
+        const timeWithoutLid = Math.round(bakingTimes.totalBakeTime - 20);
+        const totalBakingTime = bakingTimes.totalBakeTime;
+        const loafWeightSpan = document.getElementById('loaf-weight');
+        const bakingTimeNoLid = document.getElementById('baking-time-no-lid');
+        const totalBakingTimeSpan = document.getElementById('total-baking-time');
+        const bakingTimeInstruction = document.getElementById('baking-time-instruction');
+        if (loafWeightSpan)
+            loafWeightSpan.textContent = weightPerLoaf.toString();
+        if (bakingTimeNoLid)
+            bakingTimeNoLid.textContent = timeWithoutLid.toString();
+        if (totalBakingTimeSpan)
+            totalBakingTimeSpan.textContent = totalBakingTime.toString();
+        if (bakingTimeInstruction)
+            bakingTimeInstruction.textContent = timeWithoutLid.toString();
     }
     updateStep3BulkTime() {
         const tempInput = document.getElementById('bulk-temperature');

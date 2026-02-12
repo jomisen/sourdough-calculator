@@ -466,6 +466,22 @@ export const GUIDE_STEPS = [
             <div class="step-section">
                 <h4>🔍 Vad du ska göra</h4>
                 <p>Nu kommer den spännande delen – att förvandla din deg till ett vackert, gyllene bröd! Vi gräddar i en het gjutjärnsgryta för att skapa ånga och skorpa.</p>
+                <p><strong>Viktigt:</strong> Om du har gjort flera bröd, grädda <strong>ett bröd i taget</strong> i grytan. De andra kan stå kvar i kylskåpet medan du gräddar.</p>
+            </div>
+
+            <div class="step-section">
+                <h4>⏱️ Beräknad gräddningstid</h4>
+                <div class="recipe-calculator">
+                    <div class="calculated-result">
+                        <strong>Ditt bröd (~<span id="loaf-weight">975</span>g per bröd):</strong>
+                    </div>
+                    <ul style="list-style: none; padding-left: 0; margin-top: var(--space-2);">
+                        <li>• <strong>20 minuter</strong> med lock på 250°C</li>
+                        <li>• <strong><span id="baking-time-no-lid">30</span> minuter</strong> utan lock på 230°C</li>
+                        <li>• <strong>Totalt: <span id="total-baking-time">50</span> minuter</strong> i ugnen</li>
+                    </ul>
+                    <p style="font-size: 14px; color: var(--green-medium); margin-top: var(--space-2);"><em>Baserat på vikten per bröd från föregående steg</em></p>
+                </div>
             </div>
 
             <div class="step-section">
@@ -478,8 +494,9 @@ export const GUIDE_STEPS = [
                             <li>Låt värmas i <strong>45-60 minuter</strong> – grytan måste bli riktigt het!</li>
                         </ul>
                     </li>
-                    <li><strong>Förbered degen:</strong>
+                    <li><strong>Förbered ett bröd:</strong>
                         <ul>
+                            <li>Ta fram <strong>ett</strong> av dina bröd från kylskåpet</li>
                             <li>Lägg bakplåtspapper på bänken</li>
                             <li>Vänd ur degen från korgen på pappret (slätsidan upp nu)</li>
                             <li>Skär ett mönster med ett vasst rakblad eller kniv:
@@ -490,23 +507,24 @@ export const GUIDE_STEPS = [
                             </li>
                         </ul>
                     </li>
-                    <li><strong>I ugnen:</strong>
+                    <li><strong>I ugnen - Med lock:</strong>
                         <ul>
                             <li>Ta ut den heta grytan (VAR FÖRSIKTIG!)</li>
                             <li>Lyft degen med bakplåtspappret ner i grytan</li>
-                            <li><strong>Lägg två isbitar vid sidan om degen</strong> (inte på degen!) – ger extra ånga för bättre ugnsexpansion</li>
                             <li>Lägg på locket</li>
-                            <li><strong>Grädda 20 minuter</strong> med lock</li>
+                            <li><strong>Grädda 20 minuter</strong> med lock på 250°C</li>
                         </ul>
                     </li>
-                    <li><strong>Utan lock:</strong>
+                    <li><strong>Utan lock - För gyllene skorpa:</strong>
                         <ul>
-                            <li>Ta bort locket</li>
+                            <li>Ta bort locket (varsamt, het ånga!)</li>
                             <li>Sänk till <strong>230°C</strong></li>
-                            <li><strong>Grädda 25-35 minuter</strong> tills gyllenbrun (inre temp 96-98°C)</li>
+                            <li><strong>Grädda <span id="baking-time-instruction">30</span> minuter</strong> tills gyllenbrun</li>
+                            <li>Inre temperatur ska vara 96-98°C (om du har termometer)</li>
                         </ul>
                     </li>
                     <li><strong>Ta ut:</strong> Lyft försiktigt ur brödet och ställ på galler</li>
+                    <li><strong>Upprepa för nästa bröd:</strong> Om du har fler bröd, låt ugnen värmas upp till 250°C igen och upprepa processen</li>
                 </ol>
 
                 <div class="warning-box">
@@ -526,6 +544,7 @@ export const GUIDE_STEPS = [
             </div>
         `,
         tips: [
+            "För extra ånga och ugnsexpansion (valfritt): Lägg två isbitar vid sidan om degen (inte på!) innan du stänger locket. Detta är inte nödvändigt första gången!",
             "Har du ingen gjutjärnsgryta? En djup ugnsfast gryta med lock funkar också",
             "Skär snabbt och bestämt – tvekande snitt ger fula resultat",
             "Brödet är klart när det låter ihåligt när du knackar på botten",

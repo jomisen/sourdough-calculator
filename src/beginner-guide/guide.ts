@@ -24,6 +24,7 @@ import {
     addActivePulse,
     removeActivePulse
 } from './guide-animations.js';
+import { calculateBakingTime } from '../calculator.js';
 
 export class BeginnerGuide {
     private state: GuideState;
@@ -438,6 +439,37 @@ export class BeginnerGuide {
         if (loafCountSpan) loafCountSpan.textContent = loafCount.toString();
         if (loafCountInstruction) loafCountInstruction.textContent = loafCount.toString();
         if (totalFlourWeight) totalFlourWeight.textContent = totalFlour.toString();
+
+        // Also update Step 7 baking time
+        this.updateStep7BakingTime(totalFlour, loafCount);
+    }
+
+    /**
+     * Update Step 7 baking time calculation
+     */
+    private updateStep7BakingTime(totalFlour: number, numLoaves: number): void {
+        // Calculate total weight (flour + water at 70% + starter at 20% + salt at 2%)
+        // Approximation: totalWeight ≈ flour × 1.92 (1 + 0.70 + 0.20 + 0.02)
+        const totalWeight = Math.round(totalFlour * 1.92);
+        const weightPerLoaf = Math.round(totalWeight / numLoaves);
+
+        // Calculate baking times using calculator function
+        const bakingTimes = calculateBakingTime(totalWeight, numLoaves);
+
+        // Time without lid = total - 20 min with lid
+        const timeWithoutLid = Math.round(bakingTimes.totalBakeTime - 20);
+        const totalBakingTime = bakingTimes.totalBakeTime;
+
+        // Update displays
+        const loafWeightSpan = document.getElementById('loaf-weight');
+        const bakingTimeNoLid = document.getElementById('baking-time-no-lid');
+        const totalBakingTimeSpan = document.getElementById('total-baking-time');
+        const bakingTimeInstruction = document.getElementById('baking-time-instruction');
+
+        if (loafWeightSpan) loafWeightSpan.textContent = weightPerLoaf.toString();
+        if (bakingTimeNoLid) bakingTimeNoLid.textContent = timeWithoutLid.toString();
+        if (totalBakingTimeSpan) totalBakingTimeSpan.textContent = totalBakingTime.toString();
+        if (bakingTimeInstruction) bakingTimeInstruction.textContent = timeWithoutLid.toString();
     }
 
     /**
