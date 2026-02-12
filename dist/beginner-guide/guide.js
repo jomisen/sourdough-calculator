@@ -308,7 +308,11 @@ export class BeginnerGuide {
         this.updateStep7BakingTime(totalFlour, loafCount);
     }
     updateStep7BakingTime(totalFlour, numLoaves) {
-        const totalWeight = Math.round(totalFlour * 1.92);
+        const waterAmountSpan = document.getElementById('water-amount');
+        const waterAmount = waterAmountSpan ? parseFloat(waterAmountSpan.textContent || '0') : Math.round(totalFlour * 0.70);
+        const starter = Math.round(totalFlour * 0.20);
+        const salt = Math.round(totalFlour * 0.02);
+        const totalWeight = totalFlour + waterAmount + starter + salt;
         const weightPerLoaf = Math.round(totalWeight / numLoaves);
         const bakingTimes = calculateBakingTime(totalWeight, numLoaves);
         const timeWithoutLid = Math.round(bakingTimes.totalBakeTime - 20);

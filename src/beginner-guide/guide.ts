@@ -448,9 +448,16 @@ export class BeginnerGuide {
      * Update Step 7 baking time calculation
      */
     private updateStep7BakingTime(totalFlour: number, numLoaves: number): void {
-        // Calculate total weight (flour + water at 70% + starter at 20% + salt at 2%)
-        // Approximation: totalWeight ≈ flour × 1.92 (1 + 0.70 + 0.20 + 0.02)
-        const totalWeight = Math.round(totalFlour * 1.92);
+        // Get actual water amount from DOM (calculated in step 2)
+        const waterAmountSpan = document.getElementById('water-amount');
+        const waterAmount = waterAmountSpan ? parseFloat(waterAmountSpan.textContent || '0') : Math.round(totalFlour * 0.70);
+
+        // Calculate actual ingredients
+        const starter = Math.round(totalFlour * 0.20); // 20% of flour
+        const salt = Math.round(totalFlour * 0.02);    // 2% of flour
+
+        // Calculate total dough weight (flour + water + starter + salt)
+        const totalWeight = totalFlour + waterAmount + starter + salt;
         const weightPerLoaf = Math.round(totalWeight / numLoaves);
 
         // Calculate baking times using calculator function
